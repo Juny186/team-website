@@ -20,6 +20,7 @@
   - accent（强调蓝）：`--c-accent-500 #1f4f96`（日期块蓝）
   - danger：`#d64545 / #b03a3a`；success：`#2e8b57`；warning：`#d9941a`
 - 旋转面映射：`--color-bg`(neutral-50)、`--color-surface`(#fff)、`--color-side-bg #eef2f7`、`--color-side-hover #e3eaf2`
+- **命名约定（重要，防透明 bug）**：`:root` 中真实色阶定义为 `--c-{primary|neutral|accent|danger|success|warning}-{50..900}`（`c-` 前缀）；代码里使用的 `--color-{name}-{n}`（如 `--color-primary-700`、`--color-neutral-100`）以及 `--color-primary-deep`、`--color-white`、`--color-focus`、`--color-surface-hover` 均为 `:root` 末尾统一定义的**别名**，经 `var()` 映射到 `--c-*`。新增颜色**只能**引用已在 `:root` 定义的变量名——若使用未定义变量，`background` 会静默解析为透明，元素"消失"
 
 ### 间距（4px 基线）
 - `--sp-xs 4 / sm 8 / md 16 / lg 24 / xl 32`
