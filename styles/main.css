@@ -1164,6 +1164,82 @@ img {
 }
 
 /* =============================================================
+   占位内页（导航子页面，后续替换真实内容）
+   ============================================================= */
+.page-hero {
+  background: linear-gradient(135deg, var(--color-primary-700), var(--color-primary-500));
+  padding: var(--sp-xl) 0;
+  margin-bottom: var(--sp-xl);
+}
+
+.page-hero .page-title {
+  margin: 0;
+  color: var(--color-white);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.page-hero .page-sub {
+  margin-top: var(--sp-xs);
+  color: var(--color-primary-100);
+  font-size: var(--text-base);
+}
+
+.page-body {
+  padding-bottom: var(--sp-xl);
+}
+
+/* 占位卡片：提示后续替换内容 */
+.placeholder-card {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  padding: var(--sp-xl);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.placeholder-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--sp-md);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-50);
+  color: var(--color-primary);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+}
+
+.placeholder-title {
+  margin: 0 0 var(--sp-sm);
+  color: var(--color-text);
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.placeholder-text {
+  margin: 0 auto;
+  max-width: 560px;
+  color: var(--color-text-sub);
+  font-size: var(--text-base);
+  line-height: 1.8;
+}
+
+.placeholder-tip {
+  display: inline-block;
+  margin-top: var(--sp-md);
+  padding: var(--sp-xs) var(--sp-md);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-muted);
+  color: var(--color-text-sub);
+  font-size: var(--text-sm);
+}
+
+/* =============================================================
    响应式断点（560 / 768 / 900 / 1200 统一）
    ============================================================= */
 .hamburger {
