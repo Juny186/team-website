@@ -5,14 +5,15 @@
 
 ## 技术栈
 - 原生 HTML + CSS + JS（无构建步骤）
-- CSS：Flexbox + Grid 布局，配色/间距统一通过 `:root` 下的 CSS 变量管理
-- 布局：顶部栏 + 学术蓝主导航 + 全宽轮播 Banner + 两栏内容区 + 联系我们色块 + 快速通道色带 + 单行版权
+- CSS：Flexbox + Grid 布局，全部颜色/间距/字号/圆角/阴影/动效通过 `:root` 下的 Design Token（CSS 变量）管理，禁止硬编码魔法值散落
+- Token 体系（见 `styles/main.css`）：颜色（primary/neutral 色阶 50–900 + accent/danger/success/warning 备用）、间距 `--sp-xs~xl`(4/8/16/24/32)、字号 `--text-xs~3xl`、圆角 `--radius-sm~full`、阴影 `--shadow-sm~lg`、动效 `--dur-*`+`--ease`、焦点环 `--focus-ring`
+- 布局：顶部蓝 Header + 学术蓝主导航 + 全宽轮播 Banner + 两栏内容区（学术前沿/新闻公告）+ 联系我们色块 + 快速通道色带 + 单行版权
 
 ## 项目结构
 - `index.html`：页面主文件（唯一 HTML，主文件名必须保持 index.html）
-- `styles/main.css`：全部样式，色彩变量见 `:root`（学术蓝 `#1a4a7a`，无金色）
-- `scripts/main.js`：原生 JS，含轮播图、汉堡菜单、导航高亮
-- `DESIGN.md`：设计规范（色彩 / 字体 / 布局 / 交互 / 禁忌）
+- `styles/main.css`：全部样式；组织顺序 重置 → Token → 工具 → 布局 → 组件 → 响应式（断点统一 1200/900/768/560）
+- `scripts/main.js`：原生 JS（IIFE + const/let），含轮播图、侧边抽屉、导航高亮、MORE+、暂停控制、rAF 节流
+- `DESIGN.md`：设计规范（Token 体系 / 组件规范 / A11y / 性能 / 禁忌）
 
 ## 运行命令
 - 开发/预览：`python3 -m http.server ${DEPLOY_RUN_PORT} --bind 0.0.0.0`（由 `.coze` 的 dev.run 定义）
@@ -33,7 +34,7 @@
 ## 内容区块结构（替换占位约定）
 - 轮播 Banner：`#bannerViewport` 内 `.banner-slide`，占位图为 Unsplash 学术/科研大图（实为 `<img>` 的 `.banner-bg`），替换时改 `src`
 - 学术前沿（左栏 `.col-academic`）：`.acad-item` = `.acad-date`（`.date-md` 月.日大号 + `.date-yr` 年份）+ `.acad-title`
-- 新闻公告（右栏 `.col-news`）：`.news-item` = `.news-thumb`（`--tone` 控制缩略图底色）+ `.news-tag`（`月.日 / 年` 标签）+ `.news-title` + `.news-brief`
+- 新闻公告（右栏 `.col-news`）：`.news-item` = `.news-thumb`（统一主色蓝底 + 白字 `.thumb-text`，不再用 `--tone`）+ `.news-tag`（`月.日 / 年` 标签）+ `.news-title` + `.news-brief`
 - 联系我们（`.contact-band`）：左 `.contact-labs` 实验室名大字（`.lab-line`）+ 右 `.contact-meta` 联系方式（地址/邮编/邮箱/电话）
 - 快速通道（`.quick-band`）：`.quick-list` 内 `<li>` 中的 `.quick-btn` 外链按钮，新增直接加 `<li>`
 - 底部 `.footer-inner`：一行式版权

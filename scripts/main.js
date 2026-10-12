@@ -1,28 +1,39 @@
 /* =============================================================
    四川文理学院 信息与生物医学交叉创新团队
    原生 JS：轮播 + 移动端侧边抽屉 + 导航高亮 + MORE 占位跳转
+   说明：使用 const/let、IIFE 避免全局污染，含边界处理。
    ============================================================= */
 (function () {
   "use strict";
 
-  /* ---------- 轮播图 ---------- */
-  var bannerViewport = document.getElementById("bannerViewport");
-  var dotsWrap = document.getElementById("bannerDots");
+  /* =============================================================
+     轮播图 Banner
+     ============================================================= */
+  function initBanner() {
+    const viewport = document.getElementById("bannerViewport");
+    const dotsWrap = document.getElementById("bannerDots");
+    const pauseBtn = document.getElementById("bannerPause");
 
-  if (bannerViewport && dotsWrap) {
-    var slides = Array.prototype.slice.call(
-      bannerViewport.querySelectorAll(".banner-slide")
+    if (!viewport || !dotsWrap) return;
+
+    const slides = Array.prototype.slice.call(
+      viewport.querySelectorAll(".banner-slide")
     );
-    var slideCount = slides.length;
-    var index = 0;
-    var timer = null;
-    var INTERVAL = 4000; // 自动轮播间隔 4s
+    const slideCount = slides.length;
+    if (slideCount === 0) return;
 
+    let current = 0;
+    let timer = null;
+    let paused = false;
+    const INTERVAL = 4000; // 自动轮播间隔 4s
+
+    // 生成底部指示器（button 可聚焦，满足键盘可达）
     slides.forEach(function (_, i) {
-      var dot = document.createElement("button");
+      const dot = document.createElement("button");
       dot.type = "button";
+      dot.className = "banner-dot";
       dot.setAttribute("role", "tab");
-      dot.setAttribute("aria-label", "第 " + (i + 1) + " 张");
+      dot.setAttribute("aria-label", "第 " + (i + 1) + " 张，共 " + slideCount + " 张");
       dot.addEventListener("click", function () {
         goTo(i);
         restart();
@@ -30,77 +41,118 @@
       dotsWrap.appendChild(dot);
     });
 
-    var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll("button"));
+    const dots = Array.prototype.slice.call(
+      dotsWrap.querySelectorAll(".banner-dot")
+    );
 
     function goTo(i) {
-      index = (i + slideCount) % slideCount;
+      current = (i + slideCount) % slideCount;
       slides.forEach(function (slide, si) {
-        var on = si === index;
-        slide.classList.toggle("active", on);
-        dots[si].classList.toggle("active", on);
-        dots[si].setAttribute("aria-selected", on ? "true" : "false");
+        const isActive = si === current;
+        slide.classList.toggle("active", isActive);
+        if (dots[si]) {
+          dots[si].classList.toggle("active", isActive);
+          dots[si].setAttribute("aria-selected", isActive ? "true" : "false");
+        }
       });
     }
 
     function next() {
-      goTo(index + 1);
+      goTo(current + 1);
     }
 
     function restart() {
       stop();
-      timer = setInterval(next, INTERVAL);
+      if (paused) return;
+      timer = window.setInterval(next, INTERVAL);
     }
 
     function stop() {
       if (timer) {
-        clearInterval(timer);
+        window.clearInterval(timer);
         timer = null;
       }
     }
 
-    bannerViewport.addEventListener("mouseenter", stop);
-    bannerViewport.addEventListener("mouseleave", restart);
+    // 暂停/播放控制
+    if (pauseBtn) {
+      pauseBtn.addEventListener("click", function () {
+        paused = !paused;
+        pauseBtn.setAttribute("aria-label", paused ? "继续播放轮播" : "暂停轮播");
+        pauseBtn.textContent = paused ? "▶" : "⏸";
+        if (paused) stop();
+        else restart();
+      });
+    }
+
+    // 鼠标悬停暂停（非暂停状态下才允许自动恢复）
+    viewport.addEventListener("mouseenter", stop);
+    viewport.addEventListener("mouseleave", function () {
+      if (!paused) restart();
+    });
+
+    // 标签页可见性变化时避免后台空转
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop();
+      else if (!paused) restart();
+    });
 
     goTo(0);
     restart();
   }
 
-  /* ---------- 移动端侧边抽屉导航 ---------- */
-  var sidebar = document.getElementById("sidebar");
-  var sidebarOverlay = document.getElementById("sidebarOverlay");
-  var sidebarToggle = document.getElementById("sidebarToggle");
-  var sidebarClose = document.getElementById("sidebarClose");
+  /* =============================================================
+     移动端侧边抽屉导航
+     ============================================================= */
+  function initSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    const toggle = document.getElementById("sidebarToggle");
+    const closeBtn = document.getElementById("sidebarClose");
 
-  if (sidebar && sidebarOverlay) {
+    if (!sidebar || !overlay) return;
+
     function openSidebar() {
       sidebar.classList.add("open");
-      sidebarOverlay.classList.add("show");
+      overlay.classList.add("show");
       document.body.classList.add("menu-open");
-      if (sidebarToggle) sidebarToggle.setAttribute("aria-expanded", "true");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", "关闭菜单");
+      }
+      // 焦点移入关闭按钮，便于键盘操作
+      if (closeBtn) closeBtn.focus();
     }
 
     function closeSidebar() {
       sidebar.classList.remove("open");
-      sidebarOverlay.classList.remove("show");
+      overlay.classList.remove("show");
       document.body.classList.remove("menu-open");
-      if (sidebarToggle) sidebarToggle.setAttribute("aria-expanded", "false");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "打开菜单");
+        toggle.focus();
+      }
     }
 
-    if (sidebarToggle) sidebarToggle.addEventListener("click", openSidebar);
-    if (sidebarClose) sidebarClose.addEventListener("click", closeSidebar);
-    sidebarOverlay.addEventListener("click", closeSidebar);
+    if (toggle) toggle.addEventListener("click", openSidebar);
+    if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+    overlay.addEventListener("click", closeSidebar);
 
-    // 点击任一侧边链接后自动收起（首页类锚点跳转）
+    // 点击侧边内连接后收起
     sidebar.querySelectorAll('a[href^="#"]').forEach(function (a) {
       a.addEventListener("click", closeSidebar);
     });
 
-    /* 子菜单展开/收起 */
+    // 子菜单展开/收起（防止重复绑定）
     sidebar.querySelectorAll(".side-toggle").forEach(function (btn) {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = "1";
       btn.addEventListener("click", function (e) {
         e.preventDefault();
-        var sub = btn.closest(".side-item").querySelector(".side-sub");
-        var expanded = btn.getAttribute("aria-expanded") === "true";
+        const item = btn.closest(".side-item");
+        const sub = item ? item.querySelector(".side-sub") : null;
+        const expanded = btn.getAttribute("aria-expanded") === "true";
         if (sub) sub.classList.toggle("open", !expanded);
         btn.setAttribute("aria-expanded", expanded ? "false" : "true");
         btn.classList.toggle("expanded", !expanded);
@@ -114,49 +166,99 @@
     });
   }
 
-  /* ---------- MORE + 跳转占位 ---------- */
-  document.querySelectorAll(".js-more").forEach(function (el) {
-    el.addEventListener("click", function (e) {
-      e.preventDefault();
-      var target = el.getAttribute("data-target");
-      // 占位：根据板块滚动到对应区块；后续替换为真实列表页地址
-      if (target && document.getElementById(target)) {
-        document.getElementById(target).scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  });
-
-  /* ---------- 当前区块导航高亮 ---------- */
-  var sections = ["home", "about", "research", "members", "achievements", "frontier", "news", "contact", "links"];
-  var navAnchors = Array.prototype.slice.call(
-    document.querySelectorAll('#navList a[href^="#"]')
-  );
-
-  function onScroll() {
-    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    var current = "home";
-
-    sections.forEach(function (id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      var rect = el.getBoundingClientRect();
-      if (rect.top <= 160) current = id;
-    });
-
-    navAnchors.forEach(function (a) {
-      var match = a.getAttribute("href") === "#" + current;
-      a.parentElement.classList.toggle("active", match);
-    });
-
-    // 同步侧边菜单高亮
-    sidebar &&
-      sidebar.querySelectorAll(".side-item").forEach(function (item) {
-        var link = item.querySelector("a[href^='#']");
-        var href = link ? link.getAttribute("href") : "";
-        item.classList.toggle("active", href === "#" + current);
+  /* =============================================================
+     MORE + 跳转占位
+     ============================================================= */
+  function initMoreLinks() {
+    document.querySelectorAll(".js-more").forEach(function (el) {
+      if (el.dataset.boundMore) return;
+      el.dataset.boundMore = "1";
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = el.getAttribute("data-target");
+        // 占位：滚动到对应区块；后续替换为真实列表页地址
+        const target = document.getElementById(targetId);
+        if (target) {
+          if ("scrollBehavior" in document.documentElement.style) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else {
+            target.scrollIntoView({ block: "start" });
+          }
+        }
       });
+    });
   }
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  /* =============================================================
+     当前区块导航高亮（节流）
+     ============================================================= */
+  function initScrollHighlight() {
+    const sections = [
+      "home", "about", "research", "members", "achievements",
+      "frontier", "news", "contact", "links",
+    ];
+    const navAnchors = Array.prototype.slice.call(
+      document.querySelectorAll('#navList a[href^="#"]')
+    );
+    const sidebar = document.getElementById("sidebar");
+
+    let ticking = false;
+
+    function highlight() {
+      const scrollY =
+        window.pageYOffset || document.documentElement.scrollTop;
+      let current = "home";
+
+      sections.forEach(function (id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 160) current = id;
+      });
+
+      navAnchors.forEach(function (a) {
+        const match = a.getAttribute("href") === "#" + current;
+        a.parentElement.classList.toggle("active", match);
+      });
+
+      // 同步侧边菜单高亮
+      if (sidebar) {
+        sidebar.querySelectorAll(".side-item").forEach(function (item) {
+          const link = item.querySelector("a[href^='#']");
+          const href = link ? link.getAttribute("href") : "";
+          item.classList.toggle("active", href === "#" + current);
+        });
+      }
+
+      ticking = false;
+    }
+
+    // 用 rAF 节流，减少滚动期间的重排
+    function requestHighlight() {
+      if (!ticking) {
+        window.requestAnimationFrame(highlight);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener("scroll", requestHighlight, { passive: true });
+    window.addEventListener("resize", requestHighlight);
+    highlight();
+  }
+
+  /* =============================================================
+     初始化（DOM 就绪后执行）
+     ============================================================= */
+  function init() {
+    initBanner();
+    initSidebar();
+    initMoreLinks();
+    initScrollHighlight();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
