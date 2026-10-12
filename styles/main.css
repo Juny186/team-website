@@ -58,8 +58,9 @@
   --color-primary-active: var(--c-primary-800);
   --color-link: var(--c-primary-500);
   --color-link-hover: var(--c-primary-700);
-  --color-side-bg: #eef2f7;
-  --color-side-hover: #e3eaf2;
+  --color-side-bg: #e4ebf5;
+  --color-side-hover: #d6e1ee;
+  --color-side-line: #c9d6e6;
 
   /* ---------- 间距 token（4px 基线） ---------- */
   --sp-0: 0;
@@ -507,14 +508,14 @@ img {
 }
 
 .side-menu .side-item {
-  border-bottom: 1px solid var(--color-side-hover);
+  border-bottom: 1px solid var(--color-side-line);
 }
 
 .side-item > a {
   display: block;
-  padding: var(--sp-md) var(--sp-md);
-  font-size: 15px;
-  color: var(--color-text);
+  padding: 15px var(--sp-md);
+  font-size: var(--text-lg);
+  color: #333;
 }
 
 .side-item > a:hover {
@@ -525,6 +526,7 @@ img {
 .side-item.active > a {
   color: var(--color-primary);
   font-weight: 600;
+  background: var(--color-side-hover);
 }
 
 .side-link {
@@ -536,9 +538,9 @@ img {
 .side-link > a {
   flex: 1;
   display: block;
-  padding: var(--sp-md) var(--sp-md);
-  font-size: 15px;
-  color: var(--color-text);
+  padding: 15px var(--sp-md);
+  font-size: var(--text-lg);
+  color: #333;
 }
 
 .side-link > a:hover {
@@ -570,7 +572,7 @@ img {
 
 .side-sub {
   display: none;
-  background: #e1e9f2;
+  background: #dbe4f0;
   padding: var(--sp-xs) 0;
 }
 
@@ -595,18 +597,36 @@ img {
   display: flex;
   align-items: center;
   margin: var(--sp-md);
-  border: 1px solid var(--color-primary);
+  border: 1px solid #c9d6e6;
   background: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
 .sidebar-search .search-btn {
   width: 38px;
   height: 38px;
+  background: transparent;
+}
+
+.sidebar-search .search-btn-icon {
+  border-color: #b8322e;
+}
+
+.sidebar-search .search-btn-icon::after {
+  background: #b8322e;
 }
 
 .sidebar-search .search-input {
   width: 100%;
   height: 38px;
+  font-style: italic;
+  color: #bfc4cc;
+  background: transparent;
+}
+
+.sidebar-search .search-input::placeholder {
+  color: #bfc4cc;
 }
 
 /* =============================================================
