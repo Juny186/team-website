@@ -6,9 +6,7 @@
   "use strict";
 
   /* ---------- 轮播图 ---------- */
-  var bannerViewport = document.querySelector(".banner-viewport");
-  var prevBtn = document.getElementById("bannerPrev");
-  var nextBtn = document.getElementById("bannerNext");
+  var bannerViewport = document.getElementById("bannerViewport");
   var dotsWrap = document.getElementById("bannerDots");
 
   if (bannerViewport && dotsWrap) {
@@ -49,10 +47,6 @@
       goTo(index + 1);
     }
 
-    function prev() {
-      goTo(index - 1);
-    }
-
     function restart() {
       stop();
       timer = setInterval(next, INTERVAL);
@@ -64,9 +58,6 @@
         timer = null;
       }
     }
-
-    if (prevBtn) prevBtn.addEventListener("click", function () { prev(); restart(); });
-    if (nextBtn) nextBtn.addEventListener("click", function () { next(); restart(); });
 
     // 鼠标悬停暂停自动播放
     bannerViewport.addEventListener("mouseenter", stop);

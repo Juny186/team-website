@@ -15,24 +15,22 @@
     <header class="topbar">
       <div class="container topbar-inner">
         <div class="brand">
-          <span class="brand-badge" aria-hidden="true">
-            <span class="brand-badge-core"></span>
-          </span>
+          <span class="brand-badge" aria-hidden="true"></span>
           <div class="brand-text">
             <h1 class="brand-title">四川文理学院</h1>
             <span class="brand-sub">信息与生物医学交叉创新团队</span>
           </div>
         </div>
         <form class="search" role="search" onsubmit="return false">
+          <button class="search-btn" type="button" aria-label="搜索">
+            <span class="search-btn-icon" aria-hidden="true"></span>
+          </button>
           <input
             class="search-input"
             type="text"
             placeholder="站内搜索…"
             aria-label="站内搜索"
           />
-          <button class="search-btn" type="button" aria-label="搜索">
-            <span class="search-btn-icon" aria-hidden="true"></span>
-          </button>
         </form>
       </div>
     </header>
@@ -58,215 +56,200 @@
     </nav>
 
     <main id="home">
-      <!-- 轮播 Banner -->
+      <!-- 全宽轮播 Banner -->
       <section class="banner" aria-label="焦点图轮播">
-        <div class="banner-viewport">
+        <div class="banner-viewport" id="bannerViewport">
           <article class="banner-slide active">
-            <div class="banner-bg slide-bg-1"></div>
-            <div class="banner-mask"></div>
-            <div class="container banner-content">
-              <h2 class="banner-title">信息与生物医学深度融合</h2>
-              <p class="banner-desc">
-                聚焦多组学数据挖掘与智能诊疗，以交叉创新驱动健康医疗技术变革
-              </p>
-              <a href="#research" class="banner-link">了解更多</a>
-            </div>
+            <img
+              class="banner-bg"
+              src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1920&q=80"
+              alt="生物医学科研场景"
+            />
+            <div class="banner-shade"></div>
           </article>
           <article class="banner-slide">
-            <div class="banner-bg slide-bg-2"></div>
-            <div class="banner-mask"></div>
-            <div class="container banner-content">
-              <h2 class="banner-title">人工智能赋能医学研究</h2>
-              <p class="banner-desc">
-                构建医学影像与生信分析平台，让算法服务于临床与科研一线
-              </p>
-              <a href="#frontier" class="banner-link">了解更多</a>
-            </div>
+            <img
+              class="banner-bg"
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1920&q=80"
+              alt="数据分析科研场景"
+            />
+            <div class="banner-shade"></div>
           </article>
           <article class="banner-slide">
-            <div class="banner-bg slide-bg-3"></div>
-            <div class="banner-mask"></div>
-            <div class="container banner-content">
-              <h2 class="banner-title">交叉学科创新人才培养</h2>
-              <p class="banner-desc">
-                联合多学科团队，培养兼具信息技术与医学素养的复合型人才
-              </p>
-              <a href="#members" class="banner-link">了解更多</a>
-            </div>
+            <img
+              class="banner-bg"
+              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1920&q=80"
+              alt="实验研究场景"
+            />
+            <div class="banner-shade"></div>
           </article>
           <article class="banner-slide">
-            <div class="banner-bg slide-bg-4"></div>
-            <div class="banner-mask"></div>
-            <div class="container banner-content">
-              <h2 class="banner-title">协同攻关前沿科研课题</h2>
-              <p class="banner-desc">
-                面向生命健康重大需求，开展多项国家级与省部级科研项目研究
-              </p>
-              <a href="#achievements" class="banner-link">了解更多</a>
-            </div>
+            <img
+              class="banner-bg"
+              src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=1920&q=80"
+              alt="学术研究场景"
+            />
+            <div class="banner-shade"></div>
+          </article>
+          <article class="banner-slide">
+            <img
+              class="banner-bg"
+              src="https://images.unsplash.com/photo-1550223640-23097fc71cb2?auto=format&fit=crop&w=1920&q=80"
+              alt="计算机与生物信息场景"
+            />
+            <div class="banner-shade"></div>
           </article>
         </div>
-
-        <button class="banner-arrow prev" id="bannerPrev" aria-label="上一张">
-          <span class="arrow-symbol" aria-hidden="true">‹</span>
-        </button>
-        <button class="banner-arrow next" id="bannerNext" aria-label="下一张">
-          <span class="arrow-symbol" aria-hidden="true">›</span>
-        </button>
-
         <div class="banner-dots" id="bannerDots" role="tablist" aria-label="轮播页码"></div>
       </section>
 
-      <div class="container">
-        <!-- 新闻公告区 -->
-        <section class="section-block" id="news">
-          <div class="section-head">
-            <h3 class="section-title">新闻公告</h3>
-            <a href="#" class="section-more">MORE+</a>
-          </div>
-          <div class="news-grid section-card">
-            <article class="news-item">
-              <div class="news-thumb" style="--tone:#1a3a6b">
-                <span class="thumb-text">研究</span>
-              </div>
-              <div class="news-body">
-                <h4 class="news-title">
-                  <a href="#">团队获批四川省自然科学基金重点项目立项资助</a>
-                </h4>
-                <p class="news-brief">喜讯：团队负责人主持承担的省级重点科研项目正式获批立项。</p>
-                <span class="news-meta">2024-10-12</span>
-              </div>
-            </article>
-            <article class="news-item">
-              <div class="news-thumb" style="--tone:#2a538f">
-                <span class="thumb-text">交流</span>
-              </div>
-              <div class="news-body">
-                <h4 class="news-title">
-                  <a href="#">团队成功举办医工交叉学术研讨会</a>
-                </h4>
-                <p class="news-brief">来自多所高校与医院的专家学者围绕交叉融合展开深入交流。</p>
-                <span class="news-meta">2024-09-28</span>
-              </div>
-            </article>
-            <article class="news-item">
-              <div class="news-thumb" style="--tone:#3a67a8">
-                <span class="thumb-text">招生</span>
-              </div>
-              <div class="news-body">
-                <h4 class="news-title">
-                  <a href="#">团队面向全校招募科研助理与创新小组</a>
-                </h4>
-                <p class="news-brief">欢迎对信息技术与生物医学交叉研究感兴趣的同学加入。</p>
-                <span class="news-meta">2024-09-15</span>
-              </div>
-            </article>
-          </div>
-        </section>
+      <!-- 中间两栏内容区 -->
+      <div class="container main-col">
+        <div class="two-col">
+          <!-- 左栏：学术前沿 -->
+          <section class="col-academic" id="frontier">
+            <div class="block-head">
+              <h3 class="block-title">学术前沿</h3>
+              <a href="#" class="block-more">MORE +</a>
+            </div>
+            <div class="acad-list">
+              <a href="#" class="acad-item">
+                <span class="acad-date">
+                  <span class="date-md">07.04</span>
+                  <span class="date-yr">2025</span>
+                </span>
+                <span class="acad-title">《Nature》子刊 〡 肠道微生物与免疫应答机制研究进展</span>
+              </a>
+              <a href="#" class="acad-item">
+                <span class="acad-date">
+                  <span class="date-md">10.09</span>
+                  <span class="date-yr">2024</span>
+                </span>
+                <span class="acad-title">基于深度学习的多组学特征融合方法实现新突破</span>
+              </a>
+              <a href="#" class="acad-item">
+                <span class="acad-date">
+                  <span class="date-md">09.23</span>
+                  <span class="date-yr">2024</span>
+                </span>
+                <span class="acad-title">医学影像智能分析平台关键技术研究取得阶段性进展</span>
+              </a>
+              <a href="#" class="acad-item">
+                <span class="acad-date">
+                  <span class="date-md">09.16</span>
+                  <span class="date-yr">2024</span>
+                </span>
+                <span class="acad-title">生物医学大数据处理与疾病预测交叉研究应用</span>
+              </a>
+            </div>
+          </section>
 
-        <!-- 学术前沿区 -->
-        <section class="section-block" id="frontier">
-          <div class="section-head">
-            <h3 class="section-title">学术前沿</h3>
-            <a href="#" class="section-more">MORE+</a>
-          </div>
-          <div class="frontier section-card">
-            <a href="#" class="frontier-item">
-              <div class="frontier-date">
-                <span class="date-day">18</span>
-                <span class="date-y">2024.10</span>
-              </div>
-              <div class="frontier-line" aria-hidden="true"></div>
-              <div class="frontier-info">
-                <h4 class="frontier-title">基于深度学习的多组学特征融合方法研究</h4>
-                <p class="frontier-brief">提出一种面向肿瘤早筛的多组学数据融合新框架，显著提升预测精度。</p>
-              </div>
-            </a>
-            <a href="#" class="frontier-item">
-              <div class="frontier-date">
-                <span class="date-day">09</span>
-                <span class="date-y">2024.10</span>
-              </div>
-              <div class="frontier-line" aria-hidden="true"></div>
-              <div class="frontier-info">
-                <h4 class="frontier-title">医学影像智能分析平台建设取得阶段性进展</h4>
-                <p class="frontier-brief">团队研发的影像辅助诊断系统完成关键模块测试并进入临床验证阶段。</p>
-              </div>
-            </a>
-            <a href="#" class="frontier-item">
-              <div class="frontier-date">
-                <span class="date-day">26</span>
-                <span class="date-y">2024.09</span>
-              </div>
-              <div class="frontier-line" aria-hidden="true"></div>
-              <div class="frontier-info">
-                <h4 class="frontier-title">交叉团队在国际权威期刊发表最新研究成果</h4>
-                <p class="frontier-brief">研究成果获同行评审高度评价，为生物医学信息处理提供新思路。</p>
-              </div>
-            </a>
-          </div>
-        </section>
+          <!-- 右栏：新闻公告 -->
+          <section class="col-news" id="news">
+            <div class="block-head">
+              <h3 class="block-title">新闻公告</h3>
+              <a href="#" class="block-more">MORE +</a>
+            </div>
+            <div class="news-list">
+              <article class="news-item">
+                <div class="news-thumb" style="--tone:#1a4a7a">
+                  <span class="thumb-text">科研</span>
+                </div>
+                <div class="news-body">
+                  <span class="news-tag">09.17 / 2026</span>
+                  <h4 class="news-title">
+                    <a href="#">团队获批四川省自然科学基金重点项目立项资助</a>
+                  </h4>
+                  <p class="news-brief">
+                    喜讯：团队负责人主持承担的省级重点科研项目正式获批立项，将聚焦交叉前沿开展攻关。
+                  </p>
+                </div>
+              </article>
+              <article class="news-item">
+                <div class="news-thumb" style="--tone:#2a538f">
+                  <span class="thumb-text">交流</span>
+                </div>
+                <div class="news-body">
+                  <span class="news-tag">06.09 / 2026</span>
+                  <h4 class="news-title">
+                    <a href="#">团队成功举办医工交叉学术研讨会</a>
+                  </h4>
+                  <p class="news-brief">
+                    来自多所高校与医院的专家学者围绕生物医学与信息技术融合展开深入交流。
+                  </p>
+                </div>
+              </article>
+              <article class="news-item">
+                <div class="news-thumb" style="--tone:#2a5da0">
+                  <span class="thumb-text">学术</span>
+                </div>
+                <div class="news-body">
+                  <span class="news-tag">06.05 / 2026</span>
+                  <h4 class="news-title">
+                    <a href="#">团队成员受邀参加全国生物信息学学术会议并作报告</a>
+                  </h4>
+                  <p class="news-brief">
+                    团队青年教师与研究生在学术会议上作专题报告，展示最新研究成果。
+                  </p>
+                </div>
+              </article>
+              <article class="news-item">
+                <div class="news-thumb" style="--tone:#2a6aa8">
+                  <span class="thumb-text">招生</span>
+                </div>
+                <div class="news-body">
+                  <span class="news-tag">03.12 / 2026</span>
+                  <h4 class="news-title">
+                    <a href="#">团队面向全校招募科研助理与创新小组</a>
+                  </h4>
+                  <p class="news-brief">
+                    欢迎对信息技术与生物医学交叉研究感兴趣的同学加入，共赴科研之旅。
+                  </p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
 
-        <!-- 三栏：联系我们 + 快速通道 -->
-        <section class="row-block" id="contact">
-          <div class="col-card contact-card">
-            <h3 class="col-title">联系我们</h3>
-            <ul class="contact-list">
-              <li class="contact-item">
-                <span class="contact-label">团队地址</span>
-                <span class="contact-value">四川省达州市通川区塔石路519号</span>
-              </li>
-              <li class="contact-item">
-                <span class="contact-label">邮政编码</span>
-                <span class="contact-value">635000</span>
-              </li>
-              <li class="contact-item">
-                <span class="contact-label">联系邮箱</span>
-                <span class="contact-value">team@scwl.edu.cn</span>
-              </li>
-              <li class="contact-item">
-                <span class="contact-label">联系电话</span>
-                <span class="contact-value">0818-2790000</span>
-              </li>
-            </ul>
+        <!-- 联系我们（独立玉块） -->
+        <section class="contact-band" id="contact">
+          <div class="contact-labs">
+            <span class="lab-line">信息与</span>
+            <span class="lab-line">生物医学</span>
+            <span class="lab-line">交叉创新</span>
+            <span class="lab-line">团队</span>
           </div>
-          <div class="col-card link-card">
-            <h3 class="col-title">快速通道</h3>
-            <ul class="link-list">
-              <li><a href="#" class="link-item">四川文理学院</a></li>
-              <li><a href="#" class="link-item">信息与生物医学交叉研究中心</a></li>
-              <li><a href="#" class="link-item">科研管理系统登录</a></li>
-              <li><a href="#" class="link-item">知网 · 学术资源库</a></li>
-              <li><a href="#" class="link-item">PubMed · 生物医学文献</a></li>
-            </ul>
-          </div>
-          <div class="col-card stat-card">
-            <h3 class="col-title">团队概况</h3>
-            <p class="stat-brief">团队依托学校电子信息与医学学科优势，聚焦多学科交叉创新。</p>
-            <ul class="stat-numbers">
-              <li class="stat-item">
-                <span class="stat-num">30+</span>
-                <span class="stat-label">成员规模(人)</span>
-              </li>
-              <li class="stat-item">
-                <span class="stat-num">20+</span>
-                <span class="stat-label">在研项目(项)</span>
-              </li>
-              <li class="stat-item">
-                <span class="stat-num">50+</span>
-                <span class="stat-label">发表论文(篇)</span>
-              </li>
-            </ul>
-          </div>
+          <ul class="contact-meta">
+            <li><span class="meta-label">团队地址</span><span class="meta-val">四川省达州市通川区塔石路519号</span></li>
+            <li><span class="meta-label">邮政编码</span><span class="meta-val">635000</span></li>
+            <li><span class="meta-label">联系邮箱</span><span class="meta-val">team@scwl.edu.cn</span></li>
+            <li><span class="meta-label">联系电话</span><span class="meta-val">0818-2790000</span></li>
+          </ul>
         </section>
       </div>
+
+      <!-- 快速通道（整宽色带） -->
+      <section class="quick-band" id="links">
+        <div class="container">
+          <div class="block-head">
+            <h3 class="block-title">快速通道</h3>
+          </div>
+          <ul class="quick-list">
+            <li><a href="#" class="quick-btn">四川文理学院</a></li>
+            <li><a href="#" class="quick-btn">交叉研究中心</a></li>
+            <li><a href="#" class="quick-btn">科研管理系统</a></li>
+            <li><a href="#" class="quick-btn">NCBI · 生物医学库</a></li>
+            <li><a href="#" class="quick-btn">中国知网 · CNKI</a></li>
+            <li><a href="#" class="quick-btn">学术资源门户</a></li>
+          </ul>
+        </div>
+      </section>
     </main>
 
     <!-- 底部版权 -->
     <footer class="footer">
       <div class="container footer-inner">
-        <p>版权所有 © 四川文理学院信息与生物医学交叉创新团队</p>
-        <p>四川省达州市通川区塔石路519号 &nbsp;|&nbsp; 邮编：635000</p>
+        <p>版权所有 © 四川文理学院信息与生物医学交叉创新团队&nbsp;&nbsp;四川省达州市通川区塔石路519号&nbsp;&nbsp;邮编：635000</p>
       </div>
     </footer>
 
