@@ -314,6 +314,71 @@
   }
 
   /* =============================================================
+     5. 自定义鼠标光标（对齐参考站：圆点 + 圆环跟随）
+     - 仅精确指针设备（鼠标）启用；触屏跳过，系统光标不受影响
+     - 圆点即时跟随，圆环用 lerp 平滑拖尾；悬停可交互元素圆环放大
+     ============================================================= */
+  function initCustomCursor() {
+    const finePointer =
+      window.matchMedia &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!finePointer || prefersReducedMotion) return;
+
+    const dot = document.createElement("div");
+    dot.className = "cursor-dot";
+    const ring = document.createElement("div");
+    ring.className = "cursor-ring";
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+    document.body.classList.add("has-cursor");
+
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+
+    window.addEventListener(
+      "mousemove",
+      function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.transform = "translate(" + mouseX + "px," + mouseY + "px)";
+      },
+      { passive: true }
+    );
+
+    // 圆环用 rAF + 线性插值平滑跟随，保持 60fps
+    (function followLoop() {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      ring.style.transform = "translate(" + ringX + "px," + ringY + "px)";
+      window.requestAnimationFrame(followLoop);
+    })();
+
+    // 悬停可交互元素时圆环放大（事件委托，含动态内容）
+    const HOVER_SEL =
+      "a, button, input, textarea, select, label, [role='button'], .side-toggle, .quick-btn, .banner-dot, .banner-arrow";
+    document.addEventListener(
+      "mouseover",
+      function (e) {
+        if (e.target && e.target.closest && e.target.closest(HOVER_SEL)) {
+          ring.classList.add("grow");
+        }
+      },
+      { passive: true }
+    );
+    document.addEventListener(
+      "mouseout",
+      function (e) {
+        if (e.target && e.target.closest && e.target.closest(HOVER_SEL)) {
+          ring.classList.remove("grow");
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  /* =============================================================
      启动
      ============================================================= */
   function init() {
@@ -321,6 +386,7 @@
     initTypewriter();
     initReveal();
     initContactActions();
+    initCustomCursor();
   }
 
   if (document.readyState === "loading") {

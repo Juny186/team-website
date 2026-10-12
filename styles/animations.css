@@ -21,49 +21,54 @@
 }
 
 /* ---------- 2. 首屏打字机叙事带 ---------- */
+/* 打字机叙事带：浅色底 + 深色粗体文字（对齐参考站，文字更突出） */
 .typewriter-band {
-  background: linear-gradient(180deg, var(--color-primary-800) 0%, var(--color-primary-900) 100%);
-  color: #fff;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--color-primary-700);
+  background: linear-gradient(180deg, #f3f8fd 0%, #e9f2fa 100%);
+  padding: 24px 0;
+  border-bottom: 1px solid #d8e6f3;
 }
 .typewriter-inner {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
   min-height: 1.8em;
 }
+/* 提示符（对齐参考站 »） */
+.typewriter-prompt {
+  color: #06b6d4;
+  font-size: clamp(22px, 3.4vw, 32px);
+  font-weight: 800;
+  line-height: 1;
+}
 .typewriter-prefix {
   font-size: clamp(15px, 2vw, 19px);
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  color: var(--color-primary-700);
   letter-spacing: 2px;
 }
-/* 打字正文：大而亮，带微光，真正突出 */
+/* 打字正文：深色粗体，浅底上真正突出 */
 .typewriter-text {
   font-size: clamp(24px, 3.6vw, 34px);
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-primary-900);
   letter-spacing: 2px;
   min-width: 2em;
-  text-shadow: 0 0 16px rgba(94, 234, 212, 0.45), 0 2px 8px rgba(0, 0, 0, 0.4);
 }
-/* 呼吸感闪烁光标：加粗 + 亮青发光，清晰可见 */
+/* 竖线光标（对齐参考站 caret） */
 .typewriter-cursor {
   display: inline-block;
-  width: 4px;
-  height: 1.05em;
-  background: #34d399;
-  transform: translateY(0.18em);
+  width: 3px;
+  height: 1.15em;
+  background: #06b6d4;
+  transform: translateY(0.2em);
   border-radius: var(--radius-sm);
-  box-shadow: 0 0 12px rgba(52, 211, 153, 0.95);
-  animation: cursor-breathe 0.9s ease-in-out infinite;
+  animation: cursor-breathe 1s step-end infinite;
 }
 @keyframes cursor-breathe {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.1; }
+  50% { opacity: 0; }
 }
 
 /* ---------- 3. 视差卡片渐入（fade-slide-up） ---------- */
@@ -224,4 +229,50 @@
   .banner-prev { left: 10px; }
   .banner-next { right: 10px; }
   .contact-actions { justify-content: center; }
+}
+
+/* ---------- 自定义鼠标光标（对齐参考站：圆点 + 圆环跟随） ---------- */
+/* 仅精确指针设备（鼠标）由 JS 创建并启用；触屏不创建、系统光标正常 */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-100px, -100px);
+}
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  background: #06b6d4;
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid rgba(6, 182, 212, 0.55);
+  transition: width 0.25s var(--ease), height 0.25s var(--ease), margin 0.25s var(--ease),
+    border-color 0.25s ease, background-color 0.25s ease;
+}
+/* 悬停可交互元素时圆环放大 */
+.cursor-ring.grow {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-color: #06b6d4;
+  background-color: rgba(6, 182, 212, 0.08);
+}
+/* 启用自定义光标时隐藏系统光标 */
+body.has-cursor,
+body.has-cursor a,
+body.has-cursor button,
+body.has-cursor input,
+body.has-cursor textarea,
+body.has-cursor select,
+body.has-cursor label,
+body.has-cursor [role="button"] {
+  cursor: none;
 }
