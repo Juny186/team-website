@@ -7,13 +7,13 @@
 - 原生 HTML + CSS + JS（无构建步骤）
 - CSS：Flexbox + Grid 布局，全部颜色/间距/字号/圆角/阴影/动效通过 `:root` 下的 Design Token（CSS 变量）管理，禁止硬编码魔法值散落
 - Token 体系（见 `styles/main.css`）：颜色（primary/neutral 色阶 50–900 + accent/danger/success/warning 备用）、间距 `--sp-xs~xl`(4/8/16/24/32)、字号 `--text-xs~3xl`、圆角 `--radius-sm~full`、阴影 `--shadow-sm~lg`、动效 `--dur-*`+`--ease`、焦点环 `--focus-ring`
-- 布局：顶部蓝 Header + 学术蓝主导航 + 全宽轮播 Banner（仅首页）+ 两栏内容区（学术前沿/新闻公告，仅首页）+ 联系我们色块 + 快速通道色带 + 单行版权；子页面为「面包屑 + `.page-hero` 标题区 + `.placeholder-card` 占位卡」
+- 布局：顶部蓝 Header + 学术蓝主导航 + 全宽轮播 Banner（仅首页）+ 两栏内容区（学术前沿/新闻公告，仅首页）+ 联系我们色块 + 快速通道色带 + 单行版权；子页面为「面包屑 + `.page-hero` 标题区 + `.sub-layout`（左侧栏目导航 `.sub-side` + 右侧内容 `.sub-main`）」，已填入虚拟内容
 
 ## 项目结构（多页面静态站）
 - `index.html`：首页（主文件名必须保持 index.html），含轮播 Banner + 两栏内容区
-- 导航子页面（当前均为占位页 `.placeholder-card`，后续替换真实内容）：
-  - `about.html` 团队概况、`research.html` 研究方向、`members.html` 团队成员
-  - `achievements.html` 科研成果、`frontier.html` 学术交流、`contact.html` 联系我们、`links.html` 资料下载
+- 导航子页面（`.sub-layout` 左侧栏目导航 `.sub-side`(`.sub-side-title`+`.sub-menu-item`) + 右侧内容 `.sub-main`(`.content-card`/`.content-title`/`.content-sub`)，内容为虚拟数据，可替换）：
+  - `about.html` 团队概况(richtext 段落)、`research.html` 研究方向(dir-card 方向卡)、`members.html` 团队成员(member-card 网格)
+  - `achievements.html` 科研成果(list-item 列表)、`frontier.html` 学术交流(list-item)、`contact.html` 联系我们(contact-grid+form)、`links.html` 资料下载(dl-item)
 - 所有页面共享同一份头部（`.topbar`+`.navbar`）、移动端侧边抽屉（`.sidebar`）、页脚（`.footer`）与 `scripts/main.js`、`styles/main.css`；当前页对应 `.nav-item`/`.side-item` 加 `active` 高亮，面包屑指向 `index.html`
 - 生成脚本：`/tmp/gen_pages.py`（临时，可据其模板手动编辑各子页面）
 - `styles/main.css`：全部样式；组织顺序 重置 → Token → 工具 → 布局 → 组件 → 响应式（断点统一 1200/900/768/560）

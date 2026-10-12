@@ -1,170 +1,272 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="四川文理学院信息与生物医学交叉创新团队官网，聚焦信息技术与生物医学科交叉研究与人才培养。" />
-    <title>团队成员 - 四川文理学院信息与生物医学交叉创新团队</title>
-    <link rel="stylesheet" href="/styles/main.css" />
-  </head>
-  <body>
-    <!-- 无障碍：跳到主内容 -->
-    <a class="skip-link" href="#main">跳到主内容</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>团队成员 - 四川文理学院信息与生物医学交叉创新团队</title>
+  <meta name="description" content="四川文理学院信息与生物医学交叉创新团队团队成员，聚焦信息技术与生物医学交叉研究。" />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
 
-    <!-- 顶部 Header Banner（深蓝底） -->
-    <header class="topbar">
-      <div class="container topbar-inner">
-        <div class="brand">
-          <span class="brand-badge" aria-hidden="true"></span>
-          <div class="brand-text">
-            <span class="brand-title">四川文理学院</span>
-            <span class="brand-sub">信息与生物医学交叉创新团队</span>
-          </div>
+  <!-- 顶部 Header -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true">医</div>
+        <div class="brand-text">
+          <h1>四川文理学院</h1>
+          <p>信息与生物医学交叉创新团队</p>
         </div>
-
-        <!-- 桌面端搜索框 -->
-        <form class="search" role="search" onsubmit="return false">
-          <button class="search-btn" type="button" aria-label="搜索">
-            <span class="search-btn-icon" aria-hidden="true"></span>
-          </button>
-          <input class="search-input" type="text" placeholder="站内搜索…" aria-label="站内搜索" />
-        </form>
-
-        <!-- 移动端汉堡菜单按钮 -->
-        <button class="hamburger" id="sidebarToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="sidebar">
-          <span class="hamburger-bar" aria-hidden="true"></span>
-          <span class="hamburger-bar" aria-hidden="true"></span>
-          <span class="hamburger-bar" aria-hidden="true"></span>
-        </button>
       </div>
-
-      <!-- 主导航（桌面端） -->
-      <nav class="navbar" aria-label="主导航">
-        <div class="container nav-inner">
-          <ul class="nav-list" id="navList">
-            <li class="nav-item"><a href="index.html">首页</a></li>
-            <li class="nav-item"><a href="about.html">团队概况</a></li>
-            <li class="nav-item"><a href="research.html">研究方向</a></li>
-            <li class="nav-item active"><a href="members.html">团队成员</a></li>
-            <li class="nav-item"><a href="achievements.html">科研成果</a></li>
-            <li class="nav-item"><a href="frontier.html">学术交流</a></li>
-            <li class="nav-item"><a href="contact.html">联系我们</a></li>
-            <li class="nav-item"><a href="links.html">资料下载</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-
-    <!-- 移动端侧边抽屉导航 -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    <aside class="sidebar" id="sidebar" aria-label="侧边导航">
-      <div class="sidebar-head">
-        <span class="sidebar-head-title">菜单导航</span>
-        <button class="sidebar-close" id="sidebarClose" aria-label="关闭菜单">×</button>
-      </div>
-      <nav class="sidebar-nav" aria-label="侧边导航菜单">
-        <ul class="side-menu">
-          <li class="side-item"><a href="index.html">首页</a></li>
-          <li class="side-item">
-            <span class="side-link">
-              <a href="about.html">团队概况</a>
-              <button class="side-toggle" aria-expanded="false" aria-label="展开团队概况子菜单">+</button>
-            </span>
-            <ul class="side-sub">
-              <li><a href="about.html">团队简介</a></li>
-              <li><a href="about.html">组织架构</a></li>
-            </ul>
-          </li>
-          <li class="side-item">
-            <span class="side-link">
-              <a href="research.html">研究方向</a>
-              <button class="side-toggle" aria-expanded="false" aria-label="展开研究方向子菜单">+</button>
-            </span>
-            <ul class="side-sub">
-              <li><a href="research.html">生物医学数据分析</a></li>
-              <li><a href="research.html">医学影像智能处理</a></li>
-              <li><a href="research.html">多组学特征融合</a></li>
-            </ul>
-          </li>
-          <li class="side-item active">
-            <span class="side-link">
-              <a href="members.html">团队成员</a>
-              <button class="side-toggle" aria-expanded="false" aria-label="展开团队成员子菜单">+</button>
-            </span>
-            <ul class="side-sub">
-              <li><a href="members.html">科研骨干</a></li>
-              <li><a href="members.html">在读研究生</a></li>
-            </ul>
-          </li>
-          <li class="side-item">
-            <span class="side-link">
-              <a href="achievements.html">科研成果</a>
-              <button class="side-toggle" aria-expanded="false" aria-label="展开科研成果子菜单">+</button>
-            </span>
-            <ul class="side-sub">
-              <li><a href="achievements.html">代表论文</a></li>
-              <li><a href="achievements.html">科研项目</a></li>
-              <li><a href="achievements.html">专利软著</a></li>
-            </ul>
-          </li>
-          <li class="side-item">
-            <span class="side-link">
-              <a href="frontier.html">学术交流</a>
-              <button class="side-toggle" aria-expanded="false" aria-label="展开学术交流子菜单">+</button>
-            </span>
-            <ul class="side-sub">
-              <li><a href="frontier.html">学术报告</a></li>
-              <li><a href="frontier.html">合作交流</a></li>
-            </ul>
-          </li>
-          <li class="side-item"><a href="contact.html">联系我们</a></li>
-          <li class="side-item"><a href="links.html">资料下载</a></li>
-        </ul>
-      </nav>
-      <form class="sidebar-search" role="search" aria-label="侧边导航搜索" onsubmit="return false">
-        <button class="search-btn" type="button" aria-label="搜索">
-          <span class="search-btn-icon" aria-hidden="true"></span>
-        </button>
-        <input class="search-input" type="text" placeholder="站内搜索…" aria-label="站内搜索" />
+      <form class="search" role="search" action="#" method="get">
+        <input class="search-input" type="search" name="q" placeholder="站内搜索…" aria-label="站内搜索" />
+        <button class="search-btn" type="submit" aria-label="搜索"><span class="search-btn-icon" aria-hidden="true"></span></button>
       </form>
-    </aside>
-    <main id="main">
-      <!-- 面包屑导航 -->
-      <nav class="breadcrumb" aria-label="面包屑导航">
-        <div class="container breadcrumb-inner">
-          <span class="crumb-home" aria-hidden="true">🏠</span>
-          <a href="index.html" class="crumb">首页</a>
-          <span class="crumb-sep" aria-hidden="true">&gt;</span>
-          <span class="crumb active" aria-current="page">团队成员</span>
-        </div>
-      </nav>
+      <button class="hamburger" id="sidebarToggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="sidebar">
+        <span class="hamburger-box" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
+      </button>
+    </div>
+  </header>
 
-      <!-- 页面标题区 -->
-      <section class="page-hero">
-        <div class="container">
-          <h1 class="page-title">团队成员</h1>
-          <p class="page-sub">科研骨干与在读研究生</p>
-        </div>
-      </section>
+  <!-- 桌面端主导航 -->
+  <nav class="navbar" aria-label="主导航">
+    <div class="container navbar-inner">
+      <ul class="nav-list" id="navList">
+        <li class="nav-item"><a href="index.html">首页</a></li>
+        <li class="nav-item"><a href="about.html">团队概况</a></li>
+        <li class="nav-item"><a href="research.html">研究方向</a></li>
+        <li class="nav-item active"><a href="members.html">团队成员</a></li>
+        <li class="nav-item"><a href="achievements.html">科研成果</a></li>
+        <li class="nav-item"><a href="frontier.html">学术交流</a></li>
+        <li class="nav-item"><a href="contact.html">联系我们</a></li>
+        <li class="nav-item"><a href="links.html">资料下载</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      <!-- 占位内容区 -->
-      <div class="container page-body">
-        <div class="placeholder-card">
-          <span class="placeholder-icon" aria-hidden="true">队</span>
-          <h2 class="placeholder-title">团队成员 · 页面建设中</h2>
-          <p class="placeholder-text">本页将展示团队成员信息，包括科研骨干、在读研究生的人员简介与研究方向。</p>
-          <span class="placeholder-tip">此页面为占位内容，可后续替换为真实内容</span>
+  <!-- 移动端侧边抽屉导航 -->
+  <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+  <aside class="sidebar" id="sidebar" aria-hidden="true">
+    <div class="sidebar-head">
+      <span class="sidebar-title">导航菜单</span>
+      <button class="sidebar-close" id="sidebarClose" aria-label="关闭导航菜单">×</button>
+    </div>
+    <nav class="sidebar-nav" aria-label="移动端导航">
+      <ul class="side-menu">
+        <li class="side-item"><a href="index.html">首页</a></li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="about.html">团队概况</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开团队概况子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="about.html">团队简介</a></li>
+            <li><a href="about.html">组织架构</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="research.html">研究方向</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开研究方向子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="research.html">生物医学数据分析</a></li>
+            <li><a href="research.html">医学影像智能处理</a></li>
+            <li><a href="research.html">多组学特征融合</a></li>
+          </ul>
+        </li>
+        <li class="side-item active">
+          <div class="side-link">
+            <a href="members.html">团队成员</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开团队成员子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="members.html">学术带头人</a></li>
+            <li><a href="members.html">科研骨干</a></li>
+            <li><a href="members.html">在读研究生</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="achievements.html">科研成果</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开科研成果子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="achievements.html">代表论文</a></li>
+            <li><a href="achievements.html">科研项目</a></li>
+            <li><a href="achievements.html">专利软著</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="frontier.html">学术交流</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开学术交流子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="frontier.html">学术报告</a></li>
+            <li><a href="frontier.html">会议交流</a></li>
+            <li><a href="frontier.html">合作访问</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="contact.html">联系我们</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开联系我们子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="contact.html">联系方式</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="links.html">资料下载</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开资料下载子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="links.html">常用表格</a></li>
+            <li><a href="links.html">申报材料</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <form class="sidebar-search" role="search" action="#" method="get">
+      <span class="site-icon" aria-hidden="true"></span>
+      <input class="search-input" type="search" name="q" placeholder="站内搜索…" aria-label="站内搜索" />
+    </form>
+  </aside>
+
+  <!-- 面包屑导航 -->
+  <nav class="breadcrumb" aria-label="面包屑导航">
+    <div class="container breadcrumb-inner">
+      <a href="index.html" class="crumb crumb-home">🏠 首页</a>
+      <span class="crumb-sep" aria-hidden="true">›</span>
+      <a href="members.html" class="crumb active" aria-current="page">团队成员</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- 页面标题区 -->
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="page-title">团队成员</h1>
+        <p class="page-sub">汇聚信息技术与生物医学交叉领域的科研力量</p>
+      </div>
+    </section>
+
+    <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
+    <div class="container">
+      <div class="sub-layout">
+      <aside class="sub-side">
+        <h2 class="sub-side-title">团队成员</h2>
+        <ul class="sub-menu">
+          <li class="sub-menu-item"><a href="members.html" class="active">学术带头人</a></li>
+          <li class="sub-menu-item"><a href="members.html">科研骨干</a></li>
+          <li class="sub-menu-item"><a href="members.html">在读研究生</a></li>
+          <li class="sub-menu-item"><a href="members.html">毕业校友</a></li>
+        </ul>
+      </aside>
+        <div class="sub-main">
+<div class="content-card">
+          <h2 class="content-title">学术带头人</h2>
+          <div class="member-grid"><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">王</span>
+            <h3 class="member-name">王建国</h3>
+            <span class="member-role">教授 · 团队负责人</span>
+            <p class="member-info">医学人工智能、生物医学大数据<br>jianguo.wang@scuwl.edu.cn</p>
+          </div></div>
+          <h3 class="content-sub">科研骨干</h3>
+          <div class="member-grid"><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">李</span>
+            <h3 class="member-name">李文静</h3>
+            <span class="member-role">副教授</span>
+            <p class="member-info">医学影像智能处理</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">张</span>
+            <h3 class="member-name">张志强</h3>
+            <span class="member-role">副教授</span>
+            <p class="member-info">多组学数据融合</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">陈</span>
+            <h3 class="member-name">陈晓东</h3>
+            <span class="member-role">副教授</span>
+            <p class="member-info">机器学习与数据挖掘</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">刘</span>
+            <h3 class="member-name">刘雅琴</h3>
+            <span class="member-role">讲师</span>
+            <p class="member-info">生物信息学</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">赵</span>
+            <h3 class="member-name">赵明辉</h3>
+            <span class="member-role">讲师</span>
+            <p class="member-info">深度学习方法</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">孙</span>
+            <h3 class="member-name">孙丽华</h3>
+            <span class="member-role">讲师</span>
+            <p class="member-info">统计建模</p>
+          </div></div>
+          <h3 class="content-sub">在读研究生</h3>
+          <div class="member-grid"><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">周</span>
+            <h3 class="member-name">周子昂</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">医学影像分割</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">吴</span>
+            <h3 class="member-name">吴雨桐</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">多组学整合分析</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">郑</span>
+            <h3 class="member-name">郑浩然</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">药物-靶点预测</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">冯</span>
+            <h3 class="member-name">冯思远</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">电子病历挖掘</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">褚</span>
+            <h3 class="member-name">褚雪梅</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">疾病风险预测</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">卫</span>
+            <h3 class="member-name">卫文博</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">图神经网络</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">蒋</span>
+            <h3 class="member-name">蒋梦琪</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">可解释机器学习</p>
+          </div><div class="member-card">
+            <span class="member-avatar" aria-hidden="true">沈</span>
+            <h3 class="member-name">沈天翊</h3>
+            <span class="member-role">硕士研究生</span>
+            <p class="member-info">医学信号处理</p>
+          </div></div>
+        </div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <!-- 底部版权 -->
-    <footer class="footer">
-      <div class="container footer-inner">
-        <p>版权所有 © 四川文理学院信息与生物医学交叉创新团队　四川省达州市通川区塔石路519号　邮编：635000</p>
-      </div>
-    </footer>
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>版权所有 © 四川文理学院信息与生物医学交叉创新团队　地址：四川省达州市通川区塔石路519号　邮编：635000</p>
+    </div>
+  </footer>
 
-    <script src="/scripts/main.js"></script>
-  </body>
+  <script src="scripts/main.js"></script>
+</body>
 </html>

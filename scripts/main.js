@@ -190,6 +190,30 @@
   }
 
   /* =============================================================
+     占位交互：资料下载 / 在线留言（接入真实功能前的演示提示）
+     ============================================================= */
+  function initPlaceholderActions() {
+    // 资料下载：提示真实下载地址待配置
+    document.querySelectorAll(".dl-btn").forEach(function (btn) {
+      if (btn.dataset.boundDl) return;
+      btn.dataset.boundDl = "1";
+      btn.addEventListener("click", function () {
+        const name = btn.getAttribute("data-name") || "该文件";
+        window.alert("「" + name + "」为占位演示，真实下载地址待配置。");
+      });
+    });
+    // 在线留言：拦截提交，提示待接入后端
+    const form = document.querySelector(".contact-form");
+    if (form && !form.dataset.boundForm) {
+      form.dataset.boundForm = "1";
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        window.alert("留言功能为占位演示，待接入后端接口后启用。");
+      });
+    }
+  }
+
+  /* =============================================================
      当前区块导航高亮（节流）
      ============================================================= */
   function initScrollHighlight() {
@@ -200,6 +224,10 @@
     const navAnchors = Array.prototype.slice.call(
       document.querySelectorAll('#navList a[href^="#"]')
     );
+    // 多页站点（导航为独立页面、无页内锚点）时禁用滚动高亮，
+    // 避免误清除各页面 HTML 中预设的当前栏目 active 状态
+    if (!navAnchors.length) return;
+
     const sidebar = document.getElementById("sidebar");
 
     let ticking = false;
@@ -253,6 +281,7 @@
     initBanner();
     initSidebar();
     initMoreLinks();
+    initPlaceholderActions();
     initScrollHighlight();
   }
 
