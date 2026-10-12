@@ -11,16 +11,18 @@
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
   <body>
-    <!-- 顶部栏 -->
+    <!-- 顶部 Header Banner（深蓝底） -->
     <header class="topbar">
       <div class="container topbar-inner">
         <div class="brand">
           <span class="brand-badge" aria-hidden="true"></span>
           <div class="brand-text">
-            <h1 class="brand-title">四川文理学院</h1>
+            <span class="brand-title">四川文理学院</span>
             <span class="brand-sub">信息与生物医学交叉创新团队</span>
           </div>
         </div>
+
+        <!-- 桌面端搜索框 -->
         <form class="search" role="search" onsubmit="return false">
           <button class="search-btn" type="button" aria-label="搜索">
             <span class="search-btn-icon" aria-hidden="true"></span>
@@ -32,28 +34,110 @@
             aria-label="站内搜索"
           />
         </form>
+
+        <!-- 移动端汉堡菜单按钮 -->
+        <button
+          class="hamburger"
+          id="sidebarToggle"
+          aria-label="打开菜单"
+          aria-expanded="false"
+        >
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
       </div>
+
+      <!-- 主导航（桌面端） -->
+      <nav class="navbar">
+        <div class="container nav-inner">
+          <ul class="nav-list" id="navList">
+            <li class="nav-item active"><a href="#home">首页</a></li>
+            <li class="nav-item"><a href="#about">团队概况</a></li>
+            <li class="nav-item"><a href="#research">研究方向</a></li>
+            <li class="nav-item"><a href="#members">团队成员</a></li>
+            <li class="nav-item"><a href="#achievements">科研成果</a></li>
+            <li class="nav-item"><a href="#frontier">学术交流</a></li>
+            <li class="nav-item"><a href="#contact">联系我们</a></li>
+            <li class="nav-item"><a href="#links">资料下载</a></li>
+          </ul>
+        </div>
+      </nav>
     </header>
 
-    <!-- 主导航 -->
-    <nav class="navbar">
-      <div class="container nav-inner">
-        <button class="nav-toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false">
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-        </button>
-        <ul class="nav-list" id="navList">
-          <li class="nav-item active"><a href="#home">首页</a></li>
-          <li class="nav-item"><a href="#about">团队概况</a></li>
-          <li class="nav-item"><a href="#research">研究方向</a></li>
-          <li class="nav-item"><a href="#members">团队成员</a></li>
-          <li class="nav-item"><a href="#achievements">科研成果</a></li>
-          <li class="nav-item"><a href="#frontier">学术交流</a></li>
-          <li class="nav-item"><a href="#contact">联系我们</a></li>
-        </ul>
+    <!-- 移动端侧边抽屉导航 -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar" aria-label="侧边导航">
+      <div class="sidebar-head">
+        <span class="sidebar-head-title">菜单导航</span>
+        <button class="sidebar-close" id="sidebarClose" aria-label="关闭菜单">×</button>
       </div>
-    </nav>
+      <nav class="sidebar-nav">
+        <ul class="side-menu">
+          <li class="side-item active"><a href="#home">首页</a></li>
+          <li class="side-item">
+            <span class="side-link">
+              <a href="#about">团队概况</a>
+              <button class="side-toggle" aria-expanded="false">+</button>
+            </span>
+            <ul class="side-sub">
+              <li><a href="#about">团队简介</a></li>
+              <li><a href="#about">组织架构</a></li>
+            </ul>
+          </li>
+          <li class="side-item">
+            <span class="side-link">
+              <a href="#research">研究方向</a>
+              <button class="side-toggle" aria-expanded="false">+</button>
+            </span>
+            <ul class="side-sub">
+              <li><a href="#research">生物医学数据分析</a></li>
+              <li><a href="#research">医学影像智能处理</a></li>
+              <li><a href="#research">多组学特征融合</a></li>
+            </ul>
+          </li>
+          <li class="side-item">
+            <span class="side-link">
+              <a href="#members">团队成员</a>
+              <button class="side-toggle" aria-expanded="false">+</button>
+            </span>
+            <ul class="side-sub">
+              <li><a href="#members">科研骨干</a></li>
+              <li><a href="#members">在读研究生</a></li>
+            </ul>
+          </li>
+          <li class="side-item">
+            <span class="side-link">
+              <a href="#achievements">科研成果</a>
+              <button class="side-toggle" aria-expanded="false">+</button>
+            </span>
+            <ul class="side-sub">
+              <li><a href="#achievements">代表论文</a></li>
+              <li><a href="#achievements">科研项目</a></li>
+              <li><a href="#achievements">专利软著</a></li>
+            </ul>
+          </li>
+          <li class="side-item">
+            <span class="side-link">
+              <a href="#frontier">学术交流</a>
+              <button class="side-toggle" aria-expanded="false">+</button>
+            </span>
+            <ul class="side-sub">
+              <li><a href="#frontier">学术报告</a></li>
+              <li><a href="#frontier">合作交流</a></li>
+            </ul>
+          </li>
+          <li class="side-item"><a href="#contact">联系我们</a></li>
+          <li class="side-item"><a href="#links">资料下载</a></li>
+        </ul>
+      </nav>
+      <form class="sidebar-search" role="search" onsubmit="return false">
+        <button class="search-btn" type="button" aria-label="搜索">
+          <span class="search-btn-icon" aria-hidden="true"></span>
+        </button>
+        <input class="search-input" type="text" placeholder="站内搜索…" aria-label="站内搜索" />
+      </form>
+    </aside>
 
     <main id="home">
       <!-- 全宽轮播 Banner -->
@@ -103,6 +187,16 @@
         <div class="banner-dots" id="bannerDots" role="tablist" aria-label="轮播页码"></div>
       </section>
 
+      <!-- 面包屑导航 -->
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <div class="container breadcrumb-inner">
+          <span class="crumb-home">🏠</span>
+          <a href="#home" class="crumb active">首页</a>
+          <span class="crumb-sep">&gt;</span>
+          <span class="crumb" id="crumbCurrent">正文</span>
+        </div>
+      </nav>
+
       <!-- 中间两栏内容区 -->
       <div class="container main-col">
         <div class="two-col">
@@ -110,7 +204,7 @@
           <section class="col-academic" id="frontier">
             <div class="block-head">
               <h3 class="block-title">学术前沿</h3>
-              <a href="#" class="block-more">MORE +</a>
+              <a href="#" class="block-more js-more" data-target="frontier">MORE +</a>
             </div>
             <div class="acad-list">
               <a href="#" class="acad-item">
@@ -148,7 +242,7 @@
           <section class="col-news" id="news">
             <div class="block-head">
               <h3 class="block-title">新闻公告</h3>
-              <a href="#" class="block-more">MORE +</a>
+              <a href="#" class="block-more js-more" data-target="news">MORE +</a>
             </div>
             <div class="news-list">
               <article class="news-item">

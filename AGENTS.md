@@ -20,10 +20,15 @@
 
 ## 关键交互
 - 轮播图：`#bannerViewport` 内 `.banner-slide`，原生 JS 自动轮播间隔 4s，鼠标悬停暂停，仅底部指示器（无左右箭头）
-- 手机导航：≤768px 折叠为汉堡菜单；`#navToggle` 切换 `#navList.open`
+- 顶部 Header：深蓝底，桌面端左 logo+名称、右侧搜索框，桌面端下方为 `.navbar` 横向导航
+- 移动端（≤768px）：桌面搜索框与 `.navbar` 隐藏，显示顶部 `.hamburger`（`#sidebarToggle`）点击后从左侧滑出侧边抽屉 `#sidebar`
+  - 侧边抽屉 `#sidebar`：`.side-item` 菜单项，含 `.side-sub` 可展开子菜单（`.side-toggle` "+/−"切换）；底部 `.sidebar-search` 搜索框；遮罩 `#sidebarOverlay` 点击关闭；打开时 `body.menu-open`
+  - 菜单项：首页/团队概况/研究方向/团队成员/科研成果/学术交流/联系我们/资料下载
+- 面包屑导航：`.breadcrumb`（`.crumb`）位于 Banner 之下、内容区之上，首页默认「🏠 首页」
+- MORE+：`.block-more.js-more`，`data-target` 指定滚动目标区块，点击平滑滚动到对应区域（后续可替换为真实列表页地址）
 - 导航高亮：滚动时根据当前命中的 `#section` 区段高亮 `#navList` 内 `.nav-item`
   - 存在的 section id：`home` `about` `research` `members` `achievements` `frontier` `news` `contact` `links`
-  - 其中 `frontier`=学术前沿、`news`=新闻公告、`contact`=联系我们、`links`=快速通道；`about/research/members/achievements` 无独立 DOM 容器，锚点落地于整站 top/main
+  - 其中 `frontier`=学术前沿、`news`=新闻公告、`contact`=联系我们、`links`=快速通道/资料下载；`about/research/members/achievements` 无独立 DOM 容器，锚点落地于整站 top/main
 
 ## 内容区块结构（替换占位约定）
 - 轮播 Banner：`#bannerViewport` 内 `.banner-slide`，占位图为 Unsplash 学术/科研大图（实为 `<img>` 的 `.banner-bg`），替换时改 `src`

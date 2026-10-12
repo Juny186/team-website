@@ -1,6 +1,6 @@
 /* =============================================================
    四川文理学院 信息与生物医学交叉创新团队
-   原生 JS：轮播 + 汉堡菜单 + 导航高亮
+   原生 JS：轮播 + 移动端侧边抽屉 + 导航高亮 + MORE 占位跳转
    ============================================================= */
 (function () {
   "use strict";
@@ -18,7 +18,6 @@
     var timer = null;
     var INTERVAL = 4000; // 自动轮播间隔 4s
 
-    // 动态生成页码指示器
     slides.forEach(function (_, i) {
       var dot = document.createElement("button");
       dot.type = "button";
@@ -59,7 +58,6 @@
       }
     }
 
-    // 鼠标悬停暂停自动播放
     bannerViewport.addEventListener("mouseenter", stop);
     bannerViewport.addEventListener("mouseleave", restart);
 
@@ -67,71 +65,96 @@
     restart();
   }
 
-  /* ---------- 手机端汉堡菜单 ---------- */
-  var navToggle = document.getElementById("navToggle");
-  var navList = document.getElementById("navList");
+  /* ---------- 移动端侧边抽屉导航 ---------- */
+  var sidebar = document.getElementById("sidebar");
+  var sidebarOverlay = document.getElementById("sidebarOverlay");
+  var sidebarToggle = document.getElementById("sidebarToggle");
+  var sidebarClose = document.getElementById("sidebarClose");
 
-  if (navToggle && navList) {
-    navToggle.addEventListener("click", function () {
-      var open = navList.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-      navToggle.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+  if (sidebar && sidebarOverlay) {
+    function openSidebar() {
+      sidebar.classList.add("open");
+      sidebarOverlay.classList.add("show");
+      document.body.classList.add("menu-open");
+      if (sidebarToggle) sidebarToggle.setAttribute("aria-expanded", "true");
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove("open");
+      sidebarOverlay.classList.remove("show");
+      document.body.classList.remove("menu-open");
+      if (sidebarToggle) sidebarToggle.setAttribute("aria-expanded", "false");
+    }
+
+    if (sidebarToggle) sidebarToggle.addEventListener("click", openSidebar);
+    if (sidebarClose) sidebarClose.addEventListener("click", closeSidebar);
+    sidebarOverlay.addEventListener("click", closeSidebar);
+
+    // 点击任一侧边链接后自动收起（首页类锚点跳转）
+    sidebar.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener("click", closeSidebar);
     });
 
-    // 点击菜单项后自动收起
-    navList.addEventListener("click", function (e) {
-      if (e.target.closest(".nav-item a") && navList.classList.contains("open")) {
-        navList.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        navToggle.setAttribute("aria-label", "打开菜单");
-      }
+    /* 子菜单展开/收起 */
+    sidebar.querySelectorAll(".side-toggle").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        var sub = btn.closest(".side-item").querySelector(".side-sub");
+        var expanded = btn.getAttribute("aria-expanded") === "true";
+        if (sub) sub.classList.toggle("open", !expanded);
+        btn.setAttribute("aria-expanded", expanded ? "false" : "true");
+        btn.classList.toggle("expanded", !expanded);
+        btn.textContent = expanded ? "+" : "−";
+      });
+    });
+
+    // ESC 关闭
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeSidebar();
     });
   }
 
-  /* ---------- 当前区块导航高亮 ---------- */
-  var sections = [
-    { id: "home", link: null },
-    { id: "about", link: null },
-    { id: "research", link: null },
-    { id: "members", link: null },
-    { id: "achievements", link: null },
-    { id: "frontier", link: null },
-    { id: "contact", link: null }
-  ];
-
-  var navAnchors = Array.prototype.slice.call(
-    document.querySelectorAll('.nav-item a[href^="#"]')
-  );
-  navAnchors.forEach(function (a) {
-    var map = sections.filter(function (s) {
-      return a.getAttribute("href") === "#" + s.id;
+  /* ---------- MORE + 跳转占位 ---------- */
+  document.querySelectorAll(".js-more").forEach(function (el) {
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      var target = el.getAttribute("data-target");
+      // 占位：根据板块滚动到对应区块；后续替换为真实列表页地址
+      if (target && document.getElementById(target)) {
+        document.getElementById(target).scrollIntoView({ behavior: "smooth" });
+      }
     });
-    if (map.length) map[0].link = a.parentElement;
   });
+
+  /* ---------- 当前区块导航高亮 ---------- */
+  var sections = ["home", "about", "research", "members", "achievements", "frontier", "news", "contact", "links"];
+  var navAnchors = Array.prototype.slice.call(
+    document.querySelectorAll('#navList a[href^="#"]')
+  );
 
   function onScroll() {
     var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-    var current = sections[0].id;
+    var current = "home";
 
-    sections.forEach(function (s) {
-      var el = document.getElementById(s.id);
+    sections.forEach(function (id) {
+      var el = document.getElementById(id);
       if (!el) return;
       var rect = el.getBoundingClientRect();
-      // 距离顶部较近的区块视为当前
-      if (rect.top <= 160) {
-        current = s.id;
-      }
+      if (rect.top <= 160) current = id;
     });
 
     navAnchors.forEach(function (a) {
-      a.parentElement.classList.remove("active");
+      var match = a.getAttribute("href") === "#" + current;
+      a.parentElement.classList.toggle("active", match);
     });
-    var matched = sections.filter(function (s) {
-      return s.id === current;
-    });
-    if (matched.length && matched[0].link) {
-      matched[0].link.classList.add("active");
-    }
+
+    // 同步侧边菜单高亮
+    sidebar &&
+      sidebar.querySelectorAll(".side-item").forEach(function (item) {
+        var link = item.querySelector("a[href^='#']");
+        var href = link ? link.getAttribute("href") : "";
+        item.classList.toggle("active", href === "#" + current);
+      });
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });
