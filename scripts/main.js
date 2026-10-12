@@ -85,6 +85,22 @@
       });
     }
 
+    // 左右箭头主动切换（默认仍自动播放，操作后重置计时）
+    const prevBtn = document.getElementById("bannerPrev");
+    const nextBtn = document.getElementById("bannerNext");
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        goTo(current - 1);
+        restart();
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        goTo(current + 1);
+        restart();
+      });
+    }
+
     // 鼠标悬停暂停（非暂停状态下才允许自动恢复）
     viewport.addEventListener("mouseenter", stop);
     viewport.addEventListener("mouseleave", function () {

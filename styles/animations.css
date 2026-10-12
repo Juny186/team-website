@@ -1,0 +1,224 @@
+/* =============================================================
+   动态叙事与交互 动效层（animations.css）
+   说明：
+   - 所有“渐入”初始隐藏态（.reveal-init）只由 JS 动态添加，
+     无 JS 时元素保持 opacity:1，保证零白屏、秒开降级。
+   - 颜色/时长/缓动统一引用 :root token，风格与主站一致。
+   ============================================================= */
+
+/* ---------- 1. 顶部全局滚动进度条 ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 4px; /* h-1 */
+  width: 0%;
+  background: linear-gradient(90deg, #22d3ee 0%, #34d399 100%); /* from-cyan-400 to-emerald-400 */
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.5);
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ---------- 2. 首屏打字机叙事带 ---------- */
+.typewriter-band {
+  background: linear-gradient(180deg, var(--color-primary-800) 0%, var(--color-primary-900) 100%);
+  color: #fff;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-primary-700);
+}
+.typewriter-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: 1.6em;
+}
+.typewriter-prefix {
+  font-size: var(--text-lg);
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 1px;
+}
+.typewriter-text {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 2px;
+  min-width: 2em;
+}
+/* 呼吸感闪烁光标 */
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.15em;
+  background: #22d3ee;
+  transform: translateY(0.2em);
+  border-radius: var(--radius-sm);
+  animation: cursor-breathe 1s ease-in-out infinite;
+}
+@keyframes cursor-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
+/* ---------- 3. 视差卡片渐入（fade-slide-up） ---------- */
+/* 初始态仅 JS 添加；无 JS 时元素默认可见 */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(26px);
+  will-change: opacity, transform;
+}
+.reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- 4. 轮播左右箭头 ---------- */
+.banner-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: rgba(0, 0, 0, 0.32);
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.85;
+  transition:
+    background var(--dur-base) var(--ease),
+    opacity var(--dur-base) var(--ease),
+    transform var(--dur-base) var(--ease);
+}
+.banner-arrow:hover {
+  background: var(--color-primary);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.06);
+}
+.banner-arrow:active { transform: translateY(-50%) scale(0.96); }
+.banner-arrow:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.banner-prev { left: 18px; }
+.banner-next { right: 18px; }
+.banner-arrow .arrow-ico { display: block; margin-top: -3px; }
+
+/* ---------- 5. Canvas 彩带粒子层 ---------- */
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- 6. 气泡反馈 ---------- */
+.feedback-bubble {
+  position: fixed;
+  z-index: 9999;
+  transform: translate(-50%, -100%);
+  background: var(--color-neutral-900);
+  color: #fff;
+  font-size: var(--text-sm);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: bubble-pop 1.4s var(--ease) forwards;
+}
+.feedback-bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--color-neutral-900);
+  border-bottom: 0;
+}
+@keyframes bubble-pop {
+  0% { opacity: 0; transform: translate(-50%, -90%) scale(0.8); }
+  12% { opacity: 1; transform: translate(-50%, -100%) scale(1.04); }
+  20% { transform: translate(-50%, -100%) scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -120%); }
+}
+
+/* ---------- 7. 联系我们 动作按钮 ---------- */
+.contact-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.action-btn {
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: var(--text-sm);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    background var(--dur-base) var(--ease),
+    transform var(--dur-fast) var(--ease),
+    border-color var(--dur-base) var(--ease);
+}
+.action-btn:hover { background: rgba(255, 255, 255, 0.24); border-color: #fff; }
+.action-btn:active { transform: scale(0.96); }
+.action-btn:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.action-btn-solid {
+  background: #fff;
+  color: var(--color-primary);
+  border-color: #fff;
+  font-weight: 600;
+}
+.action-btn-solid:hover { background: var(--color-neutral-100); }
+
+/* 浅色卡片（如 contact 内容卡）内的动作按钮改为主色描边 */
+.content-card .action-btn {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: #fff;
+}
+.content-card .action-btn:hover { background: var(--color-primary-50); }
+.content-card .action-btn-solid {
+  background: var(--color-primary);
+  color: #fff;
+}
+.content-card .action-btn-solid:hover { background: var(--color-primary-700); }
+.content-card .contact-actions { justify-content: flex-start; margin-top: 16px; }
+
+/* ---------- 降级：尊重减少动效偏好 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { transition: none; }
+  .typewriter-cursor { animation: none; }
+  .reveal-init, .reveal-in { transition: none; }
+  .banner-arrow, .action-btn { transition: none; }
+  .feedback-bubble { animation-duration: 0.01s; }
+}
+
+/* ---------- 移动端：箭头与打字机尺寸微调 ---------- */
+@media (max-width: 768px) {
+  .banner-arrow { width: 40px; height: 40px; font-size: 24px; }
+  .banner-prev { left: 10px; }
+  .banner-next { right: 10px; }
+  .typewriter-text { font-size: var(--text-lg); }
+  .contact-actions { justify-content: center; }
+}

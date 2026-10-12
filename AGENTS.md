@@ -17,7 +17,10 @@
 - 所有页面共享同一份头部（`.topbar`+`.navbar`）、移动端侧边抽屉（`.sidebar`）、页脚（`.footer`）与 `scripts/main.js`、`styles/main.css`；当前页对应 `.nav-item`/`.side-item` 加 `active` 高亮，面包屑指向 `index.html`
 - 生成脚本：`/tmp/gen_pages.py`（临时，可据其模板手动编辑各子页面）
 - `styles/main.css`：全部样式；组织顺序 重置 → Token → 工具 → 布局 → 组件 → 响应式（断点统一 1200/900/768/560）
-- `scripts/main.js`：原生 JS（IIFE + const/let），含轮播图、侧边抽屉、导航高亮、MORE+、暂停控制、rAF 节流（对无轮播/无锚点 section 的子页面均已空值保护）
+- `styles/animations.css`：动效层（滚动进度条/打字机/fade-slide-up 渐入/轮播箭头/彩带 canvas/气泡/动作按钮），降级友好（`.reveal-init` 仅 JS 添加，无 JS 不白屏）
+- `scripts/main.js`：原生 JS（IIFE + const/let），含轮播图（自动播放+左右箭头+暂停+指示器）、侧边抽屉、导航高亮、MORE+、rAF 节流（对无轮播/无锚点 section 的子页面均已空值保护）
+- `scripts/animations.js`：原生动效引擎（IIFE），含滚动进度条、打字机、IntersectionObserver 渐入、Canvas 彩带粒子、复制邮箱/打招呼气泡；自动注入进度条、自动识别 `.news-item/.member-card/.content-card` 等卡片渐入，尊重 `prefers-reduced-motion`
+- 引入 Tailwind CDN（`corePlugins.preflight:false`，置 body 末尾不阻塞首屏；站点栅格仍由本地 CSS 保证，Tailwind 仅作工具类增强）
 - `DESIGN.md`：设计规范（Token 体系 / 组件规范 / A11y / 性能 / 禁忌）
 
 ## 运行命令
@@ -25,7 +28,7 @@
 - 静态站无构建脚本，无 lint / tsc
 
 ## 关键交互
-- 轮播图：`#bannerViewport` 内 `.banner-slide`，原生 JS 自动轮播间隔 4s，鼠标悬停暂停，仅底部指示器（无左右箭头）
+- 轮播图：`#bannerViewport` 内 `.banner-slide`，原生 JS 自动轮播间隔 4s，鼠标悬停暂停，左右箭头 `#bannerPrev/#bannerNext` 主动切换 + 底部指示器 + 暂停按钮
 - 顶部 Header：深蓝底，桌面端左 logo+名称、右侧搜索框，桌面端下方为 `.navbar` 横向导航
 - 移动端（≤768px）：桌面搜索框与 `.navbar` 隐藏，显示顶部 `.hamburger`（`#sidebarToggle`）点击后从左侧滑出侧边抽屉 `#sidebar`
   - 侧边抽屉 `#sidebar`：`.side-item` 菜单项，含 `.side-sub` 可展开子菜单（`.side-toggle` "+/−"切换）；底部 `.sidebar-search` 搜索框；遮罩 `#sidebarOverlay` 点击关闭；打开时 `body.menu-open`

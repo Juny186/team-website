@@ -6,6 +6,7 @@
   <title>联系我们 - 四川文理学院信息与生物医学交叉创新团队</title>
   <meta name="description" content="四川文理学院信息与生物医学交叉创新团队联系我们，聚焦信息技术与生物医学交叉研究。" />
   <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/animations.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
@@ -191,6 +192,10 @@
               <div><h4>联系电话</h4><p>0818-2790000（工作日 9:00–17:00）</p></div>
             </div>
           </div>
+          <div class="contact-actions">
+            <button class="action-btn action-btn-solid" id="copyEmailBtn" type="button" data-email="ibic@scuwl.edu.cn">复制邮箱</button>
+            <button class="action-btn" id="sayHiBtn" type="button">打招呼</button>
+          </div>
           <div class="map-placeholder" id="map">团队地理位置示意图占位（可替换为地图 / 校园位置图）</div>
         </div>
         <div class="content-card" id="msg">
@@ -230,5 +235,10 @@
   </footer>
 
   <script src="scripts/main.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (window.tailwind) { tailwind.config = { corePlugins: { preflight: false } }; }
+  </script>
+  <script src="scripts/animations.js"></script>
 </body>
 </html>

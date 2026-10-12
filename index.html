@@ -9,6 +9,7 @@
     />
     <title>四川文理学院信息与生物医学交叉创新团队</title>
     <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/animations.css" />
   </head>
   <body>
     <!-- 无障碍：跳到主内容 -->
@@ -253,6 +254,13 @@
         >
           ⏸
         </button>
+        <!-- 左右切换箭头（主动交互） -->
+        <button class="banner-arrow banner-prev" id="bannerPrev" type="button" aria-label="上一张">
+          <span class="arrow-ico" aria-hidden="true">‹</span>
+        </button>
+        <button class="banner-arrow banner-next" id="bannerNext" type="button" aria-label="下一张">
+          <span class="arrow-ico" aria-hidden="true">›</span>
+        </button>
         <!-- 底部指示器 -->
         <div
           class="banner-dots"
@@ -260,6 +268,15 @@
           role="tablist"
           aria-label="轮播页码"
         ></div>
+      </section>
+
+      <!-- 首屏打字机叙事带 -->
+      <section class="typewriter-band" aria-label="团队定位">
+        <div class="container typewriter-inner">
+          <span class="typewriter-prefix">我们专注</span>
+          <span class="typewriter-text" id="typewriterText" aria-live="polite"></span>
+          <span class="typewriter-cursor" aria-hidden="true"></span>
+        </div>
       </section>
 
       <!-- 面包屑导航 -->
@@ -410,6 +427,19 @@
               <span class="meta-val">0818-2790000</span>
             </li>
           </ul>
+          <div class="contact-actions">
+            <button
+              class="action-btn action-btn-solid"
+              id="copyEmailBtn"
+              type="button"
+              data-email="team@scwl.edu.cn"
+            >
+              复制邮箱
+            </button>
+            <button class="action-btn" id="sayHiBtn" type="button">
+              打招呼
+            </button>
+          </div>
         </section>
       </div>
 
@@ -439,5 +469,14 @@
     </footer>
 
     <script src="/scripts/main.js"></script>
+    <!-- Tailwind CSS（工具类库；preflight 关闭以保护现有样式，置底不阻塞首屏） -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      if (window.tailwind) {
+        tailwind.config = { corePlugins: { preflight: false } };
+      }
+    </script>
+    <!-- 动态叙事动效引擎 -->
+    <script src="/scripts/animations.js"></script>
   </body>
 </html>
