@@ -14,8 +14,8 @@
   z-index: 1000;
   height: 4px; /* h-1 */
   width: 0%;
-  background: linear-gradient(90deg, #22d3ee 0%, #34d399 100%); /* from-cyan-400 to-emerald-400 */
-  box-shadow: 0 0 6px rgba(34, 211, 238, 0.5);
+  background: linear-gradient(90deg, var(--color-primary-400) 0%, var(--color-primary-700) 100%);
+  box-shadow: 0 0 6px rgba(26, 74, 122, 0.35);
   transition: width 0.08s linear;
   pointer-events: none;
 }
@@ -37,7 +37,7 @@
 }
 /* 提示符（对齐参考站 »） */
 .typewriter-prompt {
-  color: #06b6d4;
+  color: var(--color-primary-500);
   font-size: clamp(22px, 3.4vw, 32px);
   font-weight: 800;
   line-height: 1;
@@ -61,7 +61,7 @@
   display: inline-block;
   width: 3px;
   height: 1.15em;
-  background: #06b6d4;
+  background: var(--color-primary-600);
   transform: translateY(0.2em);
   border-radius: var(--radius-sm);
   animation: cursor-breathe 1s step-end infinite;

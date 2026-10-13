@@ -10,8 +10,8 @@
     <title>四川文理学院信息与生物医学交叉创新团队</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%231a4a7a%22/%3E%3Cpath d=%22M17 17 L47 47 M47 17 L17 47%22 stroke=%22%23fff%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3C/svg%3E" />
 
-    <link rel="stylesheet" href="./styles/main.css?v=202610122315" />
-    <link rel="stylesheet" href="./styles/animations.css?v=202610122315" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610140300" />
+    <link rel="stylesheet" href="./styles/animations.css?v=202610140300" />
   </head>
   <body>
     <!-- 无障碍：跳到主内容 -->
@@ -169,7 +169,7 @@
           <article class="banner-slide active" role="group" aria-roledescription="幻灯片">
             <img
               class="banner-bg"
-              src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1920&q=80"
+              src="./assets/banner/b1.jpg"
               alt="生物医学科研场景"
               width="1920"
               height="600"
@@ -185,7 +185,7 @@
           <article class="banner-slide" role="group" aria-roledescription="幻灯片">
             <img
               class="banner-bg"
-              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1920&q=80"
+              src="./assets/banner/b2.jpg"
               alt="数据分析科研场景"
               width="1920"
               height="600"
@@ -201,7 +201,7 @@
           <article class="banner-slide" role="group" aria-roledescription="幻灯片">
             <img
               class="banner-bg"
-              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1920&q=80"
+              src="./assets/banner/b3.jpg"
               alt="实验研究场景"
               width="1920"
               height="600"
@@ -217,7 +217,7 @@
           <article class="banner-slide" role="group" aria-roledescription="幻灯片">
             <img
               class="banner-bg"
-              src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=1920&q=80"
+              src="./assets/banner/b4.jpg"
               alt="学术研究场景"
               width="1920"
               height="600"
@@ -233,7 +233,7 @@
           <article class="banner-slide" role="group" aria-roledescription="幻灯片">
             <img
               class="banner-bg"
-              src="https://images.unsplash.com/photo-1550223640-23097fc71cb2?auto=format&fit=crop&w=1920&q=80"
+              src="./assets/banner/b5.jpg"
               alt="计算机与生物信息场景"
               width="1920"
               height="600"
@@ -247,15 +247,6 @@
             </div>
           </article>
         </div>
-        <!-- 暂停/播放按钮（键盘可达） -->
-        <button
-          class="banner-pause"
-          id="bannerPause"
-          type="button"
-          aria-label="暂停轮播"
-        >
-          ⏸
-        </button>
         <!-- 左右切换箭头（主动交互） -->
         <button class="banner-arrow banner-prev" id="bannerPrev" type="button" aria-label="上一张">
           <span class="arrow-ico" aria-hidden="true">‹</span>
@@ -282,10 +273,36 @@
         </div>
       </section>
 
+      <!-- 团队关键数据统计带 -->
+      <section class="stats-band" aria-label="团队关键数据">
+        <div class="container">
+          <ul class="stats-grid">
+            <li class="stat-item">
+              <span class="stat-num"><span data-count="30">0</span><span class="stat-plus">+</span></span>
+              <span class="stat-label">发表学术论文</span>
+            </li>
+            <li class="stat-item">
+              <span class="stat-num"><span data-count="12">0</span><span class="stat-plus">+</span></span>
+              <span class="stat-label">在研科研项目</span>
+            </li>
+            <li class="stat-item">
+              <span class="stat-num"><span data-count="20">0</span><span class="stat-plus">+</span></span>
+              <span class="stat-label">团队成员</span>
+            </li>
+            <li class="stat-item">
+              <span class="stat-num"><span data-count="8">0</span><span class="stat-plus">+</span></span>
+              <span class="stat-label">专利与软著</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <!-- 面包屑导航 -->
       <nav class="breadcrumb" aria-label="面包屑导航">
         <div class="container breadcrumb-inner">
-          <span class="crumb-home" aria-hidden="true">🏠</span>
+          <span class="crumb-home" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+          </span>
           <a href="index.html" class="crumb active" aria-current="page">首页</a>
           <span class="crumb-sep" aria-hidden="true">&gt;</span>
           <span class="crumb" id="crumbCurrent">正文</span>
@@ -471,15 +488,8 @@
       </div>
     </footer>
 
-    <script src="./scripts/main.js?v=202610122315"></script>
-    <!-- Tailwind CSS（工具类库；preflight 关闭以保护现有样式，置底不阻塞首屏） -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      if (window.tailwind) {
-        tailwind.config = { corePlugins: { preflight: false } };
-      }
-    </script>
+    <script src="./scripts/main.js?v=202610140300"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610122315"></script>
+    <script src="./scripts/animations.js?v=202610140300"></script>
   </body>
 </html>

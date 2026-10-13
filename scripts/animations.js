@@ -123,6 +123,7 @@
       ".list-item",
       ".dl-item",
       ".contact-item",
+      ".stat-item",
     ];
     const nodes = [];
     SELECTORS.forEach(function (sel) {
@@ -379,6 +380,47 @@
   }
 
   /* =============================================================
+     5. 数字滚动（数据统计带 [data-count]）
+     ============================================================= */
+  function initCountUp() {
+    const els = Array.prototype.slice.call(
+      document.querySelectorAll("[data-count]")
+    );
+    if (!els.length) return;
+    if (prefersReducedMotion) {
+      els.forEach(function (el) {
+        el.textContent = el.getAttribute("data-count");
+      });
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          io.unobserve(el);
+          const target = parseInt(el.getAttribute("data-count"), 10) || 0;
+          const dur = 1400;
+          let t0 = null;
+          function step(t) {
+            if (t0 === null) t0 = t;
+            const p = Math.min((t - t0) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased);
+            if (p < 1) window.requestAnimationFrame(step);
+          }
+          window.requestAnimationFrame(step);
+        });
+      },
+      { threshold: 0.4 }
+    );
+    els.forEach(function (el) {
+      io.observe(el);
+    });
+  }
+
+  /* =============================================================
      启动
      ============================================================= */
   function init() {
@@ -387,6 +429,7 @@
     initReveal();
     initContactActions();
     initCustomCursor();
+    initCountUp();
   }
 
   if (document.readyState === "loading") {

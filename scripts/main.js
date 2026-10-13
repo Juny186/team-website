@@ -12,7 +12,6 @@
   function initBanner() {
     const viewport = document.getElementById("bannerViewport");
     const dotsWrap = document.getElementById("bannerDots");
-    const pauseBtn = document.getElementById("bannerPause");
 
     if (!viewport || !dotsWrap) return;
 
@@ -24,7 +23,6 @@
 
     let current = 0;
     let timer = null;
-    let paused = false;
     const INTERVAL = 4000; // 自动轮播间隔 4s
 
     // 生成底部指示器（button 可聚焦，满足键盘可达）
@@ -63,7 +61,6 @@
 
     function restart() {
       stop();
-      if (paused) return;
       timer = window.setInterval(next, INTERVAL);
     }
 
@@ -72,17 +69,6 @@
         window.clearInterval(timer);
         timer = null;
       }
-    }
-
-    // 暂停/播放控制
-    if (pauseBtn) {
-      pauseBtn.addEventListener("click", function () {
-        paused = !paused;
-        pauseBtn.setAttribute("aria-label", paused ? "继续播放轮播" : "暂停轮播");
-        pauseBtn.textContent = paused ? "▶" : "⏸";
-        if (paused) stop();
-        else restart();
-      });
     }
 
     // 左右箭头主动切换（默认仍自动播放，操作后重置计时）
@@ -101,16 +87,14 @@
       });
     }
 
-    // 鼠标悬停暂停（非暂停状态下才允许自动恢复）
+    // 鼠标悬停暂停（离开后自动恢复播放）
     viewport.addEventListener("mouseenter", stop);
-    viewport.addEventListener("mouseleave", function () {
-      if (!paused) restart();
-    });
+    viewport.addEventListener("mouseleave", restart);
 
     // 标签页可见性变化时避免后台空转
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) stop();
-      else if (!paused) restart();
+      else restart();
     });
 
     goTo(0);
@@ -291,6 +275,36 @@
   }
 
   /* =============================================================
+     返回顶部按钮（全站通用）
+     ============================================================= */
+  function initBackTop() {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "back-top";
+    btn.setAttribute("aria-label", "返回顶部");
+    btn.title = "返回顶部";
+    btn.innerHTML = '<span class="back-top-arrow" aria-hidden="true"></span>';
+    document.body.appendChild(btn);
+
+    let visible = false;
+    window.addEventListener(
+      "scroll",
+      function () {
+        const show = (window.pageYOffset || 0) > 480;
+        if (show !== visible) {
+          visible = show;
+          btn.classList.toggle("show", visible);
+        }
+      },
+      { passive: true }
+    );
+
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  /* =============================================================
      初始化（DOM 就绪后执行）
      ============================================================= */
   function init() {
@@ -299,6 +313,7 @@
     initMoreLinks();
     initPlaceholderActions();
     initScrollHighlight();
+    initBackTop();
   }
 
   if (document.readyState === "loading") {
