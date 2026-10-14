@@ -1,1 +1,218 @@
-@about.html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>团队概况 - 四川文理学院信息与生物医学交叉创新团队</title>
+  <meta name="description" content="四川文理学院信息与生物医学交叉创新团队团队概况，聚焦信息技术与生物医学交叉研究。" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%231a4a7a%22/%3E%3Cpath d=%22M17 17 L47 47 M47 17 L17 47%22 stroke=%22%23fff%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3C/svg%3E" />
+
+  <link rel="stylesheet" href="styles/main.css?v=202610141940" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610141940" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- 顶部 Header -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <div class="brand-text">
+          <span class="brand-title">四川文理学院</span>
+          <span class="brand-sub">信息与生物医学交叉创新团队</span>
+        </div>
+      </div>
+      <form class="search" role="search" action="#" method="get">
+        <input class="search-input" type="search" name="q" placeholder="站内搜索…" aria-label="站内搜索" />
+        <button class="search-btn" type="submit" aria-label="搜索"><span class="search-btn-icon" aria-hidden="true"></span></button>
+      </form>
+      <button class="hamburger" id="sidebarToggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="sidebar">
+        <span class="hamburger-box" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 桌面端主导航 -->
+  <nav class="navbar" aria-label="主导航">
+    <div class="container navbar-inner">
+      <ul class="nav-list" id="navList">
+        <li class="nav-item"><a href="index.html">首页</a></li>
+        <li class="nav-item active"><a href="about.html">团队概况</a></li>
+        <li class="nav-item"><a href="research.html">研究方向</a></li>
+        <li class="nav-item"><a href="members.html">团队成员</a></li>
+        <li class="nav-item"><a href="achievements.html">科研成果</a></li>
+        <li class="nav-item"><a href="frontier.html">学术交流</a></li>
+        <li class="nav-item"><a href="contact.html">联系我们</a></li>
+        <li class="nav-item"><a href="links.html">资料下载</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 移动端侧边抽屉导航 -->
+  <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+  <aside class="sidebar" id="sidebar" aria-hidden="true">
+    <div class="sidebar-head">
+      <span class="sidebar-title">导航菜单</span>
+      <button class="sidebar-close" id="sidebarClose" aria-label="关闭导航菜单">×</button>
+    </div>
+    <nav class="sidebar-nav" aria-label="移动端导航">
+      <ul class="side-menu">
+        <li class="side-item"><a href="index.html">首页</a></li>
+        <li class="side-item active">
+          <div class="side-link">
+            <a href="about.html">团队概况</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开团队概况子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="about.html#info">基本信息</a></li>
+            <li><a href="about.html#goal">研究目标与内容</a></li>
+            <li><a href="about.html#problems">拟解决的科学问题</a></li>
+            <li><a href="about.html#platform">支撑平台</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="research.html">研究方向</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开研究方向子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="research.html#dir1">疾病分子机制解析与诊疗靶标发现</a></li>
+            <li><a href="research.html#dir2">医学与农业生物信息学</a></li>
+            <li><a href="research.html#dir3">干细胞与生物医学材料转化医学</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="members.html">团队成员</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开团队成员子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="members.html">学术带头人</a></li>
+            <li><a href="members.html">科研骨干</a></li>
+            <li><a href="members.html">在读研究生</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="achievements.html">科研成果</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开科研成果子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="achievements.html">代表论文</a></li>
+            <li><a href="achievements.html">科研项目</a></li>
+            <li><a href="achievements.html">专利软著</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="frontier.html">学术交流</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开学术交流子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="frontier.html">学术报告</a></li>
+            <li><a href="frontier.html">会议交流</a></li>
+            <li><a href="frontier.html">合作访问</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="contact.html">联系我们</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开联系我们子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="contact.html">联系方式</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="links.html">资料下载</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开资料下载子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="links.html">常用表格</a></li>
+            <li><a href="links.html">申报材料</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <form class="sidebar-search" role="search" action="#" method="get">
+      <span class="site-icon" aria-hidden="true"></span>
+      <input class="search-input" type="search" name="q" placeholder="站内搜索…" aria-label="站内搜索" />
+    </form>
+  </aside>
+
+  <!-- 面包屑导航 -->
+  <nav class="breadcrumb" aria-label="面包屑导航">
+    <div class="container breadcrumb-inner">
+      <a href="index.html" class="crumb crumb-home"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg> 首页</a>
+      <span class="crumb-sep" aria-hidden="true">›</span>
+      <a href="about.html" class="crumb active" aria-current="page">团队概况</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- 页面标题区 -->
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="page-title">团队概况</h1>
+        <p class="page-sub">信息技术与生物医学交叉融合的高水平科研团队</p>
+      </div>
+    </section>
+
+    <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
+    <div class="container">
+      <div class="sub-layout">
+      <aside class="sub-side">
+        <h2 class="sub-side-title">团队概况</h2>
+        <ul class="sub-menu">
+          <li class="sub-menu-item"><a href="about.html#info" class="active">基本信息</a></li>
+          <li class="sub-menu-item"><a href="about.html#goal">研究目标、内容及意义</a></li>
+          <li class="sub-menu-item"><a href="about.html#problems">拟解决的主要科学问题</a></li>
+          <li class="sub-menu-item"><a href="about.html#platform">支撑平台</a></li>
+        </ul>
+      </aside>
+        <div class="sub-main">
+<div class="content-card">
+          <h2 class="content-title">团队简介</h2>
+          <div class="richtext" id="info">
+            <h3 class="content-sub">基本信息</h3>
+            <p>四川文理学院信息与生物医学交叉创新团队经学校党委会批准成立，依托学校学科基础与人才优势，面向达州地区生命科学与生物医学领域的发展需求组建。团队现有核心成员 7 名，其中博士 5 名、硕士 2 名，并吸纳 30 余名在校本科生参与科研训练。</p>
+            <p>团队研究方向涵盖生物信息学、人工智能、分子免疫学、遗传学、干细胞与再生医学、流行病学与统计学、运动与健康促进及慢性脑缺血机制等领域。团队成员已发表高水平学术论文超过 50 篇，主持国家级、省部级及市厅级科研项目 18 项。团队致力于发挥多学科协同优势，构建涵盖机制解析、诊断预测、干预研究与成果转化的研究体系，服务达州地区疾病防控、健康管理与生物医学研究，为地方生命健康事业发展提供科技和人才支撑。</p>
+          </div>
+          <div class="richtext" id="goal">
+            <h3 class="content-sub">研究目标、内容及意义</h3>
+            <p>团队围绕常见病、慢性病及重点人群健康需求，以阐明疾病机制、发现诊疗靶标和探索干预策略为主要目标，重点研究免疫相关疾病、神经损伤及慢性病的分子调控机制。通过整合基因组、转录组、蛋白组和代谢组等多组学数据，结合人工智能技术识别关键分子和生物标志物，构建疾病诊断、风险预测及预后评估模型；利用斑马鱼、小鼠等模式生物开展体内功能验证与机制研究；围绕组织修复和功能改善，探索干细胞、生物医学材料及运动干预的作用机制与应用潜力。</p>
+            <p>团队将加强与达州地区医疗机构、健康服务机构及相关企事业单位的合作，推动研究成果服务于疾病早期识别、精准诊疗、康复干预和居民健康管理。</p>
+          </div>
+          <div class="richtext" id="problems">
+            <h3 class="content-sub">拟解决的主要科学问题</h3>
+            <p>团队重点研究免疫失衡、神经损伤及慢性病发生发展过程中的关键分子调控机制，识别具有诊疗价值的关键靶点；探索多组学数据与区域人群健康数据的有效整合方法，筛选具有稳定预测能力和明确生物学意义的标志物；阐明干细胞、生物医学材料及运动干预对组织修复与功能恢复的作用机制。</p>
+            <p>团队将生物信息学分析、人工智能建模、动物模型和实验验证有机结合，形成从区域人群风险识别、候选靶标筛选、功能验证和机制解析到干预策略评价的研究路径，提升四川文理学院服务达州地区医疗卫生与健康事业发展的科研能力。</p>
+          </div>
+          <div class="richtext" id="platform">
+            <h3 class="content-sub">支撑平台</h3>
+            <p>依托四川文理学院，团队建有生物信息学计算平台，配备 3 台高性能计算设备，包括双路 Intel Xeon E5-2686 v4 服务器、联想 ThinkStation P920 工作站和 AMD EPYC 9754 服务器，拥有多核 CPU、大容量内存和存储资源，并配置 NVIDIA GeForce RTX 4090、RTX A4500 等 GPU，可满足大规模组学数据存储与分析、基因组组装与注释、遗传变异检测、泛基因组构建及人工智能模型训练等研究需求。</p>
+            <p>实验平台配备高效液相色谱仪、PCR 仪、冷冻离心机以及蛋白电泳、转膜和成像系统等常用仪器，可开展核酸与蛋白质检测、基因表达分析及相关分子生物学实验。现有计算与实验条件可为团队开展多组学数据挖掘、人工智能建模、候选靶标筛选和功能验证提供支撑，并为达州地区医疗机构和相关单位开展科研合作、数据分析及技术服务提供平台保障。</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>版权所有 © 四川文理学院信息与生物医学交叉创新团队　地址：四川省达州市通川区塔石路519号　邮编：635000</p>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js?v=202610141940"></script>
+  <script src="scripts/animations.js?v=202610141940"></script>
+</body>
+</html>

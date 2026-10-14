@@ -1,1 +1,236 @@
-@research.html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>研究方向 - 四川文理学院信息与生物医学交叉创新团队</title>
+  <meta name="description" content="四川文理学院信息与生物医学交叉创新团队研究方向，聚焦信息技术与生物医学交叉研究。" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%231a4a7a%22/%3E%3Cpath d=%22M17 17 L47 47 M47 17 L17 47%22 stroke=%22%23fff%22 stroke-width=%225%22 stroke-linecap=%22round%22/%3E%3C/svg%3E" />
+
+  <link rel="stylesheet" href="styles/main.css?v=202610141940" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610141940" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- 顶部 Header -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <div class="brand-text">
+          <span class="brand-title">四川文理学院</span>
+          <span class="brand-sub">信息与生物医学交叉创新团队</span>
+        </div>
+      </div>
+      <form class="search" role="search" action="#" method="get">
+        <input class="search-input" type="search" name="q" placeholder="站内搜索…" aria-label="站内搜索" />
+        <button class="search-btn" type="submit" aria-label="搜索"><span class="search-btn-icon" aria-hidden="true"></span></button>
+      </form>
+      <button class="hamburger" id="sidebarToggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="sidebar">
+        <span class="hamburger-box" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 桌面端主导航 -->
+  <nav class="navbar" aria-label="主导航">
+    <div class="container navbar-inner">
+      <ul class="nav-list" id="navList">
+        <li class="nav-item"><a href="index.html">首页</a></li>
+        <li class="nav-item"><a href="about.html">团队概况</a></li>
+        <li class="nav-item active"><a href="research.html">研究方向</a></li>
+        <li class="nav-item"><a href="members.html">团队成员</a></li>
+        <li class="nav-item"><a href="achievements.html">科研成果</a></li>
+        <li class="nav-item"><a href="frontier.html">学术交流</a></li>
+        <li class="nav-item"><a href="contact.html">联系我们</a></li>
+        <li class="nav-item"><a href="links.html">资料下载</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 移动端侧边抽屉导航 -->
+  <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+  <aside class="sidebar" id="sidebar" aria-hidden="true">
+    <div class="sidebar-head">
+      <span class="sidebar-title">导航菜单</span>
+      <button class="sidebar-close" id="sidebarClose" aria-label="关闭导航菜单">×</button>
+    </div>
+    <nav class="sidebar-nav" aria-label="移动端导航">
+      <ul class="side-menu">
+        <li class="side-item"><a href="index.html">首页</a></li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="about.html">团队概况</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开团队概况子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="about.html">团队简介</a></li>
+            <li><a href="about.html">组织架构</a></li>
+          </ul>
+        </li>
+        <li class="side-item active">
+          <div class="side-link">
+            <a href="research.html">研究方向</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开研究方向子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="research.html#dir1">疾病分子机制解析与诊疗靶标发现</a></li>
+            <li><a href="research.html#dir2">医学与农业生物信息学</a></li>
+            <li><a href="research.html#dir3">干细胞与生物医学材料转化医学</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="members.html">团队成员</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开团队成员子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="members.html">学术带头人</a></li>
+            <li><a href="members.html">科研骨干</a></li>
+            <li><a href="members.html">在读研究生</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="achievements.html">科研成果</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开科研成果子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="achievements.html">代表论文</a></li>
+            <li><a href="achievements.html">科研项目</a></li>
+            <li><a href="achievements.html">专利软著</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="frontier.html">学术交流</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开学术交流子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="frontier.html">学术报告</a></li>
+            <li><a href="frontier.html">会议交流</a></li>
+            <li><a href="frontier.html">合作访问</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="contact.html">联系我们</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开联系我们子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="contact.html">联系方式</a></li>
+          </ul>
+        </li>
+        <li class="side-item">
+          <div class="side-link">
+            <a href="links.html">资料下载</a>
+            <button class="side-toggle" type="button" aria-expanded="false" aria-label="展开资料下载子菜单">+</button>
+          </div>
+          <ul class="side-sub">
+            <li><a href="links.html">常用表格</a></li>
+            <li><a href="links.html">申报材料</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <form class="sidebar-search" role="search" action="#" method="get">
+      <span class="site-icon" aria-hidden="true"></span>
+      <input class="search-input" type="search" name="q" placeholder="站内搜索…" aria-label="站内搜索" />
+    </form>
+  </aside>
+
+  <!-- 面包屑导航 -->
+  <nav class="breadcrumb" aria-label="面包屑导航">
+    <div class="container breadcrumb-inner">
+      <a href="index.html" class="crumb crumb-home"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg> 首页</a>
+      <span class="crumb-sep" aria-hidden="true">›</span>
+      <a href="research.html" class="crumb active" aria-current="page">研究方向</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- 页面标题区 -->
+    <section class="page-hero">
+      <div class="container">
+        <h1 class="page-title">研究方向</h1>
+        <p class="page-sub">聚焦信息技术与生物医学交叉的前沿研究方向</p>
+      </div>
+    </section>
+
+    <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
+    <div class="container">
+      <div class="sub-layout">
+      <aside class="sub-side">
+        <h2 class="sub-side-title">研究方向</h2>
+        <ul class="sub-menu">
+          <li class="sub-menu-item"><a href="research.html" class="active">方向总览</a></li>
+          <li class="sub-menu-item"><a href="research.html#dir1">疾病分子机制解析与诊疗靶标发现</a></li>
+          <li class="sub-menu-item"><a href="research.html#dir2">医学与农业生物信息学</a></li>
+          <li class="sub-menu-item"><a href="research.html#dir3">干细胞与生物医学材料的转化医学研究</a></li>
+        </ul>
+      </aside>
+        <div class="sub-main">
+<div class="content-card">
+          <h2 class="content-title">研究方向</h2>
+          <p class="dir-lead">团队围绕疾病分子机制解析与靶标发现、医学与农业相关的生物信息领域、干细胞与生物医学材料的转化医学三大方向开展研究，形成"机制解析 — 数据挖掘 — 转化应用"贯通的研究布局。</p>
+          <div class="dir-flow">
+
+          <article class="dir-row" id="dir1">
+            <figure class="dir-media">
+              <img src="assets/research/dir1.jpg" alt="疾病分子机制解析与诊疗靶标发现：实验室与分子通路研究场景" loading="lazy" width="1033" height="563" />
+            </figure>
+            <div class="dir-body">
+              <span class="dir-index" aria-hidden="true">01</span>
+              <h3>疾病分子机制解析与诊疗靶标发现</h3>
+              <p>围绕免疫相关疾病、神经损伤、慢性脑缺血及其他重大慢性疾病，综合运用分子生物学、多组学分析和动物模型等技术，解析疾病发生、发展及组织损伤修复过程中的关键分子机制。重点筛选与疾病诊断、风险预测、预后评估和治疗响应相关的生物标志物与调控靶点，并开展功能验证，为疾病早期识别、精准诊疗和干预策略研究提供理论依据。</p>
+              <div class="dir-tags"><span class="tag">多组学分析</span><span class="tag">动物模型</span><span class="tag">生物标志物</span></div>
+            </div>
+          </article>
+
+          <article class="dir-row dir-row-reverse" id="dir2">
+            <figure class="dir-media">
+              <img src="assets/research/dir2.jpg" alt="医学与农业生物信息学：水产物种基因组研究与大数据分析平台" loading="lazy" width="1033" height="563" />
+            </figure>
+            <div class="dir-body">
+              <span class="dir-index" aria-hidden="true">02</span>
+              <h3>医学与农业生物信息学</h3>
+              <p>面向医学健康与地方特色农业发展需求，开展基因组、转录组、蛋白组、代谢组及医学人群数据的整合分析，运用生物信息学、人工智能和统计学方法挖掘关键基因、分子标志物及潜在调控网络。在医学领域，重点开展疾病风险预测、辅助诊断及预后评估研究；在农业领域，围绕达州特色动植物种质资源，开展基因组组装与注释、遗传变异检测、泛基因组分析、优良性状挖掘、分子辅助育种及疫病防控研究，为地方医疗健康服务和特色农业产业发展提供技术支撑。</p>
+              <div class="dir-tags"><span class="tag">泛基因组</span><span class="tag">分子辅助育种</span><span class="tag">疾病风险预测</span></div>
+            </div>
+          </article>
+
+          <article class="dir-row" id="dir3">
+            <figure class="dir-media">
+              <img src="assets/research/dir3.jpg" alt="干细胞与生物医学材料的转化医学研究：3D 生物打印与再生医学平台" loading="lazy" width="1033" height="563" />
+            </figure>
+            <div class="dir-body">
+              <span class="dir-index" aria-hidden="true">03</span>
+              <h3>干细胞与生物医学材料的转化医学研究</h3>
+              <p>围绕组织损伤修复、功能重建与再生医学需求，研究干细胞增殖、分化、迁移及其微环境调控机制，评价其在组织修复和疾病干预中的应用潜力。结合生物医学材料，探索细胞递送、组织支架、药物缓释及局部微环境调控等技术，开展材料生物相容性、功能效应和安全性评价，推动干细胞与生物医学材料在组织修复、功能改善及相关疾病干预中的转化应用。</p>
+              <div class="dir-tags"><span class="tag">干细胞</span><span class="tag">组织支架</span><span class="tag">再生医学</span></div>
+            </div>
+          </article>
+
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>版权所有 © 四川文理学院信息与生物医学交叉创新团队　地址：四川省达州市通川区塔石路519号　邮编：635000</p>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js?v=202610141940"></script>
+  <script src="scripts/animations.js?v=202610141940"></script>
+</body>
+</html>
