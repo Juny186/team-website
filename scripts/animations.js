@@ -59,12 +59,12 @@
     const el = document.getElementById("typewriterText");
     if (!el) return;
 
-    // 团队定位关键词（保留现有文案风格）
+    // 团队定位关键词（与官方研究方向保持一致）
     const phrases = [
-      "生物医学数据分析",
-      "医学影像智能处理",
-      "多组学特征融合",
-      "机器学习与精准医疗",
+      "疾病分子机制解析与诊疗靶标发现",
+      "医学与农业生物信息学",
+      "干细胞与生物医学材料转化医学",
+      "人工智能与精准医疗",
     ];
     const TYPE_SPEED = 110;   // 打字速度
     const ERASE_SPEED = 55;   // 删除速度
@@ -289,10 +289,23 @@
     }
   }
 
-  /* 绑定联系动作按钮（复制邮箱 / 打招呼） */
+  /* 绑定联系动作按钮（复制邮箱 / 复制地址 / 打招呼） */
   function initContactActions() {
     const copyBtn = document.getElementById("copyEmailBtn");
+    const copyAddrBtn = document.getElementById("copyAddrBtn");
     const hiBtn = document.getElementById("sayHiBtn");
+
+    if (copyAddrBtn) {
+      copyAddrBtn.addEventListener("click", function (e) {
+        const addr = copyAddrBtn.getAttribute("data-addr") || "";
+        const x = e.clientX;
+        const y = e.clientY;
+        copyEmail(addr).then(function (ok) {
+          fireConfetti(x, y);
+          showBubble(ok ? "地址已复制 ✓ " + addr : "复制失败，请手动复制", x, y);
+        });
+      });
+    }
 
     if (copyBtn) {
       copyBtn.addEventListener("click", function (e) {
