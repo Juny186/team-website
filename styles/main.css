@@ -4839,3 +4839,45 @@ html.js-scene .stats-band .scene-tag i {
   font-weight: 400;
   letter-spacing: 12px;
 }
+
+/* =============================================================
+   十六轮：校训水印换新「艰难困苦，玉汝于成」+ 滚动逐字流动
+   ============================================================= */
+.motto-watermark {
+  top: 12vh;
+  left: 3vw;
+  flex-direction: column;
+  gap: 0;
+  /* 置于 main 内容之上、吸顶导航之下（main 自身形成堆叠上下文） */
+  z-index: 3;
+}
+.motto-watermark .motto-row {
+  display: block;
+  font-family: var(--font-brush, "STXingkai", "华文行楷", "KaiTi", 楷体, serif);
+  font-size: clamp(56px, 8.4vw, 136px);
+  line-height: 1.06;
+  letter-spacing: 0.02em;
+  color: rgba(26, 74, 122, 0.075);
+  white-space: nowrap;
+}
+.motto-watermark .motto-row-2 {
+  margin-left: 0.72em;
+}
+.motto-watermark i {
+  display: inline-block;
+  font-style: normal;
+  transform: translate3d(var(--cx, 0px), var(--cy, 0px), 0)
+    rotate(var(--cr, 0deg)) scale(var(--cs, 1));
+  opacity: var(--co, 0.075);
+  will-change: transform, opacity;
+}
+.motto-comma {
+  opacity: 0.06 !important;
+  margin-left: -0.08em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .motto-watermark i {
+    transform: none;
+    opacity: 0.075;
+  }
+}

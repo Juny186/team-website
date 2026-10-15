@@ -11,8 +11,8 @@
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
     <link rel="preload" href="./assets/fonts/mashanzheng-subset.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="./styles/main.css?v=202610151845" />
-    <link rel="stylesheet" href="./styles/animations.css?v=202610151845" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610151900" />
+    <link rel="stylesheet" href="./styles/animations.css?v=202610151900" />
   </head>
   <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -165,10 +165,10 @@
     </aside>
 
     <main id="main">
-      <!-- 人大式：校训书法水印，随页面滚动缓慢视差 -->
-      <div class="motto-watermark" aria-hidden="true">
-        <span>养天地正气</span>
-        <span>法古今完人</span>
+      <!-- 人大式：校训书法水印（四川文理学院校训），逐字随滚动流动 -->
+      <div class="motto-watermark" id="mottoWm" aria-hidden="true">
+        <span class="motto-row"><i>艰</i><i>难</i><i>困</i><i>苦</i><i class="motto-comma">，</i></span>
+        <span class="motto-row motto-row-2"><i>玉</i><i>汝</i><i>于</i><i>成</i></span>
       </div>
 
       <!-- 全宽轮播 Banner -->
@@ -1021,8 +1021,8 @@
       </div>
     </footer>
 
-    <script src="./scripts/main.js?v=202610151845"></script>
+    <script src="./scripts/main.js?v=202610151900"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610151845"></script>
+    <script src="./scripts/animations.js?v=202610151900"></script>
   </body>
 </html>
