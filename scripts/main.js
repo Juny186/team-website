@@ -1043,6 +1043,7 @@
       if (tagEl) tagEl.textContent = p.tag || "协作点";
       if (titleEl) titleEl.textContent = p.n || "";
       if (descEl) descEl.textContent = p.d || "";
+      state.last = p;
       card.classList.add("is-open");
     }
     var closeBtn = document.getElementById("mapCardX");
@@ -1298,7 +1299,8 @@
       if (state.mode === "baidu") return;
       if (rt) window.clearTimeout(rt);
       rt = window.setTimeout(function () {
-        renderGrid();
+        if (state.mode === "tiles") renderTiles();
+        else renderGrid();
       }, 220);
     });
 
@@ -1459,11 +1461,10 @@
           delete TM.tiles[k];
         }
       });
-      var cd = document.getElementById("mapCoord");
-      if (cd) {
-        cd.textContent =
-          TM.lng.toFixed(4) + "\u00b0E  " + TM.lat.toFixed(4) + "\u00b0N  z" + TM.zoom;
-      }
+      var cds = document.querySelectorAll(".map-coord");
+      var ctext =
+        TM.lng.toFixed(4) + "\u00b0E  " + TM.lat.toFixed(4) + "\u00b0N  z" + TM.zoom;
+      for (var q = 0; q < cds.length; q++) cds[q].textContent = ctext;
       positionPins();
     }
     function positionPins() {
@@ -1564,6 +1565,97 @@
       }
       step();
     }
+
+    /* ---------- 点开地图：全屏弹层 ---------- */
+    var fsOpen = false;
+    function buildFsTabs() {
+      var box = document.getElementById("fsTabs");
+      if (!box) return;
+      if (box.children.length) {
+        for (var i = 0; i < box.children.length; i++) {
+          box.children[i].classList.toggle(
+            "is-act",
+            Number(box.children[i].getAttribute("data-i")) === state.idx
+          );
+        }
+        return;
+      }
+      var LABELS = ["一校多点", "临床协作网络", "公共数据互联", "校企合作伙伴"];
+      LABELS.forEach(function (t, i) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "fs-tab" + (i === state.idx ? " is-act" : "");
+        b.setAttribute("data-i", i);
+        b.textContent = t;
+        box.appendChild(b);
+      });
+      box.addEventListener("click", function (e) {
+        var b = e.target;
+        while (b && b !== box) {
+          if (b.getAttribute && b.getAttribute("data-i") !== null) {
+            setView(Number(b.getAttribute("data-i")));
+            buildFsTabs();
+            return;
+          }
+          b = b.parentNode;
+        }
+      });
+    }
+    function openFs() {
+      var fs = document.getElementById("fsMap");
+      var stage = document.getElementById("fsStage");
+      if (!fs || !stage || fsOpen) return;
+      fsOpen = true;
+      fs.hidden = false;
+      stage.appendChild(canvas);
+      stage.appendChild(pinsBox);
+      stage.appendChild(card);
+      fs.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      buildFsTabs();
+      if (state.mode === "tiles") renderTiles();
+      else renderGrid();
+    }
+    function closeFs() {
+      var fs = document.getElementById("fsMap");
+      if (!fs || !fsOpen) return;
+      fsOpen = false;
+      fs.classList.remove("is-open");
+      fs.hidden = true;
+      content.appendChild(canvas);
+      content.appendChild(pinsBox);
+      content.appendChild(card);
+      document.body.style.overflow = "";
+      if (state.mode === "tiles") renderTiles();
+      else renderGrid();
+    }
+    var expBtn = document.createElement("button");
+    expBtn.type = "button";
+    expBtn.className = "map-expand";
+    expBtn.innerHTML = '<i aria-hidden="true"></i><span>展开地图</span>';
+    expBtn.addEventListener("click", openFs);
+    var panel2 = content.querySelector(".map-left");
+    if (panel2) panel2.appendChild(expBtn);
+    else canvas.appendChild(expBtn);
+
+    var fsBtn = document.createElement("button");
+    fsBtn.type = "button";
+    fsBtn.className = "map-card-fs";
+    fsBtn.textContent = "全屏查看 · 飞到该点";
+    fsBtn.addEventListener("click", function () {
+      if (state.last) locateTo(state.last);
+      openFs();
+    });
+    card.appendChild(fsBtn);
+
+    canvas.addEventListener("dblclick", openFs);
+    var fsClose = document.getElementById("fsClose");
+    if (fsClose) fsClose.addEventListener("click", closeFs);
+    var fsLoc = document.getElementById("fsLocate");
+    if (fsLoc) fsLoc.addEventListener("click", locateBase);
+    document.addEventListener("keydown", function (e) {
+      if (fsOpen && (e.key === "Escape" || e.key === "Esc")) closeFs();
+    });
 
     if (ak) loadBaidu();
     else mountTiles();

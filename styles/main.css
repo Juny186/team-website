@@ -6032,3 +6032,163 @@ html.js-scene .stats-band .scene-tag i {
 .map-canvas.is-drag {
   cursor: grabbing;
 }
+
+/* ---------- 点开地图：全屏弹层 ---------- */
+.fs-map {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+  background: rgba(6, 18, 32, 0.9);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.fs-map.is-open {
+  display: block;
+  animation: fsFade 0.35s var(--ease) both;
+}
+.fs-map-stage {
+  position: absolute;
+  left: clamp(16px, 3vw, 56px);
+  right: clamp(16px, 3vw, 56px);
+  top: clamp(16px, 3vh, 48px);
+  bottom: clamp(84px, 10vh, 110px);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0d2135;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55);
+}
+.fs-map-stage .map-pins {
+  pointer-events: none;
+}
+.fs-map-stage .map-pin {
+  pointer-events: auto;
+}
+.fs-map-bar {
+  position: absolute;
+  left: clamp(16px, 3vw, 56px);
+  right: clamp(16px, 3vw, 56px);
+  bottom: clamp(16px, 2.4vh, 28px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.fs-map-title {
+  font-family: var(--font-brush);
+  font-size: 1.25rem;
+  letter-spacing: 4px;
+  color: #fff;
+}
+.fs-map-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.fs-tab {
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: #cfe0f0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.4s var(--ease);
+}
+.fs-tab:hover {
+  color: #fff;
+  border-color: #b0841a;
+}
+.fs-tab.is-act {
+  color: #fff;
+  background: linear-gradient(135deg, #b0841a, #d8b45a);
+  border-color: transparent;
+}
+.fs-map-close {
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: #eaf2fb;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  transition: all 0.4s var(--ease);
+}
+.fs-map-close:hover {
+  color: #fff;
+  background: #9e1b1b;
+  border-color: #9e1b1b;
+}
+.fs-map-bar .map-locate {
+  margin-top: 0;
+}
+.fs-map .map-coord {
+  margin-top: 0;
+  color: #cfe0f0;
+}
+.map-expand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  margin-left: 8px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: #eaf2fb;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: all 0.4s var(--ease);
+}
+.map-expand i {
+  width: 9px;
+  height: 9px;
+  border: 2px solid #9fb6cd;
+  border-radius: 2px;
+}
+.map-expand:hover {
+  color: #fff;
+  background: #1a4a7a;
+  border-color: #1a4a7a;
+}
+.map-card-fs {
+  margin-top: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.76rem;
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, #1a4a7a, #2f7fd0);
+  border: 0;
+  transition: all 0.4s var(--ease);
+}
+.map-card-fs:hover {
+  background: linear-gradient(135deg, #b0841a, #d8b45a);
+}
+@keyframes fsFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 900px) {
+  .fs-map-stage {
+    bottom: clamp(130px, 20vh, 160px);
+  }
+  .fs-map-title {
+    display: none;
+  }
+}

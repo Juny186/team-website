@@ -11,8 +11,8 @@
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
     <link rel="preload" href="./assets/fonts/mashanzheng-subset.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="./styles/main.css?v=202610152045" />
-    <link rel="stylesheet" href="./styles/animations.css?v=202610152045" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610152100" />
+    <link rel="stylesheet" href="./styles/animations.css?v=202610152100" />
   </head>
   <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -1099,6 +1099,18 @@
       </section>
     </main>
 
+    <!-- 全屏地图弹层（点开地图） -->
+    <div class="fs-map" id="fsMap" hidden role="dialog" aria-modal="true" aria-label="全景团队协同网络地图">
+      <div class="fs-map-stage" id="fsStage"></div>
+      <div class="fs-map-bar">
+        <span class="fs-map-title">全景团队</span>
+        <div class="fs-map-tabs" id="fsTabs"></div>
+        <button type="button" class="map-locate" id="fsLocate"><i aria-hidden="true"></i><span>定位主基地</span></button>
+        <span class="map-coord" id="fsCoord"></span>
+        <button type="button" class="fs-map-close" id="fsClose">&times; 关闭</button>
+      </div>
+    </div>
+
     <!-- 右侧模块进度条（西大式：深蓝圆角竖条 + 虚线 + 白点 + 金色塔标 + 板块标签） -->
     <nav class="scroll-rail" id="scrollRail" aria-label="页面板块导航">
       <ul class="rail-list">
@@ -1136,9 +1148,9 @@
       </div>
     </footer>
 
-    <script src="./scripts/map-config.js?v=202610152045"></script>
-    <script src="./scripts/main.js?v=202610152045"></script>
+    <script src="./scripts/map-config.js?v=202610152100"></script>
+    <script src="./scripts/main.js?v=202610152100"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610152045"></script>
+    <script src="./scripts/animations.js?v=202610152100"></script>
   </body>
 </html>
