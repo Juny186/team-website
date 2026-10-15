@@ -23,7 +23,7 @@
 
     let current = 0;
     let timer = null;
-    const INTERVAL = 4000; // 自动轮播间隔 4s
+    const INTERVAL = 6000; // 自动轮播间隔 6s（配合底图缓推，更从容）
 
     // 生成底部指示器（button 可聚焦，满足键盘可达）
     slides.forEach(function (_, i) {
@@ -456,9 +456,105 @@
           top:
             target.getBoundingClientRect().top +
             window.scrollY -
-            72 /* 页头高度补偿 */,
+            headerOffset(),
           behavior: reduced ? "auto" : "smooth",
         });
+      });
+    });
+  }
+
+  /* =============================================================
+     页头高度：吸顶导航收缩后高度会变，跳转补偿需动态取
+     ============================================================= */
+  function headerOffset() {
+    var bar = document.querySelector(".topbar");
+    return bar ? bar.offsetHeight + 16 : 72;
+  }
+
+  /* =============================================================
+     吸顶导航：滚动后收缩、毛玻璃、投影（武大 / 东南式）
+     ============================================================= */
+  function initStickyHeader() {
+    var bar = document.querySelector(".topbar");
+    if (!bar) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      bar.classList.toggle("is-scrolled", window.scrollY > 60);
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+    update();
+  }
+
+  /* =============================================================
+     顶部滚动进度条：反映当前阅读位置
+     ============================================================= */
+  function initScrollProgress() {
+    var rail = document.getElementById("progressRail");
+    if (!rail) return;
+    var bar = rail.firstElementChild;
+    if (!bar) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - doc.clientHeight;
+      var p = max > 0 ? window.scrollY / max : 0;
+      if (p < 0) p = 0;
+      if (p > 1) p = 1;
+      bar.style.transform = "scaleX(" + p.toFixed(4) + ")";
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+    window.addEventListener("resize", function () {
+      window.requestAnimationFrame(update);
+    });
+    update();
+  }
+
+  /* =============================================================
+     方向感知悬停：遮罩从鼠标进入的那一侧滑入（西财 hoverdir 思路）
+     ============================================================= */
+  function initHoverDir() {
+    var nodes = document.querySelectorAll(".quick-btn, .acad-item");
+    if (!nodes.length) return;
+    Array.prototype.forEach.call(nodes, function (el) {
+      el.classList.add("hdir");
+      el.addEventListener("mouseenter", function (e) {
+        var r = el.getBoundingClientRect();
+        var w = r.width;
+        var h = r.height;
+        var x = (e.clientX - r.left - w / 2) * (w > h ? h / w : 1);
+        var y = (e.clientY - r.top - h / 2) * (h > w ? w / h : 1);
+        var dir =
+          Math.abs(x) > Math.abs(y)
+            ? x > 0
+              ? "right"
+              : "left"
+            : y > 0
+            ? "bottom"
+            : "top";
+        el.setAttribute("data-dir", dir);
+      });
+      el.addEventListener("mouseleave", function () {
+        el.removeAttribute("data-dir");
       });
     });
   }
@@ -476,6 +572,9 @@
     initScrollHighlight();
     initBackTop();
     initScrollRail();
+    initStickyHeader();
+    initScrollProgress();
+    initHoverDir();
   }
 
   if (document.readyState === "loading") {

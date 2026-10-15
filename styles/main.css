@@ -3089,3 +3089,165 @@ img {
     transition: none;
   }
 }
+
+/* =============================================================
+   动效与交互升级（借鉴西财 / 武大 / 人大 / 重大 / 东南 五校官网）
+   1) 吸顶导航：滚动后收缩 + 毛玻璃 + 阴影
+   2) 顶部滚动进度条
+   3) 轮播 Ken Burns 缓推 + 文案错峰浮现
+   4) 卡片方向感知悬停（hoverdir 思路）
+   ============================================================= */
+
+/* ---------- 1. 吸顶导航 ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-primary);
+  transition:
+    background var(--dur-slow) var(--ease),
+    box-shadow var(--dur-slow) var(--ease);
+}
+.topbar.is-scrolled {
+  background: rgba(19, 54, 92, 0.93);
+  -webkit-backdrop-filter: saturate(1.15) blur(12px);
+  backdrop-filter: saturate(1.15) blur(12px);
+  box-shadow: 0 6px 26px rgba(8, 22, 40, 0.24);
+}
+.topbar-inner {
+  transition: padding var(--dur-slow) var(--ease);
+}
+.topbar.is-scrolled .topbar-inner {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.brand-logo {
+  transition: height var(--dur-slow) var(--ease);
+}
+.topbar.is-scrolled .brand-logo {
+  height: 36px;
+}
+.topbar.is-scrolled .navbar {
+  background: transparent;
+}
+/* 顶栏收缩时，搜索框同步收窄 */
+.search-input {
+  transition: width var(--dur-slow) var(--ease),
+    background var(--dur-slow) var(--ease);
+}
+
+/* ---------- 2. 顶部滚动进度条 ---------- */
+.progress-rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 1200;
+  pointer-events: none;
+}
+.progress-rail > span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #1a4a7a, #2f6ea8 55%, #b0841a);
+  transition: transform 0.12s linear;
+}
+
+/* ---------- 3. 轮播：底图缓慢推近 + 文案错峰浮现 ---------- */
+.banner-slide.active .banner-bg {
+  animation: bannerKen 7.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes bannerKen {
+  from { transform: scale(1); }
+  to   { transform: scale(1.1); }
+}
+.banner-slide.active .banner-caption h2 {
+  animation: capRise 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.14s both;
+}
+.banner-slide.active .banner-caption p {
+  animation: capRise 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.32s both;
+}
+@keyframes capRise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- 4. 方向感知悬停：遮罩从鼠标进入的方向滑入 ---------- */
+.hdir {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hdir::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-700, #123a63),
+    var(--color-primary, #1a4a7a)
+  );
+  opacity: 0;
+  transform: translate(var(--hdx, 0), var(--hdy, 0));
+  transition: transform 0.42s var(--ease), opacity 0.42s var(--ease);
+}
+.hdir[data-dir="top"]::after    { --hdx: 0;     --hdy: -101%; }
+.hdir[data-dir="bottom"]::after { --hdx: 0;     --hdy: 101%; }
+.hdir[data-dir="left"]::after   { --hdx: -101%; --hdy: 0; }
+.hdir[data-dir="right"]::after  { --hdx: 101%;  --hdy: 0; }
+.hdir:hover::after,
+.hdir:focus-visible::after {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+/* 悬停时文字转白，保证对比度 */
+.hdir:hover,
+.hdir:focus-visible {
+  color: #ffffff;
+}
+.quick-btn.hdir:hover {
+  border-color: var(--color-primary, #1a4a7a);
+}
+.acad-item.hdir:hover .acad-title,
+.acad-item.hdir:hover .acad-date,
+.acad-item.hdir:hover .date-md,
+.acad-item.hdir:hover .date-yr {
+  color: #ffffff;
+}
+.acad-item.hdir:hover {
+  background: transparent;
+}
+.acad-item .acad-title,
+.acad-item .acad-date {
+  transition: color var(--dur-base) var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-slide.active .banner-bg,
+  .banner-slide.active .banner-caption h2,
+  .banner-slide.active .banner-caption p {
+    animation: none;
+  }
+  .hdir::after {
+    transition: opacity 0.2s linear;
+    transform: none;
+  }
+}
+
+/* 吸顶导航占位补偿：锚点跳转不被顶栏遮住 */
+section[id],
+[id].block-head,
+main [id] {
+  scroll-margin-top: 132px;
+}
+@media (max-width: 900px) {
+  section[id],
+  [id].block-head,
+  main [id] {
+    scroll-margin-top: 84px;
+  }
+}
