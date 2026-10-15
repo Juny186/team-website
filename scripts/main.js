@@ -1269,6 +1269,7 @@
       }
       closeCard();
       if (state.mode === "baidu") renderBaidu();
+      else if (state.mode === "tiles") renderTileView();
       else renderGrid();
     }
     function hit(root, el) {
@@ -1301,9 +1302,484 @@
       }, 220);
     });
 
+    /* ---------- 真实瓦片底图（合规数据源：高德地图瓦片） ---------- */
+    var TM = null;
+    function lonX(lng) {
+      return (lng + 180) / 360;
+    }
+    function latY(lat) {
+      var sn = Math.sin((lat * Math.PI) / 180);
+      return 0.5 - Math.log((1 + sn) / (1 - sn)) / (4 * Math.PI);
+    }
+    function yToLat(y) {
+      var A = (0.5 - y) * 4 * Math.PI;
+      var sn = (Math.exp(A) - 1) / (Math.exp(A) + 1);
+      return (Math.asin(sn) * 180) / Math.PI;
+    }
+    function tileURL(x, y, z) {
+      return (
+        "https://webrd0" + (((x + y) % 4) + 1) +
+        ".is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x=" +
+        x + "&y=" + y + "&z=" + z
+      );
+    }
+    function mountTiles() {
+      TM = { lng: 107.5022, lat: 31.2096, zoom: 6, layer: null, tiles: {}, w: 0, h: 0, ok: 0, fail: 0 };
+      var layer = document.createElement("div");
+      layer.className = "map-tiles";
+      canvas.appendChild(layer);
+      TM.layer = layer;
+
+      var ctrl = document.createElement("div");
+      ctrl.className = "map-zoom";
+      ctrl.innerHTML =
+        '<button type="button" class="map-ctrl-btn" data-z="1" aria-label="放大">+</button>' +
+        '<button type="button" class="map-ctrl-btn" data-z="-1" aria-label="缩小">&minus;</button>';
+      canvas.appendChild(ctrl);
+
+      var panel = content.querySelector(".map-left");
+      var locate = document.createElement("button");
+      locate.type = "button";
+      locate.className = "map-locate";
+      locate.id = "mapLocate";
+      locate.innerHTML = '<i aria-hidden="true"></i><span>定位主基地</span>';
+      locate.addEventListener("click", locateBase);
+      if (panel) panel.appendChild(locate);
+      else canvas.appendChild(locate);
+
+      var coord = document.createElement("div");
+      coord.className = "map-coord";
+      coord.id = "mapCoord";
+      if (panel) panel.appendChild(coord);
+      else canvas.appendChild(coord);
+
+      var attr = document.createElement("div");
+      attr.className = "map-attr";
+      attr.textContent = "底图 \u00a9 \u9ad8\u5fb7\u5730\u56fe";
+      if (panel) panel.appendChild(attr);
+      else canvas.appendChild(attr);
+
+      state.mode = "tiles";
+      content.classList.add("is-tiles");
+      if (note) note.textContent = "底图：高德地图 · 点位为团队协同节点示意";
+
+      ctrl.addEventListener("click", function (e) {
+        var z = null;
+        var el = e.target;
+        while (el && el !== ctrl) {
+          if (el.getAttribute && el.getAttribute("data-z") !== null) { z = el; break; }
+          el = el.parentNode;
+        }
+        if (z) {
+          TM.zoom = Math.max(3, Math.min(16, TM.zoom + Number(z.getAttribute("data-z"))));
+          renderTiles();
+          return;
+        }
+      });
+
+      var drag = null;
+      canvas.addEventListener("pointerdown", function (e) {
+        if (state.mode !== "tiles") return;
+        var el = e.target;
+        while (el && el !== canvas) {
+          if (el.tagName === "BUTTON") return;
+          el = el.parentNode;
+        }
+        drag = { x: e.clientX, y: e.clientY, lng: TM.lng, lat: TM.lat, W: 256 * Math.pow(2, TM.zoom) };
+        canvas.classList.add("is-drag");
+      });
+      window.addEventListener("pointermove", function (e) {
+        if (!drag) return;
+        TM.lng = drag.lng - ((e.clientX - drag.x) / drag.W) * 360;
+        if (TM.lng > 180) TM.lng -= 360;
+        if (TM.lng < -180) TM.lng += 360;
+        var ny = latY(drag.lat) - (e.clientY - drag.y) / drag.W;
+        TM.lat = Math.max(-84, Math.min(84, yToLat(ny)));
+        renderTiles();
+      });
+      window.addEventListener("pointerup", function () {
+        drag = null;
+        canvas.classList.remove("is-drag");
+      });
+      window.addEventListener("pointercancel", function () {
+        drag = null;
+        canvas.classList.remove("is-drag");
+      });
+    }
+    function renderTiles() {
+      if (!TM) return;
+      var w = canvas.clientWidth || content.clientWidth;
+      var h = canvas.clientHeight || content.clientHeight;
+      TM.w = w;
+      TM.h = h;
+      var W = 256 * Math.pow(2, TM.zoom);
+      var ox = lonX(TM.lng) * W - w / 2;
+      var oy = latY(TM.lat) * W - h / 2;
+      var x0 = Math.floor(ox / 256);
+      var x1 = Math.floor((ox + w) / 256);
+      var y0 = Math.floor(oy / 256);
+      var y1 = Math.floor((oy + h) / 256);
+      var n = Math.pow(2, TM.zoom);
+      var need = {};
+      var x, y, tx, key, el;
+      for (x = x0; x <= x1; x++) {
+        for (y = y0; y <= y1; y++) {
+          if (y < 0 || y >= n) continue;
+          tx = ((x % n) + n) % n;
+          key = TM.zoom + "/" + tx + "/" + y;
+          need[key] = true;
+          el = TM.tiles[key];
+          if (!el) {
+            el = document.createElement("img");
+            el.className = "map-tile";
+            el.alt = "";
+            el.width = 256;
+            el.height = 256;
+            el.draggable = false;
+            el.onload = function () {
+              TM.ok += 1;
+              this.style.opacity = 1;
+            };
+            el.onerror = function () {
+              TM.fail += 1;
+              if (TM.ok === 0 && TM.fail >= 4) tileFail();
+            };
+            el.src = tileURL(tx, y, TM.zoom);
+            TM.layer.appendChild(el);
+            TM.tiles[key] = el;
+          }
+          el.style.transform =
+            "translate3d(" + (x * 256 - ox) + "px," + (y * 256 - oy) + "px,0)";
+        }
+      }
+      Object.keys(TM.tiles).forEach(function (k) {
+        if (!need[k]) {
+          var e2 = TM.tiles[k];
+          if (e2.parentNode) e2.parentNode.removeChild(e2);
+          delete TM.tiles[k];
+        }
+      });
+      var cd = document.getElementById("mapCoord");
+      if (cd) {
+        cd.textContent =
+          TM.lng.toFixed(4) + "\u00b0E  " + TM.lat.toFixed(4) + "\u00b0N  z" + TM.zoom;
+      }
+      positionPins();
+    }
+    function positionPins() {
+      if (!TM) return;
+      var W = 256 * Math.pow(2, TM.zoom);
+      var ox = lonX(TM.lng) * W - TM.w / 2;
+      var oy = latY(TM.lat) * W - TM.h / 2;
+      var arr = pinsBox.querySelectorAll(".map-pin");
+      for (var i = 0; i < arr.length; i++) {
+        var el = arr[i];
+        var lng = Number(el.getAttribute("data-lng"));
+        var lat = Number(el.getAttribute("data-lat"));
+        var px = lonX(lng) * W - ox;
+        var py = latY(lat) * W - oy;
+        el.style.left = Math.round(px) + "px";
+        el.style.top = Math.round(py) + "px";
+        el.style.display =
+          px < -80 || px > TM.w + 80 || py < -80 || py > TM.h + 80 ? "none" : "";
+      }
+    }
+    function tileFail() {
+      state.mode = "grid";
+      content.classList.remove("is-tiles");
+      if (note) note.textContent = "底图瓦片不可用，当前为经纬度投影点位图";
+      setView(state.idx);
+    }
+    function locateBase() {
+      var set = MAP_SETS[state.idx];
+      var main = null;
+      set.points.forEach(function (p) {
+        if (p.main) main = p;
+      });
+      if (!main) main = { lng: 107.5022, lat: 31.2096 };
+      if (state.mode !== "tiles") {
+        setView(0);
+        openCard(main);
+        return;
+      }
+      var s = { lng: TM.lng, lat: TM.lat, z: TM.zoom };
+      var t0 = Date.now();
+      var dur = 720;
+      function step() {
+        var k = Math.min(1, (Date.now() - t0) / dur);
+        var e = 1 - Math.pow(1 - k, 3);
+        TM.lng = s.lng + (main.lng - s.lng) * e;
+        TM.lat = s.lat + (main.lat - s.lat) * e;
+        TM.zoom = Math.round(s.z + (12 - s.z) * e);
+        renderTiles();
+        if (k < 1) window.requestAnimationFrame(step);
+        else openCard(main);
+      }
+      step();
+    }
+    function renderTileView() {
+      var set = MAP_SETS[state.idx];
+      if (!TM) mountTiles();
+      pinsBox.innerHTML = "";
+      set.points.forEach(function (p, i) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "map-pin" + (p.main ? " is-main" : "");
+        btn.setAttribute("data-lng", p.lng);
+        btn.setAttribute("data-lat", p.lat);
+        btn.style.animationDelay = reduced ? "0s" : (i * 0.08).toFixed(2) + "s";
+        btn.innerHTML = "<i></i><span>" + p.n + "</span>";
+        btn.addEventListener("mouseenter", function () {
+          openCard(p);
+        });
+        btn.addEventListener("focus", function () {
+          openCard(p);
+        });
+        btn.addEventListener("click", function () {
+          var all = pinsBox.querySelectorAll(".map-pin");
+          for (var z = 0; z < all.length; z++) all[z].classList.remove("is-act");
+          btn.classList.add("is-act");
+          locateTo(p);
+        });
+        pinsBox.appendChild(btn);
+      });
+      TM.lng = set.center[0];
+      TM.lat = set.center[1];
+      TM.zoom = set.zoom;
+      renderTiles();
+    }
+    function locateTo(p) {
+      openCard(p);
+      if (state.mode !== "tiles" || !TM) return;
+      var s = { lng: TM.lng, lat: TM.lat };
+      var t0 = Date.now();
+      var dur = 620;
+      function step() {
+        var k = Math.min(1, (Date.now() - t0) / dur);
+        var e = 1 - Math.pow(1 - k, 3);
+        TM.lng = s.lng + (p.lng - s.lng) * e;
+        TM.lat = s.lat + (p.lat - s.lat) * e;
+        renderTiles();
+        if (k < 1) window.requestAnimationFrame(step);
+      }
+      step();
+    }
+
     if (ak) loadBaidu();
-    else if (note) note.textContent = "经纬度投影点位图 · 配置底图密钥后显示标准地图";
+    else mountTiles();
     setView(0);
+  }
+
+  /* =============================================================
+     人大「今日人大」式：今日团队（头条轮播 + 动态列表 + 专题推荐）
+     ============================================================= */
+  function initToday() {
+    var dots = document.getElementById("todayDots");
+    var media = document.querySelector(".today-media");
+    var img = document.getElementById("todayImg");
+    if (!dots || !img) return;
+    var FEAT = [
+      {
+        img: "assets/gallery/act1.jpg", alt: "实验教学实训", tag: "实验教学",
+        t: "2026 级新成员完成首批上机操作",
+        d: "实训周内完成移液、离心与测序上机的全流程考核，正式进入课题组轮转。",
+        date: "2026-10-15"
+      },
+      {
+        img: "assets/gallery/act2.jpg", alt: "教学研讨现场", tag: "教学研讨",
+        t: "教学研讨：课程共建与实验方案评审",
+        d: "围绕实验课程大纲与联合培养方案开展研讨，确定下学期共建课程清单。",
+        date: "2026-10-10"
+      },
+      {
+        img: "assets/gallery/act3.jpg", alt: "实验操作指导", tag: "实验指导",
+        t: "一对一带教：规范操作从第一支移液枪开始",
+        d: "高年级成员带教新成员完成标准操作规程训练，统一实验记录与样本编号规范。",
+        date: "2026-10-04"
+      }
+    ];
+    var TOPIC = [
+      { t: "2026 年大学生创新训练计划申报", d: "面向全校本科生开放，团队提供课题、算力与一对一指导。" },
+      { t: "医工交叉青年学者论坛", d: "每学期一期，邀请高校与医院学者交流交叉学科最新进展。" },
+      { t: "组学数据分析训练营", d: "四周集中训练：从原始数据到可复现的完整分析流程。" }
+    ];
+    var cur = 0;
+    var timer = null;
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function paint(f) {
+      if (media) media.classList.add("is-swap");
+      window.setTimeout(function () {
+        img.setAttribute("src", f.img);
+        img.setAttribute("alt", f.alt);
+        var tag = document.getElementById("todayTag");
+        var t2 = document.getElementById("todayTitle2");
+        var ds = document.getElementById("todayDesc");
+        var dt = document.getElementById("todayDate");
+        if (tag) tag.textContent = f.tag;
+        if (t2) t2.textContent = f.t;
+        if (ds) ds.textContent = f.d;
+        if (dt) { dt.textContent = f.date; dt.setAttribute("datetime", f.date); }
+        if (media) media.classList.remove("is-swap");
+      }, reduced ? 0 : 220);
+    }
+    function show(i) {
+      cur = (i + FEAT.length) % FEAT.length;
+      var bs = dots.children;
+      for (var k = 0; k < bs.length; k++) bs[k].classList.toggle("is-on", k === cur);
+      paint(FEAT[cur]);
+    }
+    function start() {
+      if (!timer && !reduced) timer = window.setInterval(function () { show(cur + 1); }, 5600);
+    }
+    function stop() {
+      if (timer) { window.clearInterval(timer); timer = null; }
+    }
+    dots.addEventListener("click", function (e) {
+      var b = e.target;
+      while (b && b !== dots) {
+        if (b.getAttribute && b.getAttribute("data-i") !== null) {
+          show(Number(b.getAttribute("data-i")));
+          return;
+        }
+        b = b.parentNode;
+      }
+    });
+    var feature = document.querySelector(".today-feature");
+    if (feature) {
+      feature.addEventListener("mouseenter", stop);
+      feature.addEventListener("mouseleave", start);
+    }
+
+    var topicI = 0;
+    var tTitle = document.getElementById("topicTitle");
+    var tDesc = document.getElementById("topicDesc");
+    function paintTopic() {
+      if (tTitle) tTitle.textContent = TOPIC[topicI].t;
+      if (tDesc) tDesc.textContent = TOPIC[topicI].d;
+    }
+    var arrows = document.querySelectorAll(".today-arrow");
+    for (var a = 0; a < arrows.length; a++) {
+      arrows[a].addEventListener("click", function () {
+        var dir = Number(this.getAttribute("data-dir"));
+        topicI = (topicI + dir + TOPIC.length) % TOPIC.length;
+        paintTopic();
+      });
+    }
+    var band = document.getElementById("today");
+    if (band && "IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (en) {
+          if (en.isIntersecting) start();
+          else stop();
+        });
+      }, { threshold: 0.15 });
+      io.observe(band);
+    } else {
+      start();
+    }
+  }
+
+  /* =============================================================
+     人大「学术讲座」式：学术日历 + 竖排讲座条 + 详情卡
+     ============================================================= */
+  function initLectures() {
+    var strips = document.getElementById("lecStrips");
+    var cal = document.getElementById("lecCal");
+    if (!strips) return;
+    var LEC = [
+      {
+        name: "单细胞测序数据降维与聚类方法前沿",
+        day: "10·16", md: [10, 16],
+        speaker: "生物信息学方向教师 · 合作单位研究员",
+        time: "2026年10月16日 14:30",
+        place: "莲湖校区 理科楼 B301",
+        host: "信息与生物医学交叉创新团队",
+        brief: "围绕高维组学数据的降维、批次校正与聚类评估，结合公开数据集现场演示完整分析流程。"
+      },
+      {
+        name: "医学影像深度学习分割技术进展",
+        day: "10·23", md: [10, 23],
+        speaker: "人工智能方向教师 · 附属医院影像科",
+        time: "2026年10月23日 15:00",
+        place: "莲湖校区 理科楼 A205",
+        host: "团队 · 附属医院放射科",
+        brief: "从 U-Net 到通用分割模型的演进脉络，讨论小样本标注下的训练策略与评价指标选择。"
+      },
+      {
+        name: "磁共振波谱定量分析入门",
+        day: "10·30", md: [10, 30],
+        speaker: "分析测试中心工程师",
+        time: "2026年10月30日 14:00",
+        place: "实验楼 3-12 波谱实验室",
+        host: "分析测试中心",
+        brief: "介绍谱图采集参数、基线校正与代谢物定量流程，并演示常见伪影的识别与处理。"
+      },
+      {
+        name: "学术写作与图表规范：从数据到论文",
+        day: "11·06", md: [11, 6],
+        speaker: "团队指导教师",
+        time: "2026年11月6日 15:00",
+        place: "莲湖校区 图书馆报告厅",
+        host: "团队 · 图书馆",
+        brief: "以已发表论文为例，拆解结果呈现、图表排版与投稿信写作中的常见误区。"
+      },
+      {
+        name: "保结构算法在生物力学仿真中的应用",
+        day: "11·13", md: [11, 13],
+        speaker: "计算力学方向教师",
+        time: "2026年11月13日 14:30",
+        place: "莲湖校区 理科楼 B301",
+        host: "信息与生物医学交叉创新团队",
+        brief: "讨论长时间仿真中的能量守恒与数值稳定性问题，对比多种保结构积分方案。"
+      }
+    ];
+    var marks = [];
+    LEC.forEach(function (l) {
+      if (l.md[0] === 10) marks.push(l.md[1]);
+    });
+    if (cal) {
+      var y = 2026, m = 10;
+      var first = new Date(y, m - 1, 1).getDay();
+      var days = new Date(y, m, 0).getDate();
+      var now = new Date();
+      var html = "";
+      var i;
+      for (i = 0; i < first; i++) html += '<span class="lec-cal-day is-empty"></span>';
+      for (i = 1; i <= days; i++) {
+        var cls = "lec-cal-day";
+        if (marks.indexOf(i) >= 0) cls += " is-mark";
+        if (now.getFullYear() === y && now.getMonth() + 1 === m && now.getDate() === i) cls += " is-today";
+        html += '<span class="' + cls + '">' + i + "</span>";
+      }
+      cal.innerHTML = html;
+    }
+    function select(i) {
+      var bs = strips.children;
+      for (var k = 0; k < bs.length; k++) bs[k].classList.toggle("is-act", k === i);
+      var d = LEC[i];
+      var set = function (id, v) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = v;
+      };
+      set("lecName", d.name);
+      set("lecSpeaker", d.speaker);
+      set("lecTime", d.time);
+      set("lecPlace", d.place);
+      set("lecHost", d.host);
+      set("lecBrief", d.brief);
+    }
+    strips.addEventListener("click", function (e) {
+      var b = e.target;
+      while (b && b !== strips) {
+        if (b.getAttribute && b.getAttribute("data-i") !== null) {
+          select(Number(b.getAttribute("data-i")));
+          return;
+        }
+        b = b.parentNode;
+      }
+    });
+    select(0);
   }
 
   /* =============================================================
@@ -1394,6 +1870,8 @@
     "map-band": "#0b2540",
     "exch-band": "#fbfaf6",
     "gallery-band": "#ffffff",
+    "today-band": "#fbfaf6",
+    "lec-band": "#f7f4ec",
   };
 
   function initSceneSwap() {
@@ -1721,6 +2199,8 @@
     initStatsSlides();
     initPeopleBand();
     initMapBand();
+    initToday();
+    initLectures();
     initStagger();
     initHeadReveal();
     initSceneSwap();

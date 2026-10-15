@@ -11,8 +11,8 @@
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
     <link rel="preload" href="./assets/fonts/mashanzheng-subset.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="./styles/main.css?v=202610152035" />
-    <link rel="stylesheet" href="./styles/animations.css?v=202610152035" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610152045" />
+    <link rel="stylesheet" href="./styles/animations.css?v=202610152045" />
   </head>
   <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -388,6 +388,93 @@
         </div>
       </section>
 
+      <!-- 人大「今日人大」式：今日团队（大图轮播 + 动态列表 + 专题推荐） -->
+      <section class="today-band" id="today" aria-labelledby="todayTitle">
+        <div class="container">
+          <div class="today-head">
+            <div class="today-head-l">
+              <span class="today-kicker">TEAM TODAY</span>
+              <h3 class="today-title" id="todayTitle">今日团队</h3>
+              <span class="today-sub">讲好团队成长的故事</span>
+            </div>
+            <a class="today-more" href="research.html">查看更多<span aria-hidden="true">&rarr;</span></a>
+          </div>
+          <div class="today-grid">
+            <article class="today-feature">
+              <div class="today-media">
+                <img id="todayImg" src="assets/gallery/act1.jpg" alt="实验教学实训" width="640" height="400" />
+                <span class="today-media-tag" id="todayTag">实验教学</span>
+              </div>
+              <div class="today-copy">
+                <h4 id="todayTitle2">2026 级新成员完成首批上机操作</h4>
+                <p id="todayDesc">实训周内完成移液、离心与测序上机的全流程考核，正式进入课题组轮转。</p>
+                <time id="todayDate" datetime="2026-10-15">2026-10-15</time>
+              </div>
+              <div class="today-dots" id="todayDots">
+                <button type="button" class="is-on" data-i="0" aria-label="第 1 条头条"></button>
+                <button type="button" data-i="1" aria-label="第 2 条头条"></button>
+                <button type="button" data-i="2" aria-label="第 3 条头条"></button>
+              </div>
+            </article>
+            <ul class="today-list">
+              <li>
+                <a href="research.html">
+                  <i aria-hidden="true"></i>
+                  <b>赴附属医院开展联合预实验，完成首批样本编码</b>
+                  <time datetime="2026-10-13">2026-10-13</time>
+                </a>
+              </li>
+              <li>
+                <a href="research.html">
+                  <i aria-hidden="true"></i>
+                  <b>实验教学实训周：新成员完成仪器操作考核</b>
+                  <time datetime="2026-10-08">2026-10-08</time>
+                </a>
+              </li>
+              <li>
+                <a href="research.html">
+                  <i aria-hidden="true"></i>
+                  <b>与成都联合实验室共建课题获校级立项</b>
+                  <time datetime="2026-09-28">2026-09-28</time>
+                </a>
+              </li>
+              <li>
+                <a href="research.html">
+                  <i aria-hidden="true"></i>
+                  <b>学术例会：文献精读与数据复现双周循环</b>
+                  <time datetime="2026-09-26">2026-09-26</time>
+                </a>
+              </li>
+              <li>
+                <a href="research.html">
+                  <i aria-hidden="true"></i>
+                  <b>参加全国生物信息学学术会议并作口头报告</b>
+                  <time datetime="2026-09-18">2026-09-18</time>
+                </a>
+              </li>
+              <li>
+                <a href="research.html">
+                  <i aria-hidden="true"></i>
+                  <b>团队官网「全景团队」地图模块上线</b>
+                  <time datetime="2026-10-15">2026-10-15</time>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="today-topic">
+            <span class="today-topic-tag">专题推荐</span>
+            <div class="today-topic-main">
+              <h4 id="topicTitle">2026 年大学生创新训练计划申报</h4>
+              <p id="topicDesc">面向全校本科生开放，团队提供课题、算力与一对一指导。</p>
+            </div>
+            <div class="today-topic-nav">
+              <button type="button" class="today-arrow" data-dir="-1" aria-label="上一个专题">&lsaquo;</button>
+              <button type="button" class="today-arrow" data-dir="1" aria-label="下一个专题">&rsaquo;</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 团队聚焦：三色立体板块 -->
       <section class="focus-band" id="focus" aria-labelledby="focusTitle">
         <div class="container">
@@ -759,7 +846,7 @@
               <span class="mile-date">2021</span>
               <div class="mile-card">
                 <h4>团队获批成立</h4>
-                <p>经四川文理学院党委会批准，信息与生物医学交叉创新团队正式组建，面向达州地区生命健康领域需求开展多学科交叉研究。</p>
+                <p>经学校批准组建，面向达州地区生命健康需求开展医工交叉研究。</p>
               </div>
             </li>
             <li class="mile-item">
@@ -767,47 +854,23 @@
               <span class="mile-date">2022</span>
               <div class="mile-card">
                 <h4>生物信息学计算平台建成</h4>
-                <p>建成高性能计算集群并配置 RTX 4090、RTX A4500 等 GPU，具备大规模组学数据存储、基因组分析与人工智能模型训练能力。</p>
-              </div>
-            </li>
-            <li class="mile-item">
-              <span class="mile-node" aria-hidden="true"></span>
-              <span class="mile-date">2023</span>
-              <div class="mile-card">
-                <h4>科研项目体系初步形成</h4>
-                <p>围绕免疫相关疾病、神经损伤与慢性病机制，主持国家级、省部级及市厅级科研项目，逐步形成多层次项目支撑体系。</p>
+                <p>配置 GPU 计算集群，具备组学数据存储、分析与模型训练能力。</p>
               </div>
             </li>
             <li class="mile-item">
               <span class="mile-node" aria-hidden="true"></span>
               <span class="mile-date">2024</span>
               <div class="mile-card">
-                <h4>高水平论文成果积累</h4>
-                <p>团队成员累计发表高水平学术论文超过 50 篇，研究方向覆盖生物信息学、分子免疫学、干细胞与再生医学等领域。</p>
-              </div>
-            </li>
-            <li class="mile-item">
-              <span class="mile-node" aria-hidden="true"></span>
-              <span class="mile-date">2025.07</span>
-              <div class="mile-card">
-                <h4>前沿方法学系列报告启动</h4>
-                <p>围绕深度学习医学影像分析、多组学整合与生物标志物发现、可解释人工智能等主题，启动系列前沿学术报告。</p>
+                <h4>论文与项目体系形成</h4>
+                <p>累计发表高水平论文 50 余篇，形成多层次项目支撑体系。</p>
               </div>
             </li>
             <li class="mile-item">
               <span class="mile-node" aria-hidden="true"></span>
               <span class="mile-date">2026.06</span>
               <div class="mile-card">
-                <h4>参加全国生物信息学学术会议</h4>
-                <p>团队成员受邀参加全国生物信息学学术会议并作口头报告，同期赴中科院成都生物研究所开展多组学合作洽谈。</p>
-              </div>
-            </li>
-            <li class="mile-item">
-              <span class="mile-node" aria-hidden="true"></span>
-              <span class="mile-date">2026.06</span>
-              <div class="mile-card">
-                <h4>承办医工交叉学术研讨会</h4>
-                <p>团队成功举办“医工交叉”青年学者学术论坛，邀请多所高校与医院学者交流交叉学科研究进展。</p>
+                <h4>承办医工交叉研讨会</h4>
+                <p>邀请多所高校与医院学者交流，并赴成都开展多组学合作洽谈。</p>
               </div>
             </li>
             <li class="mile-item">
@@ -815,7 +878,7 @@
               <span class="mile-date">2026.09</span>
               <div class="mile-card">
                 <h4>获批省自然科学基金重点项目</h4>
-                <p>团队获批四川省自然科学基金重点项目立项资助，进一步强化在疾病机制解析与诊疗靶标发现方向的持续投入。</p>
+                <p>强化疾病机制解析与诊疗靶标发现方向的持续投入。</p>
               </div>
             </li>
           </ol>
@@ -948,6 +1011,63 @@
         </div>
       </section>
 
+      <!-- 人大「学术讲座」式：学术日历 + 竖排讲座条 + 详情卡 -->
+      <section class="lec-band" id="lectures" aria-labelledby="lecTitle">
+        <div class="container">
+          <div class="lec-head">
+            <h3 class="lec-title" id="lecTitle"><em>学术</em>讲座</h3>
+            <a class="lec-more" href="achievements.html">查看更多<span aria-hidden="true">&rarr;</span></a>
+          </div>
+          <div class="lec-grid">
+            <div class="lec-cal">
+              <div class="lec-cal-head">
+                <span class="lec-cal-label">学术日历</span>
+                <span class="lec-cal-month">2026年10月</span>
+              </div>
+              <div class="lec-cal-week" aria-hidden="true">
+                <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+              </div>
+              <div class="lec-cal-grid" id="lecCal"></div>
+              <p class="lec-cal-note">带标记日期为已排期讲座</p>
+            </div>
+            <div class="lec-strips" id="lecStrips">
+              <button type="button" class="lec-strip is-act" data-i="0">
+                <span class="lec-strip-title">单细胞测序数据降维与聚类方法前沿</span>
+                <span class="lec-strip-date">10&middot;16</span>
+              </button>
+              <button type="button" class="lec-strip" data-i="1">
+                <span class="lec-strip-title">医学影像深度学习分割技术进展</span>
+                <span class="lec-strip-date">10&middot;23</span>
+              </button>
+              <button type="button" class="lec-strip" data-i="2">
+                <span class="lec-strip-title">磁共振波谱定量分析入门</span>
+                <span class="lec-strip-date">10&middot;30</span>
+              </button>
+              <button type="button" class="lec-strip" data-i="3">
+                <span class="lec-strip-title">学术写作与图表规范：从数据到论文</span>
+                <span class="lec-strip-date">11&middot;06</span>
+              </button>
+              <button type="button" class="lec-strip" data-i="4">
+                <span class="lec-strip-title">保结构算法在生物力学仿真中的应用</span>
+                <span class="lec-strip-date">11&middot;13</span>
+              </button>
+            </div>
+            <div class="lec-detail">
+              <span class="lec-detail-tag">学术讲座</span>
+              <h4 class="lec-detail-name" id="lecName">单细胞测序数据降维与聚类方法前沿</h4>
+              <ul class="lec-meta">
+                <li><span>主讲人</span><b id="lecSpeaker">生物信息学方向教师 · 合作单位研究员</b></li>
+                <li><span>时间</span><b id="lecTime">2026年10月16日 14:30</b></li>
+                <li><span>地点</span><b id="lecPlace">莲湖校区 理科楼 B301</b></li>
+                <li><span>主办</span><b id="lecHost">信息与生物医学交叉创新团队</b></li>
+              </ul>
+              <p class="lec-brief" id="lecBrief">围绕高维组学数据的降维、批次校正与聚类评估，结合公开数据集现场演示完整分析流程。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <!-- 加入我们 CTA（整宽深色带） -->
       <section class="join-band" id="join" aria-labelledby="joinTitle">
         <div class="join-sky" aria-hidden="true"></div>
@@ -1016,9 +1136,9 @@
       </div>
     </footer>
 
-    <script src="./scripts/map-config.js?v=202610152035"></script>
-    <script src="./scripts/main.js?v=202610152035"></script>
+    <script src="./scripts/map-config.js?v=202610152045"></script>
+    <script src="./scripts/main.js?v=202610152045"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610152035"></script>
+    <script src="./scripts/animations.js?v=202610152045"></script>
   </body>
 </html>
