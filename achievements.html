@@ -7,8 +7,8 @@
   <meta name="description" content="四川文理学院信息与生物医学交叉创新团队科研成果，聚焦信息技术与生物医学交叉研究。" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <link rel="stylesheet" href="styles/main.css?v=202610152130" />
-  <link rel="stylesheet" href="styles/animations.css?v=202610152130" />
+  <link rel="stylesheet" href="styles/main.css?v=202610152230" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610152230" />
 </head>
 <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -102,8 +102,8 @@
           </div>
           <ul class="side-sub">
             <li><a href="achievements.html">代表论文</a></li>
-            <li><a href="achievements.html">科研项目</a></li>
-            <li><a href="achievements.html">专利软著</a></li>
+            <li><a href="achievements.html#project">科研项目</a></li>
+            <li><a href="achievements.html#patent">专利软著</a></li>
           </ul>
         </li>
         <li class="side-item">
@@ -155,28 +155,44 @@
 
   <main id="main">
     <!-- 页面标题区 -->
-    <section class="page-hero">
-      <div class="container">
+    <section class="page-hero is-v2">
+      <div class="hero-bg" aria-hidden="true"><img src="assets/banner/b4.jpg" alt="" /></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="container hero-inner">
         <h1 class="page-title">科研成果</h1>
+        <p class="page-en">ACHIEVEMENTS</p>
         <p class="page-sub">团队在交叉创新领域的科研产出与成果</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><b><span data-count="50">50</span>+</b><span>高水平论文</span></div>
+          <div class="hero-stat"><b><span data-count="18">18</span></b><span>科研项目</span></div>
+          <div class="hero-stat"><b><span data-count="3">3</span></b><span>专利与软著</span></div>
+        </div>
       </div>
     </section>
+    <nav class="sub-navbar" aria-label="本页栏目导航">
+      <div class="container sub-navbar-inner">
+          <a class="sub-nav-link is-act" href="#paper">代表论文</a>
+          <a class="sub-nav-link" href="#project">科研项目</a>
+          <a class="sub-nav-link" href="#patent">专利软著</a>
+        <span class="sub-nav-ink" aria-hidden="true"></span>
+      </div>
+    </nav>
 
     <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
     <div class="container">
       <div class="sub-layout">
       <aside class="sub-side">
-        <h2 class="sub-side-title">科研成果</h2>
+        <div class="sub-side-head"><b>科研成果</b><i aria-hidden="true"></i></div>
         <ul class="sub-menu">
-          <li class="sub-menu-item"><a href="achievements.html" class="active">代表论文</a></li>
-          <li class="sub-menu-item"><a href="achievements.html">科研项目</a></li>
-          <li class="sub-menu-item"><a href="achievements.html">专利软著</a></li>
-          <li class="sub-menu-item"><a href="achievements.html">获奖成果</a></li>
+          <li class="sub-menu-item"><a href="achievements.html#paper" class="active">代表论文</a></li>
+          <li class="sub-menu-item"><a href="achievements.html#project">科研项目</a></li>
+          <li class="sub-menu-item"><a href="achievements.html#patent">专利软著</a></li>
         </ul>
       </aside>
         <div class="sub-main">
 <div class="content-card">
-          <h2 class="content-title">代表论文</h2>
+          <h2 class="content-title" id="paper">代表论文<span class="content-title-en">ACHIEVEMENTS</span></h2>
           <div class="list-item">
             <span class="list-badge">2024</span>
             <div class="list-body">
@@ -208,7 +224,7 @@
               <p class="list-meta">计算机研究与发展<span class='sep'>·</span>赵明辉, 蒋梦琪 等<span class='list-tag'>EI / 中文核心</span></p>
             </div>
           </div>
-          <h3 class="content-sub">在研科研项目</h3>
+          <h3 class="content-sub" id="project">在研科研项目</h3>
           <div class="list-item">
             <span class="list-badge">国自科</span>
             <div class="list-body">
@@ -228,7 +244,7 @@
               <p class="list-meta">四川省教育厅科研基金重点项目<span class='sep'>·</span>2023.01–2025.12<span class='sep'>·</span>主持：张志强</p>
             </div>
           </div>
-          <h3 class="content-sub">专利与软件著作权</h3>
+          <h3 class="content-sub" id="patent">专利与软件著作权</h3>
           <div class="list-item">
             <span class="list-badge">发明</span>
             <div class="list-body">
@@ -251,6 +267,16 @@
         </div>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <section class="sub-rel">
+        <div class="sub-rel-head"><h3>相关阅读</h3><span>RELATED</span></div>
+        <div class="sub-rel-grid">
+          <a class="sub-rel-card" href="research.html"><b>研究方向</b><span>成果对应的三大研究方向布局</span><em>查看研究方向 &rarr;</em></a>
+          <a class="sub-rel-card" href="frontier.html"><b>学术交流</b><span>成果相关的报告、会议与合作</span><em>查看学术交流 &rarr;</em></a>
+          <a class="sub-rel-card" href="links.html"><b>资料下载</b><span>申报材料、常用表格与投稿模板</span><em>前往资料下载 &rarr;</em></a>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -299,7 +325,7 @@
     </button>
   </footer>
 
-  <script src="scripts/main.js?v=202610152130"></script>
-  <script src="scripts/animations.js?v=202610152130"></script>
+  <script src="scripts/main.js?v=202610152230"></script>
+  <script src="scripts/animations.js?v=202610152230"></script>
 </body>
 </html>

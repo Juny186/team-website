@@ -6416,3 +6416,334 @@ html.js-scene .stats-band .scene-tag i {
     bottom: 74px;
   }
 }
+
+
+/* =============================================================
+   R25 · 二级页面版式升级
+   参考：山大 nysubNav 横向子栏目条 / 西财 xxjj-bigimg 栏目大图 banner
+        东南 listBanner / 西南大学 nyLeft+nyRight 左导航右正文与 txtList
+        人大 crumbs+banner+aside / 南大 left-right 双栏补充模块
+   ============================================================= */
+
+/* ---------- ① 栏目大图 banner（西财 xxjj-bigimg / 东南 listBanner） ---------- */
+.page-hero.is-v2 {
+  padding: clamp(58px, 9vw, 112px) 0 clamp(50px, 7vw, 88px);
+  min-height: clamp(236px, 25vw, 336px);
+  isolation: isolate;
+}
+.page-hero.is-v2::before { inset: 0; opacity: 0.3; filter: blur(3px) saturate(0.86); }
+.page-hero .hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.page-hero .hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+  transform: scale(1.08);
+  animation: heroDrift 26s var(--ease) infinite alternate;
+}
+.page-hero .hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(104deg, rgba(8, 22, 40, 0.88) 0%, rgba(11, 37, 64, 0.74) 48%, rgba(176, 132, 26, 0.28) 100%);
+}
+.page-hero .hero-glow {
+  position: absolute;
+  z-index: 0;
+  width: 46vw;
+  height: 46vw;
+  right: -8vw;
+  top: -16vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 180, 90, 0.3), rgba(216, 180, 90, 0) 66%);
+  filter: blur(6px);
+  animation: heroGlow 14s ease-in-out infinite alternate;
+}
+@keyframes heroDrift {
+  from { transform: scale(1.08) translate3d(0, 0, 0); }
+  to   { transform: scale(1.16) translate3d(-2%, -1.5%, 0); }
+}
+@keyframes heroGlow {
+  from { opacity: 0.5; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0.92; transform: translate3d(-3%, 2%, 0); }
+}
+.page-hero .hero-inner { position: relative; z-index: 1; }
+.page-hero .page-title {
+  margin: 0;
+  font-family: var(--font-brush);
+  font-size: clamp(34px, 4.4vw, 58px);
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-shadow: 0 6px 26px rgba(8, 22, 40, 0.5);
+  animation: heroRise 0.9s var(--ease) both;
+}
+.page-hero .page-en {
+  margin: 8px 0 0;
+  color: #d8b45a;
+  font-size: 12px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  animation: heroRise 0.9s 0.08s var(--ease) both;
+}
+.page-hero .page-sub {
+  margin-top: var(--sp-sm);
+  max-width: 46em;
+  color: rgba(255, 255, 255, 0.86);
+  animation: heroRise 0.9s 0.16s var(--ease) both;
+}
+@keyframes heroRise {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.page-hero .hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(18px, 3vw, 44px);
+  margin-top: clamp(18px, 2.4vw, 30px);
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  animation: heroRise 0.9s 0.24s var(--ease) both;
+}
+.hero-stat { display: flex; flex-direction: column; gap: 3px; }
+.hero-stat b {
+  font-family: var(--font-brush);
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 400;
+  line-height: 1;
+  color: #f0dca4;
+}
+.hero-stat span { font-size: 12px; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.72); }
+
+/* ---------- ② 横向子栏目条（山大 nysubNav） ---------- */
+.sub-navbar {
+  position: relative;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 4px 18px rgba(8, 22, 40, 0.06);
+}
+.sub-navbar-inner {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sub-navbar-inner::-webkit-scrollbar { display: none; }
+.sub-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 14px 16px;
+  color: var(--color-text-sub);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+.sub-nav-link:hover { color: var(--color-primary); }
+.sub-nav-link.is-act { color: var(--color-primary); font-weight: 600; }
+.sub-nav-ink {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #b0841a, #d8b45a);
+  transition: transform 0.38s var(--ease), width 0.38s var(--ease);
+}
+
+/* ---------- ③ 左侧栏目卡片导航（西财 channl-menu / 西南大学 nyLeft） ---------- */
+.sub-side-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-md) var(--sp-lg);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-700));
+  color: #fff;
+}
+.sub-side-head b {
+  font-family: var(--font-brush);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+.sub-side-head i {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.sub-side-head i::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 7px;
+  width: 8px;
+  height: 2px;
+  background: #d8b45a;
+  box-shadow: 0 4px 0 #d8b45a;
+}
+.sub-menu-item > a::before {
+  left: var(--sp-lg);
+  width: 3px;
+  height: 0;
+  border-radius: 0;
+  background: #b0841a;
+  transition: height 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+.sub-menu-item > a:hover::before,
+.sub-menu-item > a.is-act::before,
+.sub-menu-item > a.active::before { height: 18px; }
+.sub-menu-item > a.active,
+.sub-menu-item > a.is-act {
+  background: var(--color-primary-50);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ---------- ④ 正文标题栏（西南大学 titr + 英文小标） ---------- */
+.content-title {
+  align-items: flex-end;
+  border-bottom: 2px solid var(--color-primary-50);
+}
+.content-title::before {
+  height: 22px;
+  background: linear-gradient(180deg, #d8b45a, #b0841a);
+}
+.content-title-en {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-neutral-400);
+}
+
+/* ---------- ⑤ 列表行（西南大学 txtList：标题 + 右对齐日期，hover 位移） ---------- */
+.list-item {
+  position: relative;
+  align-items: flex-start;
+  padding: var(--sp-md) var(--sp-sm);
+  border-bottom: 1px dashed var(--color-border);
+  transition: background-color 0.3s var(--ease), padding-left 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.list-item:hover {
+  background: var(--color-primary-50);
+  padding-left: var(--sp-md);
+  box-shadow: inset 3px 0 0 #b0841a;
+}
+.list-item:hover .list-title { color: var(--color-primary); }
+.list-title { transition: color 0.3s var(--ease); }
+.list-meta {
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---------- ⑥ 底部相关阅读（人大 aside / 南大 right 补充模块） ---------- */
+.sub-rel {
+  margin: 0 0 var(--sp-xl);
+  padding-top: var(--sp-lg);
+}
+.sub-rel-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-md);
+  padding-bottom: var(--sp-sm);
+  border-bottom: 2px solid var(--color-primary-50);
+}
+.sub-rel-head h3 {
+  margin: 0;
+  font-family: var(--font-brush);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--color-primary);
+}
+.sub-rel-head span {
+  margin-left: auto;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-neutral-400);
+}
+.sub-rel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--sp-md);
+}
+.sub-rel-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: var(--sp-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  text-decoration: none;
+  transition: transform 0.34s var(--ease), box-shadow 0.34s var(--ease), border-color 0.34s var(--ease);
+}
+.sub-rel-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #b0841a, #d8b45a);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.sub-rel-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(176, 132, 26, 0.5);
+  box-shadow: var(--shadow-md);
+}
+.sub-rel-card:hover::after { transform: scaleX(1); }
+.sub-rel-card b {
+  display: block;
+  color: var(--color-text);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+.sub-rel-card span {
+  display: block;
+  margin-top: 6px;
+  color: var(--color-text-sub);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+.sub-rel-card em {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-style: normal;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 900px) {
+  .page-hero.is-v2 { min-height: 0; }
+  .page-hero .hero-stats { gap: 18px; }
+  .hero-stat b { font-size: 26px; }
+  .sub-layout { grid-template-columns: 1fr; }
+  .list-item { flex-wrap: wrap; }
+  .list-meta { margin-left: 0; text-align: left; white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-hero .hero-bg img,
+  .page-hero .hero-glow { animation: none; }
+  .page-hero .page-title,
+  .page-hero .page-en,
+  .page-hero .page-sub,
+  .page-hero .hero-stats { animation: none; }
+}

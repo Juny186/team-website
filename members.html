@@ -7,8 +7,8 @@
   <meta name="description" content="四川文理学院信息与生物医学交叉创新团队团队成员，聚焦信息技术与生物医学交叉研究。" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <link rel="stylesheet" href="styles/main.css?v=202610152130" />
-  <link rel="stylesheet" href="styles/animations.css?v=202610152130" />
+  <link rel="stylesheet" href="styles/main.css?v=202610152230" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610152230" />
 </head>
 <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -91,8 +91,8 @@
           </div>
           <ul class="side-sub">
             <li><a href="members.html">学术带头人</a></li>
-            <li><a href="members.html">科研骨干</a></li>
-            <li><a href="members.html">在读研究生</a></li>
+            <li><a href="members.html#backbone">科研骨干</a></li>
+            <li><a href="members.html#student">在读研究生</a></li>
           </ul>
         </li>
         <li class="side-item">
@@ -155,12 +155,30 @@
 
   <main id="main">
     <!-- 页面标题区 -->
-    <section class="page-hero">
-      <div class="container">
+    <section class="page-hero is-v2">
+      <div class="hero-bg" aria-hidden="true"><img src="assets/banner/b3.jpg" alt="" /></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="container hero-inner">
         <h1 class="page-title">团队成员</h1>
+        <p class="page-en">MEMBERS</p>
         <p class="page-sub">汇聚信息技术与生物医学交叉领域的科研力量</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><b><span data-count="7">7</span></b><span>核心成员</span></div>
+          <div class="hero-stat"><b><span data-count="5">5</span></b><span>博士学位</span></div>
+          <div class="hero-stat"><b><span data-count="2">2</span></b><span>硕士学位</span></div>
+          <div class="hero-stat"><b><span data-count="30">30</span>+</b><span>参与本科生</span></div>
+        </div>
       </div>
     </section>
+    <nav class="sub-navbar" aria-label="本页栏目导航">
+      <div class="container sub-navbar-inner">
+          <a class="sub-nav-link is-act" href="#leader">学术带头人</a>
+          <a class="sub-nav-link" href="#backbone">科研骨干</a>
+          <a class="sub-nav-link" href="#student">在读研究生</a>
+        <span class="sub-nav-ink" aria-hidden="true"></span>
+      </div>
+    </nav>
 
     <!-- 东南大学「东大人物」式：环形弧环头像 + 椭圆虚线轨道 + 小头像节点切换 -->
     <section class="people-band" aria-labelledby="peopleKicker">
@@ -194,24 +212,23 @@
     <div class="container">
       <div class="sub-layout">
       <aside class="sub-side">
-        <h2 class="sub-side-title">团队成员</h2>
+        <div class="sub-side-head"><b>团队成员</b><i aria-hidden="true"></i></div>
         <ul class="sub-menu">
-          <li class="sub-menu-item"><a href="members.html" class="active">学术带头人</a></li>
-          <li class="sub-menu-item"><a href="members.html">科研骨干</a></li>
-          <li class="sub-menu-item"><a href="members.html">在读研究生</a></li>
-          <li class="sub-menu-item"><a href="members.html">毕业校友</a></li>
+          <li class="sub-menu-item"><a href="members.html#leader" class="active">学术带头人</a></li>
+          <li class="sub-menu-item"><a href="members.html#backbone">科研骨干</a></li>
+          <li class="sub-menu-item"><a href="members.html#student">在读研究生</a></li>
         </ul>
       </aside>
         <div class="sub-main">
 <div class="content-card">
-          <h2 class="content-title">学术带头人</h2>
+          <h2 class="content-title" id="leader">学术带头人<span class="content-title-en">MEMBERS</span></h2>
           <div class="member-grid"><div class="member-card">
             <span class="member-avatar" aria-hidden="true">王</span>
             <h3 class="member-name">王建国</h3>
             <span class="member-role">教授 · 团队负责人</span>
             <p class="member-info">医学人工智能、生物医学大数据<br>jianguo.wang@scuwl.edu.cn</p>
           </div></div>
-          <h3 class="content-sub">科研骨干</h3>
+          <h3 class="content-sub" id="backbone">科研骨干</h3>
           <div class="member-grid"><div class="member-card">
             <span class="member-avatar" aria-hidden="true">李</span>
             <h3 class="member-name">李文静</h3>
@@ -243,7 +260,7 @@
             <span class="member-role">讲师</span>
             <p class="member-info">统计建模</p>
           </div></div>
-          <h3 class="content-sub">在读研究生</h3>
+          <h3 class="content-sub" id="student">在读研究生</h3>
           <div class="member-grid"><div class="member-card">
             <span class="member-avatar" aria-hidden="true">周</span>
             <h3 class="member-name">周子昂</h3>
@@ -288,6 +305,16 @@
         </div>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <section class="sub-rel">
+        <div class="sub-rel-head"><h3>相关阅读</h3><span>RELATED</span></div>
+        <div class="sub-rel-grid">
+          <a class="sub-rel-card" href="about.html"><b>团队概况</b><span>团队组建背景、人员构成与研究定位</span><em>查看团队概况 &rarr;</em></a>
+          <a class="sub-rel-card" href="research.html"><b>研究方向</b><span>骨干成员各自承担的方向与分工</span><em>查看研究方向 &rarr;</em></a>
+          <a class="sub-rel-card" href="contact.html"><b>联系我们</b><span>加入团队、联合培养与合作咨询</span><em>查看联系方式 &rarr;</em></a>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -336,7 +363,7 @@
     </button>
   </footer>
 
-  <script src="scripts/main.js?v=202610152130"></script>
-  <script src="scripts/animations.js?v=202610152130"></script>
+  <script src="scripts/main.js?v=202610152230"></script>
+  <script src="scripts/animations.js?v=202610152230"></script>
 </body>
 </html>

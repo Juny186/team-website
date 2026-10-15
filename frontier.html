@@ -7,8 +7,8 @@
   <meta name="description" content="四川文理学院信息与生物医学交叉创新团队学术交流，聚焦信息技术与生物医学交叉研究。" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <link rel="stylesheet" href="styles/main.css?v=202610152130" />
-  <link rel="stylesheet" href="styles/animations.css?v=202610152130" />
+  <link rel="stylesheet" href="styles/main.css?v=202610152230" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610152230" />
 </head>
 <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -113,8 +113,8 @@
           </div>
           <ul class="side-sub">
             <li><a href="frontier.html">学术报告</a></li>
-            <li><a href="frontier.html">会议交流</a></li>
-            <li><a href="frontier.html">合作访问</a></li>
+            <li><a href="frontier.html#meeting">会议交流</a></li>
+            <li><a href="frontier.html#visit">合作访问</a></li>
           </ul>
         </li>
         <li class="side-item">
@@ -155,27 +155,44 @@
 
   <main id="main">
     <!-- 页面标题区 -->
-    <section class="page-hero">
-      <div class="container">
+    <section class="page-hero is-v2">
+      <div class="hero-bg" aria-hidden="true"><img src="assets/banner/b6.jpg" alt="" /></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="container hero-inner">
         <h1 class="page-title">学术交流</h1>
+        <p class="page-en">ACADEMY</p>
         <p class="page-sub">学术报告 · 会议交流 · 合作访问</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><b><span data-count="9">9</span></b><span>学术活动</span></div>
+          <div class="hero-stat"><b><span data-count="3">3</span></b><span>交流类别</span></div>
+          <div class="hero-stat"><b><span data-count="2">2</span></b><span>合作单位</span></div>
+        </div>
       </div>
     </section>
+    <nav class="sub-navbar" aria-label="本页栏目导航">
+      <div class="container sub-navbar-inner">
+          <a class="sub-nav-link is-act" href="#report">学术报告</a>
+          <a class="sub-nav-link" href="#meeting">会议交流</a>
+          <a class="sub-nav-link" href="#visit">合作访问</a>
+        <span class="sub-nav-ink" aria-hidden="true"></span>
+      </div>
+    </nav>
 
     <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
     <div class="container">
       <div class="sub-layout">
       <aside class="sub-side">
-        <h2 class="sub-side-title">学术交流</h2>
+        <div class="sub-side-head"><b>学术交流</b><i aria-hidden="true"></i></div>
         <ul class="sub-menu">
-          <li class="sub-menu-item"><a href="frontier.html" class="active">学术报告</a></li>
-          <li class="sub-menu-item"><a href="frontier.html">会议交流</a></li>
-          <li class="sub-menu-item"><a href="frontier.html">合作访问</a></li>
+          <li class="sub-menu-item"><a href="frontier.html#report" class="active">学术报告</a></li>
+          <li class="sub-menu-item"><a href="frontier.html#meeting">会议交流</a></li>
+          <li class="sub-menu-item"><a href="frontier.html#visit">合作访问</a></li>
         </ul>
       </aside>
         <div class="sub-main">
 <div class="content-card">
-          <h2 class="content-title">学术报告</h2>
+          <h2 class="content-title" id="report">学术报告<span class="content-title-en">ACADEMY</span></h2>
           <div class="list-item">
             <span class="list-badge">06.18</span>
             <div class="list-body">
@@ -201,7 +218,7 @@
               <p class="list-meta">苏文博 副教授<span class='sep'>·</span>西南交通大学<span class='sep'>·</span>2024</p>
             </div>
           </div>
-          <h3 class="content-sub">会议交流</h3>
+          <h3 class="content-sub" id="meeting">会议交流</h3>
           <div class="list-item">
             <span class="list-badge">07.05</span>
             <div class="list-body">
@@ -221,7 +238,7 @@
               <p class="list-meta">成都<span class='sep'>·</span>2024</p>
             </div>
           </div>
-          <h3 class="content-sub">合作访问</h3>
+          <h3 class="content-sub" id="visit">合作访问</h3>
           <div class="list-item">
             <span class="list-badge">06.25</span>
             <div class="list-body">
@@ -238,6 +255,16 @@
         </div>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <section class="sub-rel">
+        <div class="sub-rel-head"><h3>相关阅读</h3><span>RELATED</span></div>
+        <div class="sub-rel-grid">
+          <a class="sub-rel-card" href="achievements.html"><b>科研成果</b><span>交流合作催生的论文、项目与专利</span><em>查看科研成果 &rarr;</em></a>
+          <a class="sub-rel-card" href="research.html"><b>研究方向</b><span>报告与会议主题对应的研究方向</span><em>查看研究方向 &rarr;</em></a>
+          <a class="sub-rel-card" href="contact.html"><b>联系我们</b><span>来访预约、报告申请与合作洽谈</span><em>查看联系方式 &rarr;</em></a>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -286,7 +313,7 @@
     </button>
   </footer>
 
-  <script src="scripts/main.js?v=202610152130"></script>
-  <script src="scripts/animations.js?v=202610152130"></script>
+  <script src="scripts/main.js?v=202610152230"></script>
+  <script src="scripts/animations.js?v=202610152230"></script>
 </body>
 </html>

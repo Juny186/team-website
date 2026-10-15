@@ -7,8 +7,8 @@
   <meta name="description" content="四川文理学院信息与生物医学交叉创新团队联系我们，聚焦信息技术与生物医学交叉研究。" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <link rel="stylesheet" href="styles/main.css?v=202610152130" />
-  <link rel="stylesheet" href="styles/animations.css?v=202610152130" />
+  <link rel="stylesheet" href="styles/main.css?v=202610152230" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610152230" />
 </head>
 <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -155,18 +155,35 @@
 
   <main id="main">
     <!-- 页面标题区 -->
-    <section class="page-hero">
-      <div class="container">
+    <section class="page-hero is-v2">
+      <div class="hero-bg" aria-hidden="true"><img src="assets/banner/b8.jpg" alt="" /></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="container hero-inner">
         <h1 class="page-title">联系我们</h1>
+        <p class="page-en">CONTACT</p>
         <p class="page-sub">学校地址 · 地理位置 · 在线留言</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><b><span data-count="1">1</span></b><span>主基地校区</span></div>
+          <div class="hero-stat"><b><span data-count="519">519</span></b><span>塔石路门牌</span></div>
+          <div class="hero-stat"><b><span data-count="635000">635000</span></b><span>邮政编码</span></div>
+        </div>
       </div>
     </section>
+    <nav class="sub-navbar" aria-label="本页栏目导航">
+      <div class="container sub-navbar-inner">
+          <a class="sub-nav-link is-act" href="#info">联系方式</a>
+          <a class="sub-nav-link" href="#map">地理位置</a>
+          <a class="sub-nav-link" href="#msg">在线留言</a>
+        <span class="sub-nav-ink" aria-hidden="true"></span>
+      </div>
+    </nav>
 
     <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
     <div class="container">
       <div class="sub-layout">
       <aside class="sub-side">
-        <h2 class="sub-side-title">联系我们</h2>
+        <div class="sub-side-head"><b>联系我们</b><i aria-hidden="true"></i></div>
         <ul class="sub-menu">
           <li class="sub-menu-item"><a href="contact.html#info" class="active">联系方式</a></li>
           <li class="sub-menu-item"><a href="contact.html#map">地理位置</a></li>
@@ -175,7 +192,7 @@
       </aside>
         <div class="sub-main">
 <div class="content-card" id="info">
-          <h2 class="content-title">联系方式</h2>
+          <h2 class="content-title">联系方式<span class="content-title-en">CONTACT</span></h2>
           <div class="contact-grid contact-grid-single">
             <div class="contact-item">
               <span class="dl-icon" aria-hidden="true">地址</span>
@@ -229,6 +246,16 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <section class="sub-rel">
+        <div class="sub-rel-head"><h3>相关阅读</h3><span>RELATED</span></div>
+        <div class="sub-rel-grid">
+          <a class="sub-rel-card" href="links.html"><b>资料下载</b><span>来访登记表等常用表格在此下载</span><em>前往资料下载 &rarr;</em></a>
+          <a class="sub-rel-card" href="about.html"><b>团队概况</b><span>了解团队定位与支撑平台条件</span><em>查看团队概况 &rarr;</em></a>
+          <a class="sub-rel-card" href="members.html"><b>团队成员</b><span>按方向联系对应的团队老师</span><em>查看团队成员 &rarr;</em></a>
+        </div>
+      </section>
+    </div>
   </main>
 
   <!-- 页脚 -->
@@ -276,7 +303,7 @@
     </button>
   </footer>
 
-  <script src="scripts/main.js?v=202610152130"></script>
-  <script src="scripts/animations.js?v=202610152130"></script>
+  <script src="scripts/main.js?v=202610152230"></script>
+  <script src="scripts/animations.js?v=202610152230"></script>
 </body>
 </html>

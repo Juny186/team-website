@@ -1690,6 +1690,97 @@
   }
 
   /* =============================================================
+     R25 · 二级页面版式：横向子栏目条（山大 nysubNav）+ 左导航联动
+     + 栏目大图 banner 视差（西财 xxjj-bigimg / 东南 listBanner）
+     ============================================================= */
+  function initSubPage() {
+    var bar = document.querySelector(".sub-navbar");
+    if (!bar) return;
+
+    var links = Array.prototype.slice.call(bar.querySelectorAll(".sub-nav-link"));
+    var ink = bar.querySelector(".sub-nav-ink");
+    var sideLinks = Array.prototype.slice.call(document.querySelectorAll(".sub-menu a"));
+    var heroBg = document.querySelector(".page-hero.is-v2 .hero-bg");
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!links.length) return;
+
+    var secs = links.map(function (a) {
+      var href = a.getAttribute("href") || "";
+      if (href.charAt(0) !== "#") return null;
+      return document.getElementById(href.slice(1));
+    });
+
+    function moveInk(a) {
+      if (!ink || !a) return;
+      ink.style.width = a.offsetWidth + "px";
+      ink.style.transform = "translateX(" + a.offsetLeft + "px)";
+    }
+
+    function setAct(i) {
+      links.forEach(function (a, k) {
+        if (k === i) a.classList.add("is-act");
+        else a.classList.remove("is-act");
+      });
+      var cur = links[i];
+      moveInk(cur);
+      if (!cur) return;
+      var href = cur.getAttribute("href") || "";
+      sideLinks.forEach(function (b) {
+        var h = b.getAttribute("href") || "";
+        var hit = href && h.indexOf(href) >= 0;
+        if (hit) b.classList.add("is-act");
+        else b.classList.remove("is-act");
+      });
+    }
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        ticking = false;
+        var line = 180;
+        var idx = 0;
+        for (var i = 0; i < secs.length; i++) {
+          var el = secs[i];
+          if (!el) continue;
+          if (el.getBoundingClientRect().top <= line) idx = i;
+        }
+        setAct(idx);
+        if (heroBg && !reduced) {
+          var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+          heroBg.style.transform = "translate3d(0," + (y * 0.12).toFixed(1) + "px,0)";
+        }
+      });
+    }
+
+    links.forEach(function (a, i) {
+      a.addEventListener("click", function (e) {
+        var href = a.getAttribute("href") || "";
+        if (href.charAt(0) !== "#") return;
+        var el = document.getElementById(href.slice(1));
+        if (!el) return;
+        e.preventDefault();
+        var top = el.getBoundingClientRect().top + (window.pageYOffset || 0) - 96;
+        if (window.scrollTo) {
+          window.scrollTo({ top: top, behavior: reduced ? "auto" : "smooth" });
+        } else {
+          window.scrollTo(0, top);
+        }
+        setAct(i);
+      });
+    });
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", function () {
+      moveInk(bar.querySelector(".sub-nav-link.is-act"));
+    });
+
+    setAct(0);
+    onScroll();
+  }
+
+  /* =============================================================
      人大「今日人大」式：今日团队（头条轮播 + 动态列表 + 专题推荐）
      ============================================================= */
   function initToday() {
@@ -2319,6 +2410,7 @@
     initPeopleBand();
     initMapBand();
     initFooter();
+    initSubPage();
     initToday();
     initLectures();
     initStagger();

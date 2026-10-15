@@ -7,8 +7,8 @@
   <meta name="description" content="四川文理学院信息与生物医学交叉创新团队研究方向，聚焦信息技术与生物医学交叉研究。" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <link rel="stylesheet" href="styles/main.css?v=202610152130" />
-  <link rel="stylesheet" href="styles/animations.css?v=202610152130" />
+  <link rel="stylesheet" href="styles/main.css?v=202610152230" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610152230" />
 </head>
 <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -155,20 +155,38 @@
 
   <main id="main">
     <!-- 页面标题区 -->
-    <section class="page-hero">
-      <div class="container">
+    <section class="page-hero is-v2">
+      <div class="hero-bg" aria-hidden="true"><img src="assets/banner/b2.jpg" alt="" /></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="container hero-inner">
         <h1 class="page-title">研究方向</h1>
+        <p class="page-en">RESEARCH</p>
         <p class="page-sub">聚焦信息技术与生物医学交叉的前沿研究方向</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><b><span data-count="3">3</span></b><span>研究方向</span></div>
+          <div class="hero-stat"><b><span data-count="50">50</span>+</b><span>高水平论文</span></div>
+          <div class="hero-stat"><b><span data-count="18">18</span></b><span>科研项目</span></div>
+        </div>
       </div>
     </section>
+    <nav class="sub-navbar" aria-label="本页栏目导航">
+      <div class="container sub-navbar-inner">
+          <a class="sub-nav-link is-act" href="#overview">方向总览</a>
+          <a class="sub-nav-link" href="#dir1">分子机制与靶标</a>
+          <a class="sub-nav-link" href="#dir2">医学与农业生信</a>
+          <a class="sub-nav-link" href="#dir3">干细胞与材料转化</a>
+        <span class="sub-nav-ink" aria-hidden="true"></span>
+      </div>
+    </nav>
 
     <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
     <div class="container">
       <div class="sub-layout">
       <aside class="sub-side">
-        <h2 class="sub-side-title">研究方向</h2>
+        <div class="sub-side-head"><b>研究方向</b><i aria-hidden="true"></i></div>
         <ul class="sub-menu">
-          <li class="sub-menu-item"><a href="research.html" class="active">方向总览</a></li>
+          <li class="sub-menu-item"><a href="research.html#overview" class="active">方向总览</a></li>
           <li class="sub-menu-item"><a href="research.html#dir1">疾病分子机制解析与诊疗靶标发现</a></li>
           <li class="sub-menu-item"><a href="research.html#dir2">医学与农业生物信息学</a></li>
           <li class="sub-menu-item"><a href="research.html#dir3">干细胞与生物医学材料的转化医学研究</a></li>
@@ -176,7 +194,8 @@
       </aside>
         <div class="sub-main">
 <div class="content-card">
-          <h2 class="content-title">研究方向</h2>
+          <h2 class="content-title">研究方向<span class="content-title-en">RESEARCH</span></h2>
+          <div id="overview"></div>
           <p class="dir-lead">团队围绕疾病分子机制解析与靶标发现、医学与农业相关的生物信息领域、干细胞与生物医学材料的转化医学三大方向开展研究，形成"机制解析 — 数据挖掘 — 转化应用"贯通的研究布局。</p>
           <div class="dir-flow">
 
@@ -220,6 +239,16 @@
         </div>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <section class="sub-rel">
+        <div class="sub-rel-head"><h3>相关阅读</h3><span>RELATED</span></div>
+        <div class="sub-rel-grid">
+          <a class="sub-rel-card" href="about.html"><b>团队概况</b><span>团队定位、研究目标与拟解决的关键科学问题</span><em>查看团队概况 &rarr;</em></a>
+          <a class="sub-rel-card" href="achievements.html"><b>科研成果</b><span>方向相关的论文、项目与专利软著产出</span><em>查看科研成果 &rarr;</em></a>
+          <a class="sub-rel-card" href="frontier.html"><b>学术交流</b><span>学术报告、会议交流与对外合作访问</span><em>查看学术交流 &rarr;</em></a>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -268,7 +297,7 @@
     </button>
   </footer>
 
-  <script src="scripts/main.js?v=202610152130"></script>
-  <script src="scripts/animations.js?v=202610152130"></script>
+  <script src="scripts/main.js?v=202610152230"></script>
+  <script src="scripts/animations.js?v=202610152230"></script>
 </body>
 </html>
