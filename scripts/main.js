@@ -995,6 +995,214 @@
   }
 
   /* =============================================================
+     十四轮：滚动换页引擎
+     板块随滚动做「由下浮入 → 居中 → 上推移出」的连续过渡，
+     配合幕布收起、章节题签与整页底色平滑切换，形成翻页观感。
+     ============================================================= */
+  var TONE_MAP = {
+    "stats-band": "#0b2540",
+    "typewriter-band": "#13365c",
+    "join-band": "#0b2540",
+    "quick-band": "#113055",
+    "focus-band": "#f7fafd",
+    "dir-band": "#fffdf7",
+    "plat-band": "#f2f7fc",
+    "notice-band": "#e6eff8",
+    "main-col": "#fbfaf5",
+    "mile-band": "#f4f8fc",
+    "achv-band": "#fdfbf5",
+    "map-band": "#f2f7fc",
+    "exch-band": "#fbfaf6",
+    "gallery-band": "#ffffff",
+  };
+
+  function initSceneSwap() {
+    var host = document.querySelector("main");
+    if (!host) return;
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || window.innerWidth < 900) return;
+
+    var scenes = Array.prototype.slice
+      .call(host.children)
+      .filter(function (el) {
+        return (
+          el.tagName === "SECTION" ||
+          el.classList.contains("main-col")
+        ) && !el.classList.contains("banner") &&
+          !el.classList.contains("breadcrumb");
+      });
+    if (!scenes.length) return;
+    document.documentElement.classList.add("js-scene");
+
+    var bg = document.getElementById("pageBg");
+
+    scenes.forEach(function (sc, i) {
+      sc.classList.add("scene");
+
+      // 幕布：未进入时覆盖，进入后由下往上收起
+      var cur = document.createElement("i");
+      cur.className = "scene-curtain";
+      cur.setAttribute("aria-hidden", "true");
+      sc.insertBefore(cur, sc.firstChild);
+
+      // 章节题签：序号 + 板块名
+      var tag = document.createElement("span");
+      tag.className = "scene-tag";
+      tag.setAttribute("aria-hidden", "true");
+      var no = i + 1;
+      tag.innerHTML =
+        "<b>" + (no < 10 ? "0" + no : no) + "</b><i>" + sceneLabel(sc) + "</i>";
+      sc.appendChild(tag);
+    });
+
+    function sceneLabel(sc) {
+      var t =
+        sc.querySelector(".plat-title") ||
+        sc.querySelector(".block-title") ||
+        sc.querySelector(".map-title") ||
+        sc.querySelector(".notice-title") ||
+        sc.querySelector("h2") ||
+        sc.querySelector("h3");
+      if (t) return t.textContent.trim().replace(/\s+/g, "");
+      var aria = sc.getAttribute("aria-label") || sc.getAttribute("aria-labelledby");
+      return aria ? aria.trim() : "";
+    }
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      var lead = null;
+
+      for (var i = 0; i < scenes.length; i++) {
+        var sc = scenes[i];
+        var r = sc.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) continue;
+
+        // 进入：板块顶部进入视口下沿算起
+        var enter = (vh - r.top) / Math.min(vh * 0.66, Math.max(r.height * 0.45, 300));
+        enter = enter < 0 ? 0 : enter > 1 ? 1 : enter;
+
+        // 移出：已滚过视口中线之后逐步淡出上移
+        var leave = (-r.top - r.height * 0.5) / (vh * 0.72);
+        leave = leave < 0 ? 0 : leave > 1 ? 1 : leave;
+
+        var ty = -30 * (1 - enter) - 26 * leave;
+        var s = 1 - 0.018 * (1 - enter) - 0.026 * leave;
+        var o = 1 - 0.42 * (1 - enter) - 0.5 * leave;
+
+        var st = sc.style;
+        st.setProperty("--sc-y", ty.toFixed(2) + "px");
+        st.setProperty("--sc-s", s.toFixed(4));
+        st.setProperty("--sc-o", o.toFixed(3));
+        st.setProperty("--sc-cur", (1 - enter).toFixed(3));
+        st.setProperty("--sc-tag", (enter > 0.55 && leave < 0.4 ? 1 : 0).toFixed(0));
+
+        // 视口 38% 处的板块决定整页底色
+        if (r.top <= vh * 0.38 && r.bottom >= vh * 0.38) lead = sc;
+      }
+
+      if (bg && lead) {
+        var key = lead.classList[0];
+        var tone = lead.getAttribute("data-tone") || TONE_MAP[key] || "#ffffff";
+        if (tone !== bg.getAttribute("data-cur")) {
+          bg.setAttribute("data-cur", tone);
+          bg.style.background = tone;
+        }
+      }
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+
+  /* =============================================================
+     十四轮：大事记时间轴（轴线随滚动生长 + 节点逐个点亮）
+     ============================================================= */
+  function initMilestone() {
+    var list = document.getElementById("mileList");
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll(".mile-item"));
+    if (!items.length) return;
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              en.target.classList.add("lit");
+              io.unobserve(en.target);
+            }
+          });
+        },
+        { threshold: 0.35, rootMargin: "0px 0px -8% 0px" }
+      );
+      items.forEach(function (it) {
+        io.observe(it);
+      });
+    } else {
+      items.forEach(function (it) {
+        it.classList.add("lit");
+      });
+    }
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var r = list.getBoundingClientRect();
+      var p = (window.innerHeight * 0.62 - r.top) / Math.max(r.height, 1);
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      list.style.setProperty("--axis", p.toFixed(3));
+    }
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+
+  /* =============================================================
+     十四轮：科研成果分类切换
+     ============================================================= */
+  function initAchvTabs() {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".achv-tab"));
+    if (!tabs.length) return;
+    var panels = Array.prototype.slice.call(
+      document.querySelectorAll(".achv-panel")
+    );
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var key = tab.getAttribute("data-tab");
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        panels.forEach(function (p) {
+          var on = p.getAttribute("data-panel") === key;
+          p.hidden = !on;
+          p.classList.remove("active");
+          if (on) {
+            void p.offsetWidth;
+            p.classList.add("active");
+          }
+        });
+      });
+    });
+  }
+
+  /* =============================================================
      初始化（DOM 就绪后执行）
      ============================================================= */
   function init() {
@@ -1020,6 +1228,9 @@
     initStagger();
     initHeadReveal();
     initMapPoints();
+    initSceneSwap();
+    initMilestone();
+    initAchvTabs();
   }
 
   if (document.readyState === "loading") {
