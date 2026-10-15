@@ -104,6 +104,46 @@
   }
 
   /* =============================================================
+     走进团队：三色立体板块（悬停/点击/键盘横向展开）
+     ============================================================= */
+  function initFocusPanels() {
+    const band = document.getElementById("focusBand");
+    if (!band) return;
+
+    const panels = Array.prototype.slice.call(
+      band.querySelectorAll(".focus-panel")
+    );
+    if (panels.length === 0) return;
+
+    function activate(target) {
+      panels.forEach(function (panel) {
+        const isActive = panel === target;
+        panel.classList.toggle("active", isActive);
+        panel.setAttribute("aria-expanded", isActive ? "true" : "false");
+      });
+    }
+
+    panels.forEach(function (panel) {
+      panel.addEventListener("click", function (e) {
+        // 已展开面板内的链接正常跳转
+        if (panel.classList.contains("active") && e.target.closest("a")) return;
+        activate(panel);
+      });
+      panel.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        if (e.target.closest("a")) return;
+        e.preventDefault();
+        activate(panel);
+      });
+      if (window.matchMedia("(hover: hover)").matches) {
+        panel.addEventListener("mouseenter", function () {
+          activate(panel);
+        });
+      }
+    });
+  }
+
+  /* =============================================================
      移动端侧边抽屉导航
      ============================================================= */
   function initSidebar() {
@@ -311,6 +351,7 @@
      ============================================================= */
   function init() {
     initBanner();
+    initFocusPanels();
     initSidebar();
     initMoreLinks();
     initPlaceholderActions();

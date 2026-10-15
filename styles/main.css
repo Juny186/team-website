@@ -2067,3 +2067,261 @@ img {
 @media (max-width: 700px) {
   .map-frame { height: 280px; }
 }
+
+/* ===================== 走进团队：三色立体板块 ===================== */
+.focus-band {
+  margin: var(--sp-xl) 0;
+}
+
+.focus-row {
+  display: flex;
+  height: 380px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.focus-panel {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  cursor: pointer;
+  overflow: hidden;
+  color: var(--color-white);
+  transition: flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  outline-offset: -3px;
+}
+
+.focus-panel.active {
+  flex-grow: 4.2;
+  cursor: default;
+}
+
+.focus-panel:focus-visible {
+  outline: 3px solid var(--color-focus);
+}
+
+/* 三色：深蓝 / 中蓝 / 校徽红（背景叠校园照片纹理） */
+.fp-science {
+  background:
+    linear-gradient(rgba(18, 58, 99, 0.82), rgba(18, 58, 99, 0.9)),
+    url("../assets/banner/b2.jpg") center / cover no-repeat;
+}
+.fp-talent {
+  background:
+    linear-gradient(rgba(26, 74, 122, 0.82), rgba(26, 74, 122, 0.9)),
+    url("../assets/banner/b3.jpg") center / cover no-repeat;
+}
+.fp-service {
+  background:
+    linear-gradient(rgba(158, 27, 27, 0.82), rgba(158, 27, 27, 0.9)),
+    url("../assets/banner/b1.jpg") center / cover no-repeat;
+}
+
+/* 收起态：竖排标题条 */
+.focus-strip {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.focus-name {
+  margin: 0;
+  writing-mode: vertical-rl;
+  letter-spacing: 8px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.focus-en {
+  writing-mode: vertical-rl;
+  font-size: 0.68rem;
+  letter-spacing: 3px;
+  opacity: 0.65;
+  text-transform: uppercase;
+}
+
+.focus-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  border-radius: var(--radius-full);
+}
+
+/* 展开态：正文内容 */
+.focus-body {
+  position: absolute;
+  inset: 0;
+  padding: 30px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(14px);
+  transition: opacity 0.3s ease 0.12s, transform 0.35s ease 0.12s, visibility 0s 0.3s;
+}
+
+.focus-panel.active .focus-body {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.35s ease 0.22s, transform 0.4s ease 0.22s;
+}
+
+.focus-panel.active .focus-strip {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.focus-heading {
+  margin: 0;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+}
+
+.focus-desc {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 560px;
+}
+
+.focus-list {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+.focus-list li {
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.focus-list a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 2px;
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: padding-left var(--dur-base) var(--ease);
+}
+
+.focus-list a:hover {
+  padding-left: 10px;
+}
+
+.focus-date {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  letter-spacing: 1px;
+}
+
+.focus-more {
+  align-self: flex-start;
+  margin-top: 6px;
+  color: var(--color-white);
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  padding-bottom: 2px;
+}
+
+.focus-more:hover {
+  border-bottom-color: var(--color-white);
+}
+
+@media (max-width: 860px) {
+  .focus-row {
+    flex-direction: column;
+    height: auto;
+  }
+  .focus-panel {
+    min-height: 64px;
+    flex-grow: 0;
+  }
+  .focus-panel.active {
+    flex-grow: 0;
+    min-height: 360px;
+  }
+  .focus-strip {
+    position: static;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 18px 20px;
+  }
+  .focus-name,
+  .focus-en {
+    writing-mode: horizontal-tb;
+    letter-spacing: 4px;
+  }
+  .focus-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .focus-body {
+    position: static;
+    padding: 4px 20px 24px;
+  }
+}
+
+/* ===================== 新闻区：头条 + 列表排版 ===================== */
+.news-item.news-featured {
+  display: block;
+  padding-bottom: var(--sp-md);
+  margin-bottom: var(--sm-md, var(--sp-md));
+  border-bottom: 1px solid var(--color-border);
+}
+
+.news-featured .news-thumb {
+  display: block;
+  margin: 0 0 12px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.news-featured .news-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.news-featured:hover .news-thumb img {
+  transform: scale(1.04);
+}
+
+.news-featured .news-title {
+  font-size: 1.08rem;
+  margin: 6px 0 8px;
+}
+
+.news-featured .news-brief {
+  color: var(--color-text-sub);
+  line-height: 1.75;
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.news-featured .news-tag {
+  color: var(--color-primary-400);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
