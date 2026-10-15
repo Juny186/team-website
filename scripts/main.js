@@ -1663,6 +1663,33 @@
   }
 
   /* =============================================================
+     山大式尾页：友情链接下拉 + 回到顶部
+     ============================================================= */
+  function initFooter() {
+    var box = document.getElementById("sduLinks");
+    var btn = document.getElementById("sduLinksBtn");
+    if (box && btn) {
+      btn.addEventListener("click", function () {
+        var open = box.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.addEventListener("click", function (e) {
+        if (!box.contains(e.target)) {
+          box.classList.remove("is-open");
+          btn.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+    var top = document.getElementById("toTop");
+    if (top) {
+      top.addEventListener("click", function () {
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      });
+    }
+  }
+
+  /* =============================================================
      人大「今日人大」式：今日团队（头条轮播 + 动态列表 + 专题推荐）
      ============================================================= */
   function initToday() {
@@ -2291,6 +2318,7 @@
     initStatsSlides();
     initPeopleBand();
     initMapBand();
+    initFooter();
     initToday();
     initLectures();
     initStagger();

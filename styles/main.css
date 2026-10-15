@@ -6192,3 +6192,227 @@ html.js-scene .stats-band .scene-tag i {
     display: none;
   }
 }
+
+/* =========================================================================
+   山大式尾页版式（配色沿用站点深蓝 + 金，不沿用山大红）
+   ========================================================================= */
+.sdu-footer {
+  position: relative;
+  padding: clamp(34px, 4.4vw, 56px) 0 0;
+  color: #eaf2fb;
+  background: linear-gradient(180deg, #12365c 0%, #0b2540 62%, #081c33 100%);
+  border-top: 3px solid #b0841a;
+}
+.sdu-top-row {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.1fr) minmax(280px, 1.4fr) minmax(200px, 240px);
+  gap: clamp(24px, 3.4vw, 56px);
+  align-items: center;
+  padding-bottom: clamp(24px, 3vw, 38px);
+}
+.sdu-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sdu-logo {
+  width: clamp(58px, 6vw, 78px);
+  height: auto;
+  flex: none;
+}
+.sdu-brand-text {
+  display: grid;
+  gap: 4px;
+}
+.sdu-name {
+  font-family: var(--font-brush);
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  letter-spacing: 3px;
+  color: #fff;
+  line-height: 1.2;
+}
+.sdu-name-en {
+  font-size: 0.64rem;
+  letter-spacing: 2.5px;
+  color: rgba(234, 242, 251, 0.62);
+}
+.sdu-name-sub {
+  font-size: 0.76rem;
+  letter-spacing: 2px;
+  color: #d8b45a;
+}
+.sdu-info {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px clamp(20px, 2.6vw, 40px);
+}
+.sdu-info li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+.sdu-info b {
+  flex: none;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: rgba(234, 242, 251, 0.58);
+}
+.sdu-info span {
+  color: #eaf2fb;
+}
+.sdu-info a {
+  color: #eaf2fb;
+  border-bottom: 1px dashed rgba(216, 180, 90, 0.6);
+  transition: color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.sdu-info a:hover {
+  color: #d8b45a;
+  border-color: #d8b45a;
+}
+/* 友情链接下拉 */
+.sdu-links {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  max-width: 240px;
+}
+.sdu-links-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  color: #eaf2fb;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  transition: all 0.45s var(--ease);
+}
+.sdu-links-btn:hover {
+  color: #fff;
+  background: rgba(176, 132, 26, 0.28);
+  border-color: #b0841a;
+}
+.sdu-links-btn i {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-135deg);
+  transition: transform 0.45s var(--ease);
+}
+.sdu-links.is-open .sdu-links-btn i {
+  transform: rotate(45deg);
+}
+.sdu-links-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 8px);
+  z-index: 5;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.32);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease),
+    visibility 0.4s var(--ease);
+}
+.sdu-links.is-open .sdu-links-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.sdu-links-panel a {
+  display: block;
+  padding: 9px 18px;
+  font-size: 0.82rem;
+  color: #17334f;
+  transition: all 0.35s var(--ease);
+}
+.sdu-links-panel a:hover {
+  color: #fff;
+  background: #1a4a7a;
+  padding-left: 22px;
+}
+/* 底栏 */
+.sdu-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding: 16px 0 clamp(20px, 2.6vw, 28px);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.76rem;
+  letter-spacing: 1px;
+  color: rgba(234, 242, 251, 0.68);
+}
+.sdu-bottom p {
+  margin: 0;
+}
+.sdu-bottom a {
+  color: rgba(234, 242, 251, 0.82);
+}
+.sdu-bottom a:hover {
+  color: #d8b45a;
+}
+/* 回到顶部 */
+.sdu-top-btn {
+  position: absolute;
+  right: clamp(16px, 3vw, 46px);
+  bottom: clamp(58px, 7vw, 78px);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.05rem;
+  color: #eaf2fb;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  transition: all 0.45s var(--ease);
+}
+.sdu-top-btn:hover {
+  color: #fff;
+  background: #b0841a;
+  border-color: #b0841a;
+  transform: translateY(-3px);
+}
+@media (max-width: 1100px) {
+  .sdu-top-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sdu-links {
+    grid-column: 1 / -1;
+    justify-self: start;
+    max-width: 320px;
+  }
+}
+@media (max-width: 900px) {
+  .sdu-top-row {
+    grid-template-columns: 1fr;
+  }
+  .sdu-info {
+    grid-template-columns: 1fr;
+  }
+  .sdu-top-btn {
+    bottom: 74px;
+  }
+}
