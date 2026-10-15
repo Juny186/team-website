@@ -769,14 +769,16 @@ img {
   bottom: var(--sp-md);
   z-index: 3;
   display: flex;
-  gap: var(--sp-sm);
+  align-items: center;
+  gap: 14px;
   padding: 0;
   margin: 0;
 }
 
 .banner-dot {
-  width: 16px;
-  height: 16px;
+  position: relative;
+  width: 12px;
+  height: 12px;
   margin: 0;
   padding: 0;
   border: 2px solid var(--color-white);
@@ -793,6 +795,35 @@ img {
 
 .banner-dot.active {
   background: var(--color-white);
+}
+
+/* 激活圆点的旋转进度环：一圈 = 一次轮播间隔（4s），悬停暂停时同步冻结 */
+.banner-dot.active::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  border-top-color: var(--color-white);
+  pointer-events: none;
+  animation: bannerDotSpin var(--banner-interval, 4s) linear infinite;
+}
+
+.banner-dots.paused .banner-dot.active::before {
+  animation-play-state: paused;
+}
+
+@keyframes bannerDotSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-dot.active::before {
+    animation: none;
+    border: 2px solid var(--color-white);
+  }
 }
 
 .banner-dot:focus-visible {
@@ -1167,9 +1198,26 @@ img {
    占位内页（导航子页面，后续替换真实内容）
    ============================================================= */
 .page-hero {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(135deg, var(--color-primary-700), var(--color-primary-500));
   padding: var(--sp-xl) 0;
   margin-bottom: var(--sp-xl);
+}
+
+/* 虚化校园照片纹理：让标题色带更有层次 */
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  background: url("../assets/banner/hero-texture.jpg") center 38% / cover no-repeat;
+  filter: blur(5px) saturate(0.9);
+  opacity: 0.22;
+}
+
+.page-hero > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .page-hero .page-title {

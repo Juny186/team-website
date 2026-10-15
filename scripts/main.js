@@ -61,10 +61,12 @@
 
     function restart() {
       stop();
+      dotsWrap.classList.remove("paused");
       timer = window.setInterval(next, INTERVAL);
     }
 
     function stop() {
+      dotsWrap.classList.add("paused");
       if (timer) {
         window.clearInterval(timer);
         timer = null;
