@@ -715,7 +715,7 @@ img {
   inset: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--dur-fade) var(--ease), visibility var(--dur-fade) var(--ease);
+  transition: opacity 800ms var(--ease), visibility 800ms var(--ease);
 }
 
 .banner-slide.active {
@@ -3249,5 +3249,93 @@ main [id] {
   [id].block-head,
   main [id] {
     scroll-margin-top: 84px;
+  }
+}
+
+/* =============================================================
+   续：借鉴西南大学 / 南京大学
+   5) SVG 标识逐笔描边（南大 Vivus 思路，用 JS 取真实路径长度 + CSS 动画）
+   6) 图片悬停缓慢放大（西南大学 zoomImg，全站 32 处同款手法）
+   7) 轮播可拖拽（南大 grabCursor）
+   ============================================================= */
+
+/* ---------- 5. SVG 标识描边 ---------- */
+.notice-svg {
+  position: absolute;
+  right: 2.5%;
+  top: 20px;
+  width: 168px;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 16px rgba(26, 74, 122, 0.14));
+}
+.notice-svg .draw {
+  stroke-dasharray: var(--len, 400);
+  stroke-dashoffset: var(--len, 400);
+}
+.notice-svg.drawn .draw {
+  animation: svgDraw 1.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes svgDraw {
+  to { stroke-dashoffset: 0; }
+}
+.notice-svg .fillin {
+  opacity: 0;
+}
+.notice-svg.drawn .fillin {
+  opacity: 1;
+  transition: opacity 0.9s ease 1.45s;
+}
+@media (max-width: 1080px) {
+  .notice-svg {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .notice-svg .draw {
+    stroke-dashoffset: 0;
+  }
+  .notice-svg.drawn .draw {
+    animation: none;
+  }
+  .notice-svg .fillin {
+    opacity: 1;
+  }
+}
+
+/* ---------- 6. 图片悬停缓慢放大 ---------- */
+.nf-stage {
+  overflow: hidden;
+}
+.nf-stage img,
+.nr-thumb img,
+.dir-media img {
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.nf-stage:hover .nf-slide.active img,
+.news-row:hover .nr-thumb img {
+  transform: scale(1.07);
+}
+.dir-row:hover .dir-media img,
+.dir-row-reverse:hover .dir-media img {
+  transform: scale(1.06);
+}
+
+/* ---------- 7. 轮播可拖拽 ---------- */
+.banner {
+  cursor: grab;
+}
+.banner.is-dragging {
+  cursor: grabbing;
+}
+.banner.is-dragging .banner-slide {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nf-stage img,
+  .nr-thumb img,
+  .dir-media img {
+    transition: none;
   }
 }

@@ -560,6 +560,123 @@
   }
 
   /* =============================================================
+     SVG 标识逐笔描边：进入视口后线条依次画出（南大 Vivus 思路）
+     —— 用 getTotalLength() 取真实长度，避免写死 dasharray
+     ============================================================= */
+  function initSvgDraw() {
+    var svg = document.querySelector(".notice-svg");
+    if (!svg) return;
+    var paths = Array.prototype.slice.call(svg.querySelectorAll(".draw"));
+    if (!paths.length) return;
+
+    paths.forEach(function (p, i) {
+      var len = 400;
+      if (typeof p.getTotalLength === "function") {
+        try {
+          len = Math.ceil(p.getTotalLength());
+        } catch (e) {
+          len = 400;
+        }
+      }
+      p.style.setProperty("--len", len);
+      p.style.animationDelay = Math.min(i * 70, 1200) + "ms";
+    });
+
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function draw() {
+      svg.classList.add("drawn");
+    }
+    if (reduced || !("IntersectionObserver" in window)) {
+      draw();
+      return;
+    }
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) {
+            draw();
+            io.unobserve(en.target);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(svg);
+  }
+
+  /* =============================================================
+     轮播可拖拽：按住左右拖动切换（南大 grabCursor 思路）
+     ============================================================= */
+  function initBannerDrag() {
+    var banner = document.querySelector(".banner");
+    var prev = document.getElementById("bannerPrev");
+    var next = document.getElementById("bannerNext");
+    if (!banner || !prev || !next) return;
+
+    var startX = 0;
+    var dragging = false;
+    var THRESHOLD = 60;
+
+    banner.addEventListener("pointerdown", function (e) {
+      // 忽略在按钮 / 链接上的按下
+      if (e.target.closest("button, a")) return;
+      dragging = true;
+      startX = e.clientX;
+      banner.classList.add("is-dragging");
+    });
+
+    banner.addEventListener("pointerup", function (e) {
+      if (!dragging) return;
+      dragging = false;
+      banner.classList.remove("is-dragging");
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) < THRESHOLD) return;
+      if (dx < 0) {
+        next.click();
+      } else {
+        prev.click();
+      }
+    });
+
+    banner.addEventListener("pointercancel", function () {
+      dragging = false;
+      banner.classList.remove("is-dragging");
+    });
+  }
+
+  /* =============================================================
+     统计带底图视差：滚动时背景缓慢位移（南大 parallax 思路）
+     —— 用 background-position，避免与 Ken Burns 的 transform 冲突
+     ============================================================= */
+  function initStatsParallax() {
+    var band = document.getElementById("stats");
+    var bg = band ? band.querySelector(".stats-bg") : null;
+    if (!band || !bg) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var r = band.getBoundingClientRect();
+      var vh = window.innerHeight || 1;
+      // -1（刚进入视口下方） → 1（已滚过）
+      var p = (vh - r.top) / (vh + r.height);
+      if (p < 0) p = 0;
+      if (p > 1) p = 1;
+      bg.style.backgroundPosition = "center " + (34 + p * 14).toFixed(2) + "%";
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+    update();
+  }
+
+  /* =============================================================
      初始化（DOM 就绪后执行）
      ============================================================= */
   function init() {
@@ -575,6 +692,9 @@
     initStickyHeader();
     initScrollProgress();
     initHoverDir();
+    initSvgDraw();
+    initBannerDrag();
+    initStatsParallax();
   }
 
   if (document.readyState === "loading") {
