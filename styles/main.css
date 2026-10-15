@@ -267,56 +267,33 @@ img {
   min-width: 0;
 }
 
-.brand-badge {
-  width: 46px;
+.brand-logo {
+  display: block;
   height: 46px;
-  border-radius: var(--radius-full);
-  background: var(--color-surface);
-  position: relative;
+  width: auto;
   flex-shrink: 0;
-}
-
-.brand-badge::before,
-.brand-badge::after {
-  content: "";
-  position: absolute;
-  background: var(--color-primary);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.brand-badge::before {
-  width: 22px;
-  height: 4px;
-}
-
-.brand-badge::after {
-  width: 4px;
-  height: 22px;
 }
 
 .brand-text {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-width: 0;
-}
-
-.brand-title {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--color-surface);
-  letter-spacing: 1px;
-  line-height: 1.2;
-  white-space: nowrap;
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  padding-left: 14px;
+  margin-left: 2px;
 }
 
 .brand-sub {
-  font-size: var(--text-sm);
-  color: rgba(255, 255, 255, 0.85);
-  margin-top: 2px;
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.92);
   letter-spacing: 2px;
   white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .brand-logo { height: 38px; }
+  .brand-sub { font-size: var(--text-sm); letter-spacing: 1px; }
 }
 
 /* 搜索框组件 */
