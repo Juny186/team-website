@@ -11,8 +11,8 @@
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
     <link rel="preload" href="./assets/fonts/mashanzheng-subset.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="./styles/main.css?v=202610151940" />
-    <link rel="stylesheet" href="./styles/animations.css?v=202610151940" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610152016" />
+    <link rel="stylesheet" href="./styles/animations.css?v=202610152016" />
   </head>
   <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -842,51 +842,45 @@
         </div>
       </section>
 
-      <!-- 人大式：全景团队地图带（左标题要点 + 右地图；底图仅用合规数据源） -->
+      <!-- 人大式：全景团队（全幅底图 + 左侧浮层 + 底部通道切换 + 点位卡片） -->
       <section class="map-band" id="panorama" aria-labelledby="panoTitle">
-        <div class="container map-inner">
-          <div class="map-copy">
+        <div class="map-content" id="mapContent">
+          <div class="map-canvas" id="teamMap" role="application" aria-label="团队合作网络地图"></div>
+          <div class="map-grid" id="mapGrid" aria-hidden="true">
+            <svg class="map-links" id="mapLinks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </div>
+          <div class="map-pins" id="mapPins"></div>
+
+          <div class="map-left">
             <h3 class="map-title" id="panoTitle">全景团队</h3>
             <span class="map-en">TEAM NETWORK</span>
-            <ul class="map-points">
-              <li class="is-on">
+            <ul class="map-points" id="mapViews">
+              <li class="is-act" data-index="0">
                 <b>一校多点</b>
-                <span>莲湖校区主基地，附属医院与合作企业多点协同</span>
+                <span>莲湖校区主基地统筹，附属医院与合作单位多点协同</span>
               </li>
-              <li>
-                <b>临床网络</b>
-                <span>川东北医疗机构合作，样本与验证通道贯通</span>
-              </li>
-              <li>
-                <b>数据互联</b>
-                <span>对接 NCBI 等公共数据库，成果全球可见</span>
+              <li data-index="1">
+                <b>全球战略</b>
+                <span>临床网络、公共数据与校企伙伴三类通道并行</span>
               </li>
             </ul>
           </div>
-          <div class="map-stage">
-            <div class="map-fallback" aria-hidden="true">
-              <svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg">
-                <g fill="none" stroke="#9db6cf" stroke-width="1.4" stroke-dasharray="2 6" opacity="0.85">
-                  <path d="M120 300 Q 250 140 340 216"/>
-                  <path d="M120 300 Q 260 260 396 252"/>
-                  <path d="M340 216 Q 470 130 520 176"/>
-                  <path d="M396 252 Q 500 210 540 286"/>
-                  <path d="M340 216 Q 380 300 452 330"/>
-                  <path d="M120 300 Q 240 350 452 330"/>
-                </g>
-                <g font-family="Georgia, STSong, SimSun, serif" font-size="15" fill="#17334f">
-                  <circle cx="120" cy="300" r="9" fill="#9e1b1b"/><text x="104" y="330">达州 · 主基地</text>
-                  <circle cx="340" cy="216" r="6" fill="#1a4a7a"/><text x="322" y="200">成都</text>
-                  <circle cx="396" cy="252" r="6" fill="#1a4a7a"/><text x="386" y="278">重庆</text>
-                  <circle cx="520" cy="176" r="6" fill="#1a4a7a"/><text x="508" y="162">北京</text>
-                  <circle cx="540" cy="286" r="6" fill="#1a4a7a"/><text x="530" y="312">上海</text>
-                  <circle cx="452" cy="330" r="6" fill="#1a4a7a"/><text x="436" y="356">广州</text>
-                </g>
-                <text x="320" y="398" text-anchor="middle" font-size="12" letter-spacing="4" fill="#8aa2ba">协同网络示意 · 底图加载后展示真实地图</text>
-              </svg>
-            </div>
-            <div class="map-embed" id="teamMap" role="img" aria-label="团队合作网络地图"></div>
+
+          <div class="map-bottom" id="mapTabs" hidden>
+            <button type="button" class="map-btn is-act" data-index="1">临床协作网络</button>
+            <button type="button" class="map-btn" data-index="2">公共数据互联</button>
+            <button type="button" class="map-btn" data-index="3">校企合作伙伴</button>
           </div>
+
+          <aside class="map-card" id="mapCard" aria-live="polite">
+            <button type="button" class="map-card-x" id="mapCardX" aria-label="关闭点位卡片">&times;</button>
+            <div class="map-card-media"><img id="mapCardImg" src="assets/gallery/act1.jpg" alt="" width="640" height="400" /></div>
+            <span class="map-card-tag" id="mapCardTag">主基地</span>
+            <h5 class="map-card-title" id="mapCardTitle">莲湖校区 · 主基地</h5>
+            <p class="map-card-desc" id="mapCardDesc"></p>
+          </aside>
+
+          <p class="map-note" id="mapNote"></p>
         </div>
       </section>
 
@@ -897,23 +891,17 @@
             <img src="assets/gallery/act1.jpg" alt="实验教学实训" loading="lazy" width="640" height="400" />
             <img src="assets/gallery/act2.jpg" alt="教学研讨现场" loading="lazy" width="640" height="400" />
             <img src="assets/gallery/act3.jpg" alt="实验操作指导" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b1.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b4.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b6.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b7.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b8.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/culture-bg.jpg" alt="" loading="lazy" width="640" height="400" />
+            <img src="assets/gallery/act1.jpg" alt="" aria-hidden="true" loading="lazy" width="640" height="400" />
+            <img src="assets/gallery/act2.jpg" alt="" aria-hidden="true" loading="lazy" width="640" height="400" />
+            <img src="assets/gallery/act3.jpg" alt="" aria-hidden="true" loading="lazy" width="640" height="400" />
           </div>
           <div class="gallery-seg">
             <img src="assets/gallery/act1.jpg" alt="实验教学实训" loading="lazy" width="640" height="400" />
             <img src="assets/gallery/act2.jpg" alt="教学研讨现场" loading="lazy" width="640" height="400" />
             <img src="assets/gallery/act3.jpg" alt="实验操作指导" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b1.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b4.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b6.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b7.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/banner/b8.jpg" alt="" loading="lazy" width="640" height="400" />
-            <img src="assets/culture-bg.jpg" alt="" loading="lazy" width="640" height="400" />
+            <img src="assets/gallery/act1.jpg" alt="" aria-hidden="true" loading="lazy" width="640" height="400" />
+            <img src="assets/gallery/act2.jpg" alt="" aria-hidden="true" loading="lazy" width="640" height="400" />
+            <img src="assets/gallery/act3.jpg" alt="" aria-hidden="true" loading="lazy" width="640" height="400" />
           </div>
         </div>
       </section>
@@ -1027,8 +1015,9 @@
       </div>
     </footer>
 
-    <script src="./scripts/main.js?v=202610151940"></script>
+    <script src="./scripts/map-config.js?v=202610152016"></script>
+    <script src="./scripts/main.js?v=202610152016"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610151940"></script>
+    <script src="./scripts/animations.js?v=202610152016"></script>
   </body>
 </html>

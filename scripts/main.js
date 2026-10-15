@@ -884,62 +884,426 @@
   }
 
   /* =============================================================
-     人大式：全景团队地图（合规底图：腾讯地图 GL JS，需自备密钥；
-     密钥未配置时回退为纯示意网络图，不绘制任何边界）
+     人大式：全景团队地图
+     版式：全幅底图 + 左侧浮层（一校多点 / 全球战略）+ 底部通道切换 + 点位卡片
+     底图：百度地图 WebGL（与人大官网同款），ak 在 scripts/map-config.js 配置
+     未配置 ak 时回退为「真实经纬度投影 + 经纬网」的合规点位图，
+     不绘制任何行政边界；切换与卡片交互与底图模式完全一致
      ============================================================= */
+  var MAP_SETS = {
+    0: {
+      center: [107.5022, 31.2096],
+      zoom: 7,
+      points: [
+        {
+          n: "莲湖校区 · 主基地", lng: 107.5022, lat: 31.2096, tag: "主基地", main: true,
+          img: "assets/gallery/act1.jpg",
+          d: "团队实验与数据中枢：课题组织、样本入库、算力调度与成果汇总均在此完成。"
+        },
+        {
+          n: "附属医院 · 临床通道", lng: 107.05, lat: 30.72, tag: "临床",
+          img: "assets/gallery/act2.jpg",
+          d: "承担样本采集与临床验证，形成「实验—临床」双向反馈闭环。"
+        },
+        {
+          n: "成都 · 联合实验", lng: 104.0665, lat: 30.5728, tag: "协作",
+          img: "assets/gallery/act3.jpg",
+          d: "共享大型仪器与测序资源，联合开展方法学验证实验。"
+        },
+        {
+          n: "重庆 · 样本协作", lng: 106.5516, lat: 29.563, tag: "协作",
+          img: "assets/gallery/act1.jpg",
+          d: "区域样本转运与并行检测，显著缩短验证周期。"
+        }
+      ]
+    },
+    1: {
+      center: [107.5, 30.9],
+      zoom: 6,
+      points: [
+        {
+          n: "莲湖校区 · 主基地", lng: 107.5022, lat: 31.2096, tag: "主基地", main: true,
+          img: "assets/gallery/act2.jpg",
+          d: "统一调度临床协作网络，负责伦理审批、样本编码与数据回收。"
+        },
+        {
+          n: "达州 · 区域医疗中心", lng: 107.05, lat: 30.72, tag: "临床",
+          img: "assets/gallery/act3.jpg",
+          d: "主要样本来源地，承担入组筛查与随访记录。"
+        },
+        {
+          n: "南充 · 随访站点", lng: 106.1106, lat: 30.8372, tag: "随访",
+          img: "assets/gallery/act1.jpg",
+          d: "长周期随访与结局指标采集，补齐纵向数据。"
+        },
+        {
+          n: "广安 · 协作采集点", lng: 106.6333, lat: 30.4559, tag: "采集",
+          img: "assets/gallery/act2.jpg",
+          d: "基层筛查协作，扩大样本覆盖面。"
+        },
+        {
+          n: "重庆 · 三甲协作", lng: 106.5516, lat: 29.563, tag: "临床",
+          img: "assets/gallery/act3.jpg",
+          d: "疑难病例会诊与多中心验证合作。"
+        }
+      ]
+    },
+    2: {
+      center: [113.5, 31],
+      zoom: 5,
+      points: [
+        {
+          n: "莲湖校区 · 主基地", lng: 107.5022, lat: 31.2096, tag: "主基地", main: true,
+          img: "assets/gallery/act1.jpg",
+          d: "统一出口：数据上传前的质控、脱敏与元数据整理。"
+        },
+        {
+          n: "北京 · 学术合作", lng: 116.4074, lat: 39.9042, tag: "学术",
+          img: "assets/gallery/act2.jpg",
+          d: "联合课题与学术互访，共享方法学与评审资源。"
+        },
+        {
+          n: "上海 · 测序服务", lng: 121.4737, lat: 31.2304, tag: "平台",
+          img: "assets/gallery/act3.jpg",
+          d: "高通量测序外包与联合分析，补齐本地算力缺口。"
+        },
+        {
+          n: "广州 · 转化平台", lng: 113.2644, lat: 23.1291, tag: "转化",
+          img: "assets/gallery/act1.jpg",
+          d: "成果转化对接，推动方法走向应用场景。"
+        },
+        {
+          n: "深圳 · 算力协作", lng: 114.0579, lat: 22.5431, tag: "算力",
+          img: "assets/gallery/act2.jpg",
+          d: "弹性算力支撑大规模建模与训练任务。"
+        }
+      ]
+    },
+    3: {
+      center: [110, 30.5],
+      zoom: 6,
+      points: [
+        {
+          n: "莲湖校区 · 主基地", lng: 107.5022, lat: 31.2096, tag: "主基地", main: true,
+          img: "assets/gallery/act3.jpg",
+          d: "校企联合课题的组织方，负责需求拆解与成果归属约定。"
+        },
+        {
+          n: "成都 · 联合实验室", lng: 104.0665, lat: 30.5728, tag: "共建",
+          img: "assets/gallery/act1.jpg",
+          d: "共建实验室，联合申报项目与培养工程型人才。"
+        },
+        {
+          n: "重庆 · 中试基地", lng: 106.5516, lat: 29.563, tag: "中试",
+          img: "assets/gallery/act2.jpg",
+          d: "中试放大与工艺验证，缩短从样品到产品的距离。"
+        },
+        {
+          n: "西安 · 仪器共享", lng: 108.9398, lat: 34.3416, tag: "共享",
+          img: "assets/gallery/act3.jpg",
+          d: "大型仪器共享预约，降低单次检测成本。"
+        },
+        {
+          n: "武汉 · 试剂供应", lng: 114.3055, lat: 30.5928, tag: "供应",
+          img: "assets/gallery/act1.jpg",
+          d: "试剂与耗材稳定供应，保障实验连续性。"
+        }
+      ]
+    }
+  };
+
   function initMapBand() {
-    var mount = document.getElementById("teamMap");
-    if (!mount) return;
-    var KEY_PLACEHOLDER =
-      "请到腾讯位置服务开放平台申请自己的密钥并替换此占位符";
-    function fallback() {
-      mount.classList.add("is-fallback");
+    var content = document.getElementById("mapContent");
+    var canvas = document.getElementById("teamMap");
+    if (!content || !canvas) return;
+    var pinsBox = document.getElementById("mapPins");
+    var links = document.getElementById("mapLinks");
+    var grid = document.getElementById("mapGrid");
+    var tabs = document.getElementById("mapTabs");
+    var views = document.getElementById("mapViews");
+    var card = document.getElementById("mapCard");
+    var note = document.getElementById("mapNote");
+    if (!pinsBox || !links || !grid || !views || !card) return;
+
+    var cfg = window.WB_MAP_CONFIG || {};
+    var ak = String(cfg.ak || "").trim();
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var state = { idx: 0, mode: "grid", bmap: null, overlays: [] };
+
+    /* ---------- 点位卡片 ---------- */
+    function closeCard() {
+      card.classList.remove("is-open");
     }
-    if (!window.TMap && !window.__WB_TMAP_PROXY__) {
-      // 静态站点：无本地代理且未配置密钥时保持示意网络图
-      if (
-        typeof KEY_PLACEHOLDER === "string" &&
-        KEY_PLACEHOLDER.indexOf("请到") === 0
-      ) {
-        fallback();
-        return;
-      }
+    function openCard(p) {
+      var img = document.getElementById("mapCardImg");
+      if (img && p.img) img.setAttribute("src", p.img);
+      var tagEl = document.getElementById("mapCardTag");
+      var titleEl = document.getElementById("mapCardTitle");
+      var descEl = document.getElementById("mapCardDesc");
+      if (tagEl) tagEl.textContent = p.tag || "协作点";
+      if (titleEl) titleEl.textContent = p.n || "";
+      if (descEl) descEl.textContent = p.d || "";
+      card.classList.add("is-open");
     }
-    // 已配置真实密钥时动态加载 SDK（不阻塞页面）
-    var s = document.createElement("script");
-    s.src = "https://map.qq.com/api/gljs?v=1.exp&key=" + KEY_PLACEHOLDER;
-    s.async = true;
-    s.onerror = fallback;
-    s.onload = function () {
-      try {
-        var map = new TMap.Map(mount, {
-          zoom: 5,
-          center: new TMap.LatLng(30.6, 107.5),
-          baseMap: { type: "vector" },
-        });
-        var pts = [
-          { lat: 31.21, lng: 107.5, name: "达州 · 主基地" },
-          { lat: 30.66, lng: 104.07, name: "成都" },
-          { lat: 29.56, lng: 106.55, name: "重庆" },
-          { lat: 39.9, lng: 116.4, name: "北京" },
-          { lat: 31.23, lng: 121.47, name: "上海" },
-          { lat: 23.13, lng: 113.26, name: "广州" },
-        ];
-        new TMap.MultiMarker({
-          map: map,
-          geometries: pts.map(function (p, i) {
-            return {
-              id: String(i),
-              position: new TMap.LatLng(p.lat, p.lng),
-            };
-          }),
-        });
-        mount.classList.add("is-ready");
-      } catch (e) {
-        fallback();
+    var closeBtn = document.getElementById("mapCardX");
+    if (closeBtn) closeBtn.addEventListener("click", closeCard);
+
+    /* ---------- 经纬度投影（回退底图用） ---------- */
+    function computeBox(pts, aspect) {
+      var minLng = 180, maxLng = -180, minLat = 90, maxLat = -90;
+      pts.forEach(function (p) {
+        if (p.lng < minLng) minLng = p.lng;
+        if (p.lng > maxLng) maxLng = p.lng;
+        if (p.lat < minLat) minLat = p.lat;
+        if (p.lat > maxLat) maxLat = p.lat;
+      });
+      var rawLng = maxLng - minLng;
+      var rawLat = maxLat - minLat;
+      var padLngW = Math.max(4.0, rawLng * 0.55);
+      var padLngE = Math.max(2.4, rawLng * 0.22);
+      var padLatN = Math.max(1.4, rawLat * 0.28);
+      var padLatS = Math.max(1.4, rawLat * 0.28);
+      return {
+        lngMin: minLng - padLngW,
+        latMax: maxLat + padLatN,
+        lngSpan: rawLng + padLngW + padLngE,
+        latSpan: rawLat + padLatN + padLatS
+      };
+    }
+    function project(lng, lat, box) {
+      return {
+        x: ((lng - box.lngMin) / box.lngSpan) * 100,
+        y: ((box.latMax - lat) / box.latSpan) * 100
+      };
+    }
+
+    function renderGrid() {
+      var set = MAP_SETS[state.idx];
+      var rect = content.getBoundingClientRect();
+      var aspect = Math.max(0.5, rect.width / Math.max(1, rect.height));
+      var box = computeBox(set.points, aspect);
+      var lngMin = box.lngMin;
+      var latMax = box.latMax;
+      var latMin = latMax - box.latSpan;
+      var stepLng = box.lngSpan > 24 ? 10 : box.lngSpan > 11 ? 5 : 2;
+      var stepLat = box.latSpan > 16 ? 10 : box.latSpan > 8 ? 5 : 2;
+      var firstLng = Math.ceil(lngMin / stepLng) * stepLng;
+      var firstLat = Math.ceil(latMin / stepLat) * stepLat;
+      grid.style.backgroundImage =
+        "linear-gradient(90deg, rgba(150,190,230,0.18) 1px, transparent 1px)," +
+        "linear-gradient(0deg, rgba(150,190,230,0.18) 1px, transparent 1px)";
+      grid.style.backgroundSize =
+        (stepLng / box.lngSpan) * 100 + "% " + (stepLat / box.latSpan) * 100 + "%";
+      grid.style.backgroundPosition =
+        ((firstLng - lngMin) / box.lngSpan) * 100 + "% " +
+        ((latMax - firstLat) / box.latSpan) * 100 + "%";
+
+      var olds = Array.prototype.slice.call(grid.querySelectorAll(".map-gl"));
+      olds.forEach(function (o) {
+        if (o.parentNode === grid) grid.removeChild(o);
+      });
+      var lg, lt, el;
+      for (lg = firstLng; lg <= lngMin + box.lngSpan; lg += stepLng) {
+        el = document.createElement("i");
+        el.className = "map-gl gl-x";
+        el.textContent = lg + "\u00b0E";
+        el.style.left = ((lg - lngMin) / box.lngSpan) * 100 + "%";
+        grid.appendChild(el);
       }
-    };
-    document.head.appendChild(s);
+      for (lt = firstLat; lt <= latMax; lt += stepLat) {
+        el = document.createElement("i");
+        el.className = "map-gl gl-y";
+        el.textContent = lt + "\u00b0N";
+        el.style.top = ((latMax - lt) / box.latSpan) * 100 + "%";
+        grid.appendChild(el);
+      }
+
+      var main = null;
+      set.points.forEach(function (p) {
+        if (p.main) main = p;
+      });
+      var d = "";
+      set.points.forEach(function (p) {
+        if (!main || p === main) return;
+        var a = project(main.lng, main.lat, box);
+        var b = project(p.lng, p.lat, box);
+        var cx = (a.x + b.x) / 2 + (b.y - a.y) * 0.14;
+        var cy = (a.y + b.y) / 2 - (b.x - a.x) * 0.14;
+        d +=
+          '<path vector-effect="non-scaling-stroke" d="M' + a.x.toFixed(2) + " " + a.y.toFixed(2) +
+          " Q" + cx.toFixed(2) + " " + cy.toFixed(2) +
+          " " + b.x.toFixed(2) + " " + b.y.toFixed(2) + '"/>';
+      });
+      links.innerHTML = d;
+
+      pinsBox.innerHTML = "";
+      set.points.forEach(function (p, i) {
+        var pos = project(p.lng, p.lat, box);
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "map-pin" + (p.main ? " is-main" : "");
+        btn.style.left = pos.x + "%";
+        btn.style.top = pos.y + "%";
+        if (!reduced) btn.style.animationDelay = (i * 0.09).toFixed(2) + "s";
+        btn.innerHTML = "<i></i><span>" + p.n + "</span>";
+        btn.addEventListener("mouseenter", function () {
+          openCard(p);
+        });
+        btn.addEventListener("focus", function () {
+          openCard(p);
+        });
+        btn.addEventListener("click", function () {
+          var all = pinsBox.querySelectorAll(".map-pin");
+          for (var z = 0; z < all.length; z++) all[z].classList.remove("is-act");
+          btn.classList.add("is-act");
+          openCard(p);
+        });
+        pinsBox.appendChild(btn);
+      });
+    }
+
+    /* ---------- 百度地图 WebGL 底图 ---------- */
+    function pinIcon(color) {
+      var svg =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="34" height="44" viewBox="0 0 34 44">' +
+        '<path d="M17 43C17 43 33 26.6 33 16.6C33 7.4 25.8 0.3 17 0.3C8.2 0.3 1 7.4 1 16.6C1 26.6 17 43 17 43Z" ' +
+        'fill="' + color + '" stroke="#ffffff" stroke-width="2"/>' +
+        '<circle cx="17" cy="16.4" r="5.4" fill="#ffffff"/></svg>';
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    }
+    function renderBaidu() {
+      if (!state.bmap || !window.BMapGL) return;
+      var set = MAP_SETS[state.idx];
+      state.overlays.forEach(function (o) {
+        state.bmap.removeOverlay(o);
+      });
+      state.overlays = [];
+      var main = null;
+      set.points.forEach(function (p) {
+        if (p.main) main = p;
+      });
+      var icoMain = pinIcon("#d8352a");
+      var icoSub = pinIcon("#2f7fd0");
+      set.points.forEach(function (p) {
+        var pt = new window.BMapGL.Point(p.lng, p.lat);
+        if (main && p !== main) {
+          var line = new window.BMapGL.Polyline(
+            [new window.BMapGL.Point(main.lng, main.lat), pt],
+            {
+              strokeColor: "#7fb0e0",
+              strokeWeight: 2,
+              strokeOpacity: 0.7,
+              strokeStyle: "dashed"
+            }
+          );
+          state.bmap.addOverlay(line);
+          state.overlays.push(line);
+        }
+        var mk = new window.BMapGL.Marker(pt);
+        try {
+          mk.setIcon(
+            new window.BMapGL.Icon(p.main ? icoMain : icoSub, new window.BMapGL.Size(34, 44), {
+              anchor: new window.BMapGL.Size(17, 44)
+            })
+          );
+        } catch (e) {
+          /* 自定义图标不可用时保留默认标注 */
+        }
+        mk.addEventListener("click", function () {
+          openCard(p);
+        });
+        state.bmap.addOverlay(mk);
+        state.overlays.push(mk);
+      });
+      state.bmap.centerAndZoom(
+        new window.BMapGL.Point(set.center[0], set.center[1]),
+        set.zoom
+      );
+    }
+    function loadBaidu() {
+      var sc = document.createElement("script");
+      sc.src = "https://api.map.baidu.com/api?type=webgl&v=3.0&ak=" + encodeURIComponent(ak);
+      sc.async = true;
+      sc.onerror = function () {
+        if (note) note.textContent = "底图加载失败，已回退为经纬度点位图";
+      };
+      sc.onload = function () {
+        if (!window.BMapGL) return;
+        try {
+          var m = new window.BMapGL.Map("teamMap");
+          m.centerAndZoom(
+            new window.BMapGL.Point(MAP_SETS[0].center[0], MAP_SETS[0].center[1]),
+            MAP_SETS[0].zoom
+          );
+          m.enableScrollWheelZoom(false);
+          if (cfg.styleId) m.setMapStyleV2({ styleId: cfg.styleId });
+          if (window.BMapGL.ZoomControl) {
+            m.addControl(new window.BMapGL.ZoomControl());
+          }
+          state.bmap = m;
+          state.mode = "baidu";
+          content.classList.add("is-baidu");
+          if (note) note.textContent = "底图：百度地图 · 点位为团队协同节点示意";
+          renderBaidu();
+        } catch (e) {
+          if (note) note.textContent = "底图初始化失败，已回退为经纬度点位图";
+        }
+      };
+      document.head.appendChild(sc);
+    }
+
+    /* ---------- 视图切换（左列大视角 + 底部通道） ---------- */
+    function setView(idx) {
+      state.idx = idx;
+      var lis = views.children;
+      for (var i = 0; i < lis.length; i++) {
+        var v = Number(lis[i].getAttribute("data-index"));
+        lis[i].classList.toggle("is-act", v === (idx === 0 ? 0 : 1));
+      }
+      if (tabs) {
+        tabs.hidden = idx === 0;
+        var bs = tabs.children;
+        for (var j = 0; j < bs.length; j++) {
+          bs[j].classList.toggle("is-act", Number(bs[j].getAttribute("data-index")) === idx);
+        }
+      }
+      closeCard();
+      if (state.mode === "baidu") renderBaidu();
+      else renderGrid();
+    }
+    function hit(root, el) {
+      while (el && el !== root) {
+        if (el.getAttribute && el.getAttribute("data-index") !== null) return el;
+        el = el.parentNode;
+      }
+      return null;
+    }
+    views.addEventListener("click", function (e) {
+      var li = hit(views, e.target);
+      if (!li) return;
+      var v = Number(li.getAttribute("data-index"));
+      setView(v === 0 ? 0 : 1);
+    });
+    if (tabs) {
+      tabs.addEventListener("click", function (e) {
+        var b = hit(tabs, e.target);
+        if (!b) return;
+        setView(Number(b.getAttribute("data-index")));
+      });
+    }
+
+    var rt = null;
+    window.addEventListener("resize", function () {
+      if (state.mode === "baidu") return;
+      if (rt) window.clearTimeout(rt);
+      rt = window.setTimeout(function () {
+        renderGrid();
+      }, 220);
+    });
+
+    if (ak) loadBaidu();
+    else if (note) note.textContent = "经纬度投影点位图 · 配置底图密钥后显示标准地图";
+    setView(0);
   }
 
   /* =============================================================
@@ -980,7 +1344,9 @@
      ============================================================= */
   function initHeadReveal() {
     var heads = Array.prototype.slice.call(
-      document.querySelectorAll(".block-head, .notice-head, .map-copy")
+      document.querySelectorAll(
+        ".block-head, .notice-head, .map-copy, .plat-head, .mile-head, .achv-head"
+      )
     );
     if (!heads.length) return;
     if (
@@ -1009,41 +1375,6 @@
   }
 
   /* =============================================================
-     人大式：地图带左列要点自动轮播高亮（悬停暂停）
-     ============================================================= */
-  function initMapPoints() {
-    var list = document.querySelector(".map-points");
-    if (!list) return;
-    var items = Array.prototype.slice.call(list.children);
-    if (items.length < 2) return;
-    var current = 0;
-    var timer = null;
-    function tick() {
-      items.forEach(function (li, i) {
-        li.classList.toggle("is-on", i === current);
-      });
-      current = (current + 1) % items.length;
-    }
-    function start() {
-      if (!timer) timer = window.setInterval(tick, 3200);
-    }
-    function stop() {
-      if (timer) {
-        window.clearInterval(timer);
-        timer = null;
-      }
-    }
-    list.addEventListener("mouseenter", stop);
-    list.addEventListener("mouseleave", start);
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) stop();
-      else start();
-    });
-    tick();
-    start();
-  }
-
-  /* =============================================================
      十四轮：滚动换页引擎
      板块随滚动做「由下浮入 → 居中 → 上推移出」的连续过渡，
      配合幕布收起、章节题签与整页底色平滑切换，形成翻页观感。
@@ -1060,7 +1391,7 @@
     "main-col": "#fbfaf5",
     "mile-band": "#f4f8fc",
     "achv-band": "#fdfbf5",
-    "map-band": "#f2f7fc",
+    "map-band": "#0b2540",
     "exch-band": "#fbfaf6",
     "gallery-band": "#ffffff",
   };
@@ -1252,6 +1583,122 @@
   }
 
   /* =============================================================
+     十八轮：动效增强驱动
+     ① 卡片 3D 倾斜 + 高光跟随  ② 板块鼠标光斑  ③ 图片滚动视差
+     ============================================================= */
+  function initTiltGloss() {
+    var sel =
+      ".plat-card, .exch-card, .dir-card3, .mile-card, .achv-list li, .notice-card, .acad-item, .quick-btn";
+    var cards = Array.prototype.slice.call(document.querySelectorAll(sel));
+    if (!cards.length) return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(hover: none)").matches
+    )
+      return;
+
+    cards.forEach(function (card) {
+      card.classList.add("tilt");
+      var raf = 0;
+      function move(e) {
+        if (raf) return;
+        raf = window.requestAnimationFrame(function () {
+          raf = 0;
+          var r = card.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width;
+          var py = (e.clientY - r.top) / r.height;
+          card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+          card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+          var ry = (px - 0.5) * 7;
+          var rx = (0.5 - py) * 7;
+          card.classList.add("is-live");
+          card.style.transform =
+            "perspective(900px) rotateX(" +
+            rx.toFixed(2) +
+            "deg) rotateY(" +
+            ry.toFixed(2) +
+            "deg) translateY(-7px) scale(1.015)";
+        });
+      }
+      function leave() {
+        card.classList.remove("is-live");
+        card.style.transform = "";
+      }
+      card.addEventListener("mousemove", move);
+      card.addEventListener("mouseleave", leave);
+    });
+  }
+
+  function initSpotlight() {
+    var bands = Array.prototype.slice.call(
+      document.querySelectorAll(
+        ".plat-band, .mile-band, .achv-band, .exch-band, .dir-band, .map-band, .join-band"
+      )
+    );
+    if (!bands.length) return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(hover: none)").matches
+    )
+      return;
+
+    bands.forEach(function (b) {
+      b.classList.add("spotlight");
+      var raf = 0;
+      b.addEventListener("mousemove", function (e) {
+        if (raf) return;
+        raf = window.requestAnimationFrame(function () {
+          raf = 0;
+          var r = b.getBoundingClientRect();
+          b.style.setProperty("--mx", (e.clientX - r.left).toFixed(0) + "px");
+          b.style.setProperty("--my", (e.clientY - r.top).toFixed(0) + "px");
+          b.classList.add("is-lit");
+        });
+      });
+      b.addEventListener("mouseleave", function () {
+        b.classList.remove("is-lit");
+      });
+    });
+  }
+
+  function initMediaParallax() {
+    var boxes = Array.prototype.slice.call(
+      document.querySelectorAll(".dir-media3, .nf-stage")
+    );
+    if (!boxes.length) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.innerWidth < 900) return;
+
+    boxes.forEach(function (box) {
+      box.classList.add("pmedia");
+    });
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      for (var i = 0; i < boxes.length; i++) {
+        var box = boxes[i];
+        var r = box.getBoundingClientRect();
+        if (r.bottom < -120 || r.top > vh + 120) continue;
+        // -1（在视口下方）→ 1（滚过上方），映射到 ±7% 位移
+        var p = (vh / 2 - (r.top + r.height / 2)) / (vh / 2 + r.height / 2);
+        p = p < -1 ? -1 : p > 1 ? 1 : p;
+        box.style.setProperty("--py", (p * -14).toFixed(1) + "px");
+      }
+    }
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+
+  /* =============================================================
      初始化（DOM 就绪后执行）
      ============================================================= */
   function init() {
@@ -1276,10 +1723,12 @@
     initMapBand();
     initStagger();
     initHeadReveal();
-    initMapPoints();
     initSceneSwap();
     initMilestone();
     initAchvTabs();
+    initTiltGloss();
+    initSpotlight();
+    initMediaParallax();
   }
 
   if (document.readyState === "loading") {
