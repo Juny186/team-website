@@ -3109,9 +3109,7 @@ img {
     box-shadow var(--dur-slow) var(--ease);
 }
 .topbar.is-scrolled {
-  background: rgba(19, 54, 92, 0.93);
-  -webkit-backdrop-filter: saturate(1.15) blur(12px);
-  backdrop-filter: saturate(1.15) blur(12px);
+  background: #13365c;
   box-shadow: 0 6px 26px rgba(8, 22, 40, 0.24);
 }
 .topbar-inner {
@@ -3567,7 +3565,9 @@ main [id] {
   }
   .nf-axis {
     display: block;
-    left: 6px;
+    left: 64px;
+    z-index: 3;
+    pointer-events: none;
   }
 }
 
@@ -3987,4 +3987,179 @@ main [id] {
   .motto-watermark { transform: none !important; }
   .nf-axis, .dots-ico.is-spin, .is-switching .people-avatar { animation: none; }
   .stats-bg-layer { transition: none; }
+}
+
+/* =============================================================
+   十三轮：内容扩充 + 呼吸感（研究方向卡带 / 风采相册 / 入场动效）
+   ============================================================= */
+
+/* ---------- 1. 研究方向三卡带 ---------- */
+.dir-band {
+  margin: clamp(56px, 7vw, 96px) 0;
+}
+.dir-grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+}
+.dir-card3 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-slow) var(--ease),
+    box-shadow var(--dur-slow) var(--ease);
+}
+.dir-card3:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(8, 22, 40, 0.16);
+}
+.dir-media3 {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.dir-media3 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.dir-card3:hover .dir-media3 img {
+  transform: scale(1.07);
+}
+.dir-body3 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: clamp(18px, 2vw, 26px);
+}
+.dir-tag3 {
+  align-self: flex-start;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: rgba(26, 74, 122, 0.08);
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+.dir-body3 h4 {
+  margin: 0 0 10px;
+  font-size: 1.08rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+.dir-body3 p {
+  margin: 0 0 16px;
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: var(--color-text-sub);
+  flex: 1;
+}
+.dir-foot3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--color-border);
+}
+.dir-foot3 i {
+  font-style: normal;
+  font-size: var(--text-xs);
+  color: var(--color-neutral-400);
+  letter-spacing: 1px;
+}
+.dir-foot3 b {
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: #b0841a;
+  white-space: nowrap;
+  transition: transform var(--dur-base) var(--ease);
+}
+.dir-card3:hover .dir-foot3 b {
+  transform: translateX(4px);
+}
+@media (max-width: 1000px) {
+  .dir-grid3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- 2. 团队风采横向漫游相册 ---------- */
+.gallery-band {
+  overflow: hidden;
+  padding: clamp(40px, 5vw, 64px) 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8fc 100%);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+.gallery-track {
+  display: flex;
+  width: max-content;
+  animation: galleryScroll 46s linear infinite;
+}
+.gallery-band:hover .gallery-track {
+  animation-play-state: paused;
+}
+.gallery-seg {
+  display: flex;
+  gap: clamp(14px, 1.6vw, 22px);
+  padding-right: clamp(14px, 1.6vw, 22px);
+}
+.gallery-seg img {
+  width: clamp(240px, 24vw, 340px);
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.gallery-seg img:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(8, 22, 40, 0.2);
+}
+@keyframes galleryScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ---------- 3. 板块标题入场：文字上浮浮现 ---------- */
+.block-head .block-title,
+.notice-head .notice-title {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.head-in .block-title,
+.head-in .notice-title {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- 4. 呼吸感细节：虚线圆徽脉动 + 水印漂移 ---------- */
+.stat-item::after {
+  animation: ringBreathe 4.5s ease-in-out infinite alternate;
+}
+@keyframes ringBreathe {
+  from { opacity: 0.45; }
+  to   { opacity: 0.9; }
+}
+/* 漂移放在 span 上，避免覆盖容器的滚动视差 transform */
+.motto-watermark span {
+  animation: mottoDrift 16s ease-in-out infinite alternate;
+}
+@keyframes mottoDrift {
+  from { opacity: 0.8; transform: translateX(0); }
+  to   { opacity: 1;   transform: translateX(1.5%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery-track, .stat-item::after, .motto-watermark { animation: none; }
 }

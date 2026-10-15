@@ -927,6 +927,74 @@
   }
 
   /* =============================================================
+     板块标题入场：文字上浮 + 底线自左展开（呼吸感）
+     ============================================================= */
+  function initHeadReveal() {
+    var heads = Array.prototype.slice.call(
+      document.querySelectorAll(".block-head, .notice-head, .map-copy")
+    );
+    if (!heads.length) return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)
+    ) {
+      heads.forEach(function (h) {
+        h.classList.add("head-in");
+      });
+      return;
+    }
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("head-in");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    heads.forEach(function (h) {
+      io.observe(h);
+    });
+  }
+
+  /* =============================================================
+     人大式：地图带左列要点自动轮播高亮（悬停暂停）
+     ============================================================= */
+  function initMapPoints() {
+    var list = document.querySelector(".map-points");
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.children);
+    if (items.length < 2) return;
+    var current = 0;
+    var timer = null;
+    function tick() {
+      items.forEach(function (li, i) {
+        li.classList.toggle("is-on", i === current);
+      });
+      current = (current + 1) % items.length;
+    }
+    function start() {
+      if (!timer) timer = window.setInterval(tick, 3200);
+    }
+    function stop() {
+      if (timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
+    list.addEventListener("mouseenter", stop);
+    list.addEventListener("mouseleave", start);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop();
+      else start();
+    });
+    tick();
+    start();
+  }
+
+  /* =============================================================
      初始化（DOM 就绪后执行）
      ============================================================= */
   function init() {
@@ -950,6 +1018,8 @@
     initPeopleBand();
     initMapBand();
     initStagger();
+    initHeadReveal();
+    initMapPoints();
   }
 
   if (document.readyState === "loading") {
