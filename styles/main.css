@@ -1772,19 +1772,30 @@ img {
   }
 }
 /* =============================================================
-   数据统计带（西财式：建筑组合底图 + 磨砂数据网格）
+   数据统计带（西财式：通栏底图 + 无框衬线大数字 + 竖排米金品牌卡）
+   —— 留白即格局：数字直接铺在照片上，无框无底
    ============================================================= */
 .stats-band {
   position: relative;
-  padding: var(--sp-xl) 0;
   overflow: hidden;
   isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: clamp(620px, 88vh, 820px);
+  padding: var(--sp-xl) 0;
 }
 .stats-bg {
   position: absolute;
   inset: 0;
   z-index: -1;
   background: url("../assets/stats-composite.jpg") center 42% / cover no-repeat;
+  transform-origin: center;
+  animation: statsKen 30s ease-in-out infinite alternate;
+}
+/* 底图缓慢推近，让画面「活」而不乱 */
+@keyframes statsKen {
+  from { transform: scale(1); }
+  to   { transform: scale(1.07); }
 }
 .stats-bg::after {
   content: "";
@@ -1792,161 +1803,149 @@ img {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(12, 33, 58, 0.6),
-    rgba(20, 48, 80, 0.26) 45%,
-    rgba(12, 33, 58, 0.52)
+    rgba(12, 33, 58, 0.56),
+    rgba(20, 48, 80, 0.16) 46%,
+    rgba(12, 33, 58, 0.5)
   );
 }
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+.stats-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+  width: 100%;
 }
+.stats-grid {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+/* 无框数字格：只有留白，悬停时整格亮起半透明深蓝（西财式高亮） */
 .stat-item {
   position: relative;
-  padding: var(--sp-lg) var(--sp-md);
+  padding: clamp(30px, 5vh, 52px) 18px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(12, 33, 58, 0.2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition:
-    background var(--dur-slow) var(--ease),
-    border-color var(--dur-slow) var(--ease),
-    box-shadow var(--dur-slow) var(--ease),
-    transform var(--dur-base) var(--ease);
 }
 .stat-item::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.75),
-    rgba(255, 255, 255, 0.15)
-  );
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-slow) var(--ease);
-}
-.stat-item:hover {
-  background: rgba(246, 243, 235, 0.92);
-  border-color: rgba(255, 255, 255, 0.65);
-  box-shadow: 0 10px 28px rgba(8, 22, 40, 0.35);
-  transform: translateY(-4px);
+  inset: 12px 10px;
+  background: rgba(31, 78, 138, 0.52);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease);
 }
 .stat-item:hover::before {
-  transform: scaleX(1);
+  opacity: 1;
 }
+.stat-item > * {
+  position: relative;
+  z-index: 1;
+}
+/* 列与列之间的一道含蓄细线 */
+.stat-item:not(:nth-child(4n + 1)) {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+/* 衬线大数字：设计感来自字体本身，而非装饰 */
 .stat-num {
   display: block;
-  font-size: var(--text-3xl);
-  font-weight: 800;
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", SimSun, serif;
+  font-size: clamp(3rem, 4.6vw, 4.4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 1px;
   color: #ffffff;
-  line-height: 1.2;
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 1px 8px rgba(10, 28, 48, 0.35);
-  transition: color var(--dur-slow) var(--ease);
+  text-shadow: 0 2px 14px rgba(8, 24, 44, 0.45);
 }
 .stat-num .stat-plus {
-  color: rgba(255, 255, 255, 0.65);
-  font-weight: 700;
-  margin-left: 2px;
-  transition: color var(--dur-slow) var(--ease);
+  font-size: 0.42em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.78);
+  margin-left: 7px;
+  vertical-align: 0.6em;
 }
 .stat-label {
   display: block;
-  margin-top: var(--sp-xs);
-  font-size: var(--text-sm);
-  color: rgba(255, 255, 255, 0.82);
-  letter-spacing: 2px;
-  transition: color var(--dur-slow) var(--ease);
-}
-.stat-item:hover .stat-num {
-  color: var(--color-primary-700);
-  text-shadow: none;
-}
-.stat-item:hover .stat-num .stat-plus {
-  color: var(--color-primary-400);
-}
-.stat-item:hover .stat-label {
-  color: var(--color-text-sub);
+  margin-top: 15px;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 8px rgba(8, 24, 44, 0.4);
 }
 
-/* 品牌卡：「数据团队」标识格 */
-.stat-brand {
+/* 竖排米金品牌卡（右侧，仿数据西财） */
+.stats-brand {
+  flex: 0 0 auto;
+  align-self: center;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: linear-gradient(
-    135deg,
-    rgba(17, 44, 74, 0.9),
-    rgba(26, 74, 122, 0.74)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.34);
+  gap: 16px;
+  padding: clamp(32px, 6vh, 52px) clamp(20px, 2vw, 30px);
+  background: rgba(216, 197, 154, 0.92);
+  box-shadow: 0 16px 40px rgba(8, 22, 40, 0.32);
 }
-.stat-brand:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(17, 44, 74, 0.94),
-    rgba(26, 74, 122, 0.84)
-  );
-  transform: none;
+.stats-brand-cn {
+  writing-mode: vertical-rl;
+  font-family: Georgia, "Songti SC", "STSong", SimSun, serif;
+  font-size: clamp(1.7rem, 2.1vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: 16px;
+  color: #17334f;
 }
-.stat-brand::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.1));
+.stats-brand-en {
+  writing-mode: vertical-rl;
+  font-size: 0.6rem;
+  letter-spacing: 5px;
+  color: rgba(23, 51, 79, 0.6);
 }
-.stat-brand-cn {
-  font-size: var(--text-2xl);
-  font-weight: 800;
-  letter-spacing: 8px;
-  text-indent: 8px;
-  color: #ffffff;
-}
-.stat-brand-en {
-  font-size: var(--text-xs);
-  letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.66);
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .stat-item {
-    background: rgba(16, 42, 74, 0.5);
+
+@media (max-width: 1100px) {
+  .stats-band {
+    min-height: 0;
+    padding: var(--sp-xl) 0;
   }
-}
-@media (max-width: 900px) {
+  .stats-inner {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: var(--sp-lg);
+  }
+  .stats-brand {
+    align-self: center;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 36px;
+  }
+  .stats-brand-cn {
+    writing-mode: horizontal-tb;
+    letter-spacing: 12px;
+    text-indent: 12px;
+  }
+  .stats-brand-en {
+    writing-mode: horizontal-tb;
+  }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .stat-brand {
-    grid-column: 1 / -1;
-    padding: var(--sp-md);
+  .stat-item:not(:nth-child(4n + 1)) {
+    border-left: none;
+  }
+  .stat-item:nth-child(even) {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
   }
 }
 @media (max-width: 560px) {
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
   .stat-item {
-    padding: var(--sp-md) var(--sp-sm);
+    padding: var(--sp-md) var(--sp-xs);
   }
   .stat-num {
-    font-size: var(--text-2xl);
+    font-size: 2.3rem;
   }
-  .stat-brand-cn {
-    font-size: var(--text-xl);
-    letter-spacing: 6px;
+  .stat-label {
+    letter-spacing: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stats-bg {
+    animation: none;
   }
 }
 
