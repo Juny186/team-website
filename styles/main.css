@@ -3081,8 +3081,7 @@ img {
     transform var(--dur-base) var(--ease),
     visibility var(--dur-base) var(--ease);
 }
-.rail-list a:hover .rail-tip,
-.rail-list a.active .rail-tip {
+.rail-list a:hover .rail-tip {
   opacity: 1;
   visibility: visible;
   transform: translateY(-50%) translateX(0);
