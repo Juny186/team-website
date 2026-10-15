@@ -7,8 +7,8 @@
   <meta name="description" content="四川文理学院信息与生物医学交叉创新团队团队成员，聚焦信息技术与生物医学交叉研究。" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <link rel="stylesheet" href="styles/main.css?v=202610151348" />
-  <link rel="stylesheet" href="styles/animations.css?v=202610151348" />
+  <link rel="stylesheet" href="styles/main.css?v=202610151406" />
+  <link rel="stylesheet" href="styles/animations.css?v=202610151406" />
 </head>
 <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -162,6 +162,34 @@
       </div>
     </section>
 
+    <!-- 东南大学「东大人物」式：环形弧环头像 + 椭圆虚线轨道 + 小头像节点切换 -->
+    <section class="people-band" aria-labelledby="peopleKicker">
+      <svg class="people-orbit" viewBox="0 0 1200 480" preserveAspectRatio="none" aria-hidden="true">
+        <ellipse cx="600" cy="250" rx="560" ry="200" fill="none" stroke="#b9a06a" stroke-width="1" stroke-dasharray="2 8" opacity="0.5"/>
+        <ellipse cx="600" cy="260" rx="430" ry="150" fill="none" stroke="#1a4a7a" stroke-width="1" stroke-dasharray="2 8" opacity="0.35"/>
+      </svg>
+      <div class="container people-inner">
+        <div class="people-stage">
+          <div class="people-main" aria-hidden="false">
+            <span class="people-ring r1" aria-hidden="true"></span>
+            <span class="people-ring r2" aria-hidden="true"></span>
+            <span class="people-avatar" id="peopleAvatar">王</span>
+          </div>
+          <div class="people-info">
+            <span class="people-kicker" id="peopleKicker">团队人物 · PEOPLE</span>
+            <h3 class="people-name" id="peopleName">王建国</h3>
+            <span class="people-role" id="peopleRole">教授 · 团队负责人</span>
+            <p class="people-desc" id="peopleDesc">深耕医学人工智能与生物医学大数据，主持多项省部级科研项目，带领团队贯通"机制解析 — 数据挖掘 — 转化应用"研究链条。</p>
+          </div>
+          <div class="people-arrows">
+            <button class="people-btn" id="peoplePrev" type="button" aria-label="上一位成员"><span aria-hidden="true">←</span></button>
+            <button class="people-btn" id="peopleNext" type="button" aria-label="下一位成员"><span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <ul class="people-dots" id="peopleDots" role="tablist" aria-label="成员切换"></ul>
+      </div>
+    </section>
+
     <!-- 二级布局：左侧栏目导航 + 右侧内容 -->
     <div class="container">
       <div class="sub-layout">
@@ -270,7 +298,7 @@
     </div>
   </footer>
 
-  <script src="scripts/main.js?v=202610151348"></script>
-  <script src="scripts/animations.js?v=202610151348"></script>
+  <script src="scripts/main.js?v=202610151406"></script>
+  <script src="scripts/animations.js?v=202610151406"></script>
 </body>
 </html>

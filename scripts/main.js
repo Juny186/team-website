@@ -43,6 +43,31 @@
       dotsWrap.querySelectorAll(".banner-dot")
     );
 
+    // 线描塔标（西大式轮转小图标）：每页切换时旋转 + 重描
+    let dotsIcon = null;
+    if (!document.getElementById("dotsIcon")) {
+      const NS = "http://www.w3.org/2000/svg";
+      dotsIcon = document.createElementNS(NS, "svg");
+      dotsIcon.setAttribute("id", "dotsIcon");
+      dotsIcon.setAttribute("class", "dots-ico");
+      dotsIcon.setAttribute("viewBox", "0 0 40 48");
+      dotsIcon.setAttribute("aria-hidden", "true");
+      dotsIcon.innerHTML =
+        '<g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">' +
+        '<path d="M 20 12 L 20 8"/>' +
+        '<circle cx="20" cy="6" r="2.4"/>' +
+        '<path d="M 14 13 Q 20 9.5 26 13"/>' +
+        '<path d="M 12 19 Q 20 15.5 28 19"/>' +
+        '<path d="M 10 25 Q 20 21.5 30 25"/>' +
+        '<path d="M 8 31 Q 20 27.5 32 31"/>' +
+        '<path d="M 6 37 Q 20 33.5 34 37"/>' +
+        '<path d="M 9 41 L 31 41 L 33 45 L 7 45 Z"/>' +
+        "</g>";
+      dotsWrap.appendChild(dotsIcon);
+    } else {
+      dotsIcon = document.getElementById("dotsIcon");
+    }
+
     function goTo(i) {
       current = (i + slideCount) % slideCount;
       slides.forEach(function (slide, si) {
@@ -53,6 +78,12 @@
           dots[si].setAttribute("aria-selected", isActive ? "true" : "false");
         }
       });
+      // 西大式：指示条末端线描塔标随换页轮转重描
+      if (dotsIcon) {
+        dotsIcon.classList.remove("is-spin");
+        void dotsIcon.getBoundingClientRect();
+        dotsIcon.classList.add("is-spin");
+      }
     }
 
     function next() {
@@ -677,6 +708,225 @@
   }
 
   /* =============================================================
+     人大式：校训书法水印，滚动视差（固定层缓慢下移）
+     ============================================================= */
+  function initMottoParallax() {
+    var el = document.querySelector(".motto-watermark");
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var y = window.scrollY * 0.22;
+      el.style.transform = "translate3d(0," + y.toFixed(1) + "px,0)";
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+    update();
+  }
+
+  /* =============================================================
+     东南式：统计带全屏换页 —— 底图淡入淡出 + 圆形箭头
+     ============================================================= */
+  function initStatsSlides() {
+    var band = document.getElementById("stats");
+    if (!band) return;
+    var layers = Array.prototype.slice.call(
+      band.querySelectorAll(".stats-bg-layer")
+    );
+    var prev = document.getElementById("statsPrev");
+    var next = document.getElementById("statsNext");
+    if (layers.length < 2 || (!prev && !next)) return;
+
+    var current = 0;
+    function show(i) {
+      current = (i + layers.length) % layers.length;
+      layers.forEach(function (layer, li) {
+        layer.classList.toggle("is-on", li === current);
+      });
+    }
+    if (prev)
+      prev.addEventListener("click", function () {
+        show(current - 1);
+      });
+    if (next)
+      next.addEventListener("click", function () {
+        show(current + 1);
+      });
+    show(0);
+  }
+
+  /* =============================================================
+     东南「东大人物」式：环形头像人物切换（members 页）
+     ============================================================= */
+  function initPeopleBand() {
+    var dots = document.getElementById("peopleDots");
+    if (!dots) return;
+    var people = [
+      { ch: "王", name: "王建国", role: "教授 · 团队负责人", desc: "深耕医学人工智能与生物医学大数据，主持多项省部级科研项目，带领团队贯通\u201c机制解析 — 数据挖掘 — 转化应用\u201d研究链条。" },
+      { ch: "李", name: "李文静", role: "副教授", desc: "聚焦医学影像智能处理，致力于把深度学习方法落地到临床辅助诊断场景。" },
+      { ch: "张", name: "张志强", role: "副教授", desc: "主攻多组学数据融合分析，探索基因表达调控的交叉研究路径。" },
+      { ch: "陈", name: "陈晓东", role: "副教授", desc: "专注机器学习与数据挖掘，支撑团队算法底座与高性能计算平台。" },
+      { ch: "刘", name: "刘雅琴", role: "讲师", desc: "从事生物信息学研究，参与疾病分子标志物挖掘与验证工作。" },
+      { ch: "赵", name: "赵明辉", role: "讲师", desc: "研究深度学习方法及其在生物医学信号处理中的应用。" }
+    ];
+    var avatar = document.getElementById("peopleAvatar");
+    var nameEl = document.getElementById("peopleName");
+    var roleEl = document.getElementById("peopleRole");
+    var descEl = document.getElementById("peopleDesc");
+    if (!avatar || !nameEl || !roleEl || !descEl) return;
+
+    var current = 0;
+    people.forEach(function (p, i) {
+      var li = document.createElement("li");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "people-dot";
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-label", p.name);
+      btn.textContent = p.ch;
+      btn.addEventListener("click", function () {
+        show(i);
+      });
+      li.appendChild(btn);
+      dots.appendChild(li);
+    });
+    var dotBtns = Array.prototype.slice.call(
+      dots.querySelectorAll(".people-dot")
+    );
+
+    function show(i) {
+      current = (i + people.length) % people.length;
+      var p = people[current];
+      var band = avatar.closest(".people-band");
+      avatar.textContent = p.ch;
+      nameEl.textContent = p.name;
+      roleEl.textContent = p.role;
+      descEl.textContent = p.desc;
+      dotBtns.forEach(function (b, bi) {
+        b.classList.toggle("active", bi === current);
+        b.setAttribute("aria-selected", bi === current ? "true" : "false");
+      });
+      if (band) {
+        band.classList.remove("is-switching");
+        void band.getBoundingClientRect();
+        band.classList.add("is-switching");
+      }
+    }
+    var prev = document.getElementById("peoplePrev");
+    var next = document.getElementById("peopleNext");
+    if (prev)
+      prev.addEventListener("click", function () {
+        show(current - 1);
+      });
+    if (next)
+      next.addEventListener("click", function () {
+        show(current + 1);
+      });
+    show(0);
+  }
+
+  /* =============================================================
+     人大式：全景团队地图（合规底图：腾讯地图 GL JS，需自备密钥；
+     密钥未配置时回退为纯示意网络图，不绘制任何边界）
+     ============================================================= */
+  function initMapBand() {
+    var mount = document.getElementById("teamMap");
+    if (!mount) return;
+    var KEY_PLACEHOLDER =
+      "请到腾讯位置服务开放平台申请自己的密钥并替换此占位符";
+    function fallback() {
+      mount.classList.add("is-fallback");
+    }
+    if (!window.TMap && !window.__WB_TMAP_PROXY__) {
+      // 静态站点：无本地代理且未配置密钥时保持示意网络图
+      if (
+        typeof KEY_PLACEHOLDER === "string" &&
+        KEY_PLACEHOLDER.indexOf("请到") === 0
+      ) {
+        fallback();
+        return;
+      }
+    }
+    // 已配置真实密钥时动态加载 SDK（不阻塞页面）
+    var s = document.createElement("script");
+    s.src = "https://map.qq.com/api/gljs?v=1.exp&key=" + KEY_PLACEHOLDER;
+    s.async = true;
+    s.onerror = fallback;
+    s.onload = function () {
+      try {
+        var map = new TMap.Map(mount, {
+          zoom: 5,
+          center: new TMap.LatLng(30.6, 107.5),
+          baseMap: { type: "vector" },
+        });
+        var pts = [
+          { lat: 31.21, lng: 107.5, name: "达州 · 主基地" },
+          { lat: 30.66, lng: 104.07, name: "成都" },
+          { lat: 29.56, lng: 106.55, name: "重庆" },
+          { lat: 39.9, lng: 116.4, name: "北京" },
+          { lat: 31.23, lng: 121.47, name: "上海" },
+          { lat: 23.13, lng: 113.26, name: "广州" },
+        ];
+        new TMap.MultiMarker({
+          map: map,
+          geometries: pts.map(function (p, i) {
+            return {
+              id: String(i),
+              position: new TMap.LatLng(p.lat, p.lng),
+            };
+          }),
+        });
+        mount.classList.add("is-ready");
+      } catch (e) {
+        fallback();
+      }
+    };
+    document.head.appendChild(s);
+  }
+
+  /* =============================================================
+     南大式：作品/条目交错上浮入场（stagger 组）
+     ============================================================= */
+  function initStagger() {
+    var groups = Array.prototype.slice.call(
+      document.querySelectorAll(".stagger-group")
+    );
+    if (!groups.length) return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)
+    ) {
+      groups.forEach(function (g) {
+        g.classList.add("stagger-done");
+      });
+      return;
+    }
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("stagger-done");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+    groups.forEach(function (g) {
+      io.observe(g);
+    });
+  }
+
+  /* =============================================================
      初始化（DOM 就绪后执行）
      ============================================================= */
   function init() {
@@ -695,6 +945,11 @@
     initSvgDraw();
     initBannerDrag();
     initStatsParallax();
+    initMottoParallax();
+    initStatsSlides();
+    initPeopleBand();
+    initMapBand();
+    initStagger();
   }
 
   if (document.readyState === "loading") {

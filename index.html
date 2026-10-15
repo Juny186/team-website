@@ -10,8 +10,8 @@
     <title>四川文理学院信息与生物医学交叉创新团队</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-    <link rel="stylesheet" href="./styles/main.css?v=202610151348" />
-    <link rel="stylesheet" href="./styles/animations.css?v=202610151348" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610151406" />
+    <link rel="stylesheet" href="./styles/animations.css?v=202610151406" />
   </head>
   <body>
     <div class="progress-rail" id="progressRail" aria-hidden="true"><span></span></div>
@@ -163,6 +163,12 @@
     </aside>
 
     <main id="main">
+      <!-- 人大式：校训书法水印，随页面滚动缓慢视差 -->
+      <div class="motto-watermark" aria-hidden="true">
+        <span>养天地正气</span>
+        <span>法古今完人</span>
+      </div>
+
       <!-- 全宽轮播 Banner -->
       <section class="banner" id="hero" aria-label="焦点图轮播" aria-roledescription="轮播">
         <div class="banner-viewport" id="bannerViewport" aria-live="polite">
@@ -305,9 +311,15 @@
         </div>
       </section>
 
-      <!-- 团队关键数据统计带（西财式：通栏底图 + 无框大数字 + 竖排品牌卡） -->
+      <!-- 团队关键数据统计带（西财式排版 + 东南式全屏换页：底图可切换 + 圆形虚线数据徽章） -->
       <section class="stats-band" id="stats" aria-label="团队关键数据">
-        <div class="stats-bg" aria-hidden="true"></div>
+        <div class="stats-bg" aria-hidden="true">
+          <i class="stats-bg-layer is-on" style="background-image:url('./assets/stats-composite.jpg')"></i>
+          <i class="stats-bg-layer" style="background-image:url('./assets/banner/b7.jpg')"></i>
+          <i class="stats-bg-layer" style="background-image:url('./assets/banner/b6.jpg')"></i>
+        </div>
+        <button class="stats-arrow stats-prev" id="statsPrev" type="button" aria-label="上一张底图"><span aria-hidden="true">←</span></button>
+        <button class="stats-arrow stats-next" id="statsNext" type="button" aria-label="下一张底图"><span aria-hidden="true">→</span></button>
         <div class="container">
           <div class="stats-inner">
             <ul class="stats-grid">
@@ -358,7 +370,7 @@
           <div class="block-head">
             <h3 class="block-title" id="focusTitle">走进团队</h3>
           </div>
-          <div class="focus-row" id="focusBand">
+          <div class="focus-row stagger-group" id="focusBand">
 
             <article class="focus-panel fp-science active" role="button" tabindex="0" aria-expanded="true">
               <div class="focus-strip">
@@ -453,7 +465,7 @@
             <h3 class="notice-title" id="noticesTitle">通知 · 公告</h3>
             <span class="notice-sub">NOTICES</span>
           </div>
-          <div class="notice-cards">
+          <div class="notice-cards stagger-group">
             <a class="notice-card" href="index.html#news">
               <span class="notice-date"><b>17</b><i>2026-09</i></span>
               <span class="notice-text">团队获批四川省自然科学基金重点项目立项资助</span>
@@ -540,6 +552,28 @@
               </a>
             </div>
             <div class="news-grid">
+              <!-- 东南式：校徽圆徽为轴心 + 圆弧轨道 + 节点，插入新闻展示 -->
+              <div class="nf-axis" aria-hidden="true">
+                <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="110" cy="110" r="102" fill="none" stroke="#1a4a7a" stroke-width="1.6" opacity="0.55"/>
+                  <circle cx="110" cy="110" r="86" fill="none" stroke="#1a4a7a" stroke-width="1" stroke-dasharray="3 7" opacity="0.6"/>
+                  <circle cx="110" cy="8" r="6" fill="#9e1b1b"/>
+                  <circle cx="196" cy="146" r="4.5" fill="#b0841a"/>
+                  <circle cx="28" cy="166" r="4.5" fill="#1a4a7a"/>
+                  <g transform="translate(58 56) scale(0.435)">
+                    <path d="M 120 98 L 120 80" fill="none" stroke="#1a4a7a" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="120" cy="73" r="7" fill="none" stroke="#1a4a7a" stroke-width="3.4"/>
+                    <path d="M 104 100 Q 120 89 136 100" fill="none" stroke="#1a4a7a" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 97 126 Q 120 115 143 126" fill="none" stroke="#1a4a7a" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 90 152 Q 120 141 150 152" fill="none" stroke="#1a4a7a" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 83 178 Q 120 167 157 178" fill="none" stroke="#1a4a7a" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 76 204 Q 120 193 164 204" fill="none" stroke="#1a4a7a" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 83 212 L 157 212 L 163 230 L 77 230 Z" fill="#1a4a7a" fill-opacity="0.14" stroke="#1a4a7a" stroke-width="3"/>
+                    <rect x="104" y="234" width="32" height="24" rx="4" fill="#9e1b1b"/>
+                    <text x="120" y="251" text-anchor="middle" font-family="Georgia, STSong, SimSun, serif" font-size="15" fill="#ffffff">文理</text>
+                  </g>
+                </svg>
+              </div>
               <div class="news-feature" id="newsFeature">
                 <span class="nf-label" aria-hidden="true">动态团队</span>
                 <div class="nf-stage">
@@ -606,13 +640,61 @@
           </section>
       </div>
 
+      <!-- 人大式：全景团队地图带（左标题要点 + 右地图；底图仅用合规数据源） -->
+      <section class="map-band" id="panorama" aria-labelledby="panoTitle">
+        <div class="container map-inner">
+          <div class="map-copy">
+            <h3 class="map-title" id="panoTitle">全景团队</h3>
+            <span class="map-en">TEAM NETWORK</span>
+            <ul class="map-points">
+              <li class="is-on">
+                <b>一校多点</b>
+                <span>莲湖校区主基地，附属医院与合作企业多点协同</span>
+              </li>
+              <li>
+                <b>临床网络</b>
+                <span>川东北医疗机构合作，样本与验证通道贯通</span>
+              </li>
+              <li>
+                <b>数据互联</b>
+                <span>对接 NCBI 等公共数据库，成果全球可见</span>
+              </li>
+            </ul>
+          </div>
+          <div class="map-stage">
+            <div class="map-fallback" aria-hidden="true">
+              <svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#9db6cf" stroke-width="1.4" stroke-dasharray="2 6" opacity="0.85">
+                  <path d="M120 300 Q 250 140 340 216"/>
+                  <path d="M120 300 Q 260 260 396 252"/>
+                  <path d="M340 216 Q 470 130 520 176"/>
+                  <path d="M396 252 Q 500 210 540 286"/>
+                  <path d="M340 216 Q 380 300 452 330"/>
+                  <path d="M120 300 Q 240 350 452 330"/>
+                </g>
+                <g font-family="Georgia, STSong, SimSun, serif" font-size="15" fill="#17334f">
+                  <circle cx="120" cy="300" r="9" fill="#9e1b1b"/><text x="104" y="330">达州 · 主基地</text>
+                  <circle cx="340" cy="216" r="6" fill="#1a4a7a"/><text x="322" y="200">成都</text>
+                  <circle cx="396" cy="252" r="6" fill="#1a4a7a"/><text x="386" y="278">重庆</text>
+                  <circle cx="520" cy="176" r="6" fill="#1a4a7a"/><text x="508" y="162">北京</text>
+                  <circle cx="540" cy="286" r="6" fill="#1a4a7a"/><text x="530" y="312">上海</text>
+                  <circle cx="452" cy="330" r="6" fill="#1a4a7a"/><text x="436" y="356">广州</text>
+                </g>
+                <text x="320" y="398" text-anchor="middle" font-size="12" letter-spacing="4" fill="#8aa2ba">协同网络示意 · 底图加载后展示真实地图</text>
+              </svg>
+            </div>
+            <div class="map-embed" id="teamMap" role="img" aria-label="团队合作网络地图"></div>
+          </div>
+        </div>
+      </section>
+
       <!-- 快速通道（整宽色带） -->
       <section class="quick-band" id="links" aria-labelledby="linksTitle">
         <div class="container">
           <div class="block-head">
             <h3 class="block-title" id="linksTitle">快速通道</h3>
           </div>
-          <ul class="quick-list">
+          <ul class="quick-list stagger-group">
             <li><a href="https://www.nsfc.gov.cn/" class="quick-btn" target="_blank" rel="noopener noreferrer">国家自然科学基金委员会</a></li>
             <li><a href="https://kjt.sc.gov.cn/" class="quick-btn" target="_blank" rel="noopener noreferrer">四川省科学技术厅</a></li>
             <li><a href="https://www.ncbi.nlm.nih.gov/" class="quick-btn" target="_blank" rel="noopener noreferrer">NCBI · 生物医学库</a></li>
@@ -622,15 +704,29 @@
       </section>
     </main>
 
-    <!-- 右侧模块进度条（滚动定位导航） -->
+    <!-- 右侧模块进度条（西大式：深蓝圆角竖条 + 虚线 + 白点 + 金色塔标 + 板块标签） -->
     <nav class="scroll-rail" id="scrollRail" aria-label="页面板块导航">
       <ul class="rail-list">
+        <li class="rail-cap" aria-hidden="true">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(3 2) scale(0.142)" fill="none" stroke="#d8c59a" stroke-width="7" stroke-linecap="round">
+              <path d="M 120 98 L 120 80"/>
+              <circle cx="120" cy="73" r="8"/>
+              <path d="M 104 100 Q 120 89 136 100"/>
+              <path d="M 97 126 Q 120 115 143 126"/>
+              <path d="M 90 152 Q 120 141 150 152"/>
+              <path d="M 83 178 Q 120 167 157 178"/>
+              <path d="M 76 204 Q 120 193 164 204"/>
+            </g>
+          </svg>
+        </li>
         <li><a href="#hero" data-rail="hero"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">焦点图</span></a></li>
         <li><a href="#stats" data-rail="stats"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">数据团队</span></a></li>
         <li><a href="#focus" data-rail="focus"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">走进团队</span></a></li>
         <li><a href="#notices" data-rail="notices"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">通知公告</span></a></li>
         <li><a href="#frontier" data-rail="frontier"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">学术前沿</span></a></li>
         <li><a href="#news" data-rail="news"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">团队动态</span></a></li>
+        <li><a href="#panorama" data-rail="panorama"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">全景团队</span></a></li>
         <li><a href="#links" data-rail="links"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">快速通道</span></a></li>
       </ul>
     </nav>
@@ -642,8 +738,8 @@
       </div>
     </footer>
 
-    <script src="./scripts/main.js?v=202610151348"></script>
+    <script src="./scripts/main.js?v=202610151406"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610151348"></script>
+    <script src="./scripts/animations.js?v=202610151406"></script>
   </body>
 </html>
