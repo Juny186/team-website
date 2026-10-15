@@ -124,6 +124,8 @@
       ".dl-item",
       ".contact-item",
       ".stat-item",
+      ".notice-card",
+      ".focus-panel",
     ];
     const nodes = [];
     SELECTORS.forEach(function (sel) {
