@@ -711,25 +711,74 @@
      人大式：校训书法水印，滚动视差（固定层缓慢下移）
      ============================================================= */
   function initMottoParallax() {
-    var el = document.querySelector(".motto-watermark");
+    var el = document.getElementById("mottoWm");
     if (!el) return;
+    var chars = Array.prototype.slice.call(el.querySelectorAll("i"));
+    if (!chars.length) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // 入场：逐字「落笔」，45ms 阶梯
+    chars.forEach(function (c, i) {
+      c.style.setProperty("--cy", "34px");
+      c.style.setProperty("--co", "0");
+      c.style.transition =
+        "transform 1s cubic-bezier(.22,.61,.36,1) " + i * 45 + "ms, opacity 1s ease " + i * 45 + "ms";
+    });
+    function release() {
+      chars.forEach(function (c, i) {
+        c.style.setProperty("--cy", "0px");
+        c.style.setProperty("--co", "0.12");
+      });
+      window.setTimeout(function () {
+        chars.forEach(function (c) {
+          c.style.transition = "none";
+        });
+      }, 1400);
+      window.removeEventListener("load", release);
+    }
+    if (document.readyState === "complete") window.setTimeout(release, 200);
+    else window.addEventListener("load", release);
+
+    var maxScroll = function () {
+      return Math.max(1, document.body.scrollHeight - window.innerHeight);
+    };
     var ticking = false;
+    var ready = false;
+
     function update() {
       ticking = false;
-      var y = window.scrollY * 0.22;
-      el.style.transform = "translate3d(0," + y.toFixed(1) + "px,0)";
+      var p = Math.min(1, Math.max(0, window.scrollY / maxScroll()));
+      // 整块：整页一次循环的有界漂浮（始终留在视区）
+      var ang = p * Math.PI * 2;
+      var y = Math.sin(ang) * 62;
+      var x = Math.sin(ang * 0.7) * 46;
+      el.style.transform =
+        "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+
+      if (!ready) return;
+      // 逐字：随滚动在 inclination 上做波浪（位移 / 旋转 / 缩放 / 浓淡）
+      for (var i = 0; i < chars.length; i++) {
+        var ph = p * Math.PI * 4 + i * 0.55;
+        var s = 0.5 + 0.5 * Math.sin(ph);
+        chars[i].style.setProperty("--cy", (Math.sin(ph) * 14).toFixed(2) + "px");
+        chars[i].style.setProperty("--cx", (Math.cos(ph * 0.6) * 7).toFixed(2) + "px");
+        chars[i].style.setProperty("--cr", (Math.sin(ph) * 2.4).toFixed(2) + "deg");
+        chars[i].style.setProperty("--cs", (1 + s * 0.07).toFixed(3));
+        chars[i].style.setProperty("--co", (0.12 + s * 0.2).toFixed(3));
+      }
     }
-    window.addEventListener(
-      "scroll",
-      function () {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(update);
-        }
-      },
-      { passive: true }
-    );
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    window.setTimeout(function () {
+      ready = true;
+      update();
+    }, 1200);
     update();
   }
 
