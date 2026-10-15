@@ -2540,3 +2540,363 @@ img {
     animation: none;
   }
 }
+
+/* ===================== 新闻公告：左轮播头条 + 右紧凑列表 ===================== */
+.news-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+  gap: var(--sp-lg);
+  align-items: start;
+}
+
+/* 左：头条轮播 */
+.news-feature {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.nf-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  letter-spacing: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-white);
+  background: linear-gradient(180deg, rgba(158, 27, 27, 0.96), rgba(122, 20, 20, 0.96));
+}
+
+.nf-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin-left: 54px;
+  background: var(--color-neutral-200);
+}
+
+.nf-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.nf-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nf-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nf-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 34px 16px 12px;
+  background: linear-gradient(transparent, rgba(18, 58, 99, 0.92));
+  color: var(--color-white);
+}
+
+.nf-date {
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  opacity: 0.85;
+}
+
+.nf-title {
+  margin: 4px 0 6px;
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.nf-title a {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.nf-title a:hover {
+  text-decoration: underline;
+}
+
+.nf-brief {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 计数环：当前页码 + 旋转进度弧 */
+.nf-counter {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  z-index: 3;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(18, 58, 99, 0.55);
+  color: var(--color-white);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.nf-counter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: var(--color-white);
+  animation: nfSpin 5s linear infinite;
+}
+
+.nf-counter .nf-idx {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.nf-counter i,
+.nf-counter .nf-total {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+@keyframes nfSpin {
+  to { transform: rotate(360deg); }
+}
+
+.news-feature.paused .nf-counter::before {
+  animation-play-state: paused;
+}
+
+/* 右：紧凑列表（首条带图摘要，其余标题+日期） */
+.news-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.news-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.news-row .nr-title {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--dur-base) var(--ease);
+}
+
+.news-row .nr-title:hover {
+  color: var(--color-primary-500);
+}
+
+.news-row .nr-date {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  color: var(--color-text-sub);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.news-row-lead {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: var(--sp-md);
+  margin-bottom: 6px;
+}
+
+.news-row-lead .nr-thumb {
+  flex-shrink: 0;
+  width: 132px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-right: var(--sp-md);
+}
+
+.news-row-lead .nr-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.news-row-lead .nr-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.news-row-lead .nr-date {
+  color: var(--color-primary-400);
+  font-weight: 600;
+}
+
+.news-row-lead .nr-title {
+  white-space: normal;
+  font-weight: 600;
+}
+
+.news-row-lead .nr-brief {
+  font-size: 0.85rem;
+  color: var(--color-text-sub);
+  line-height: 1.7;
+}
+
+@media (max-width: 1080px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+  .nf-label {
+    writing-mode: horizontal-tb;
+    width: auto;
+    bottom: auto;
+    padding: 6px 16px;
+    letter-spacing: 4px;
+    font-size: 0.9rem;
+  }
+  .nf-stage {
+    margin-left: 0;
+    margin-top: 34px;
+  }
+}
+
+/* ===================== 通知带：空间舒展 + 波浪增强 + 水墨浮现 ===================== */
+.notice-band {
+  padding: 88px 0 96px;
+}
+
+.notice-cards {
+  gap: 56px;
+}
+
+.notice-card {
+  padding: 14px 10px 26px;
+}
+
+.notice-text {
+  margin-top: 16px;
+  font-size: 1rem;
+}
+
+/* 波浪动效增强：位移加大 + 轻微呼吸 */
+.notice-waves .wave-a {
+  animation: waveDrift 11s ease-in-out infinite alternate, waveBob 7s ease-in-out infinite;
+}
+
+.notice-waves .wave-b {
+  animation: waveDrift 17s ease-in-out infinite alternate-reverse, waveBob 9s ease-in-out infinite reverse;
+}
+
+@keyframes waveDrift {
+  from { transform: translateX(-6%); }
+  to   { transform: translateX(6%); }
+}
+
+@keyframes waveBob {
+  from { transform: translateY(0); }
+  to   { transform: translateY(10px); }
+}
+
+.notice-waves svg {
+  opacity: 0.95;
+}
+
+/* 水墨塔楼：滚动进入视口后由模糊到清晰渐渐浮现，随后轻浮动 */
+.notice-art {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  width: 264px;
+  height: auto;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  animation: artFloat 7s ease-in-out infinite alternate;
+}
+
+.notice-art.reveal-wait {
+  opacity: 0;
+  filter: blur(14px);
+  transform: scale(1.08) translateY(14px);
+  transition: opacity 1.6s ease 0.2s, filter 1.6s ease 0.2s, transform 1.6s ease 0.2s;
+}
+
+.notice-art.reveal-in {
+  opacity: 0.9;
+  filter: blur(0);
+  transform: scale(1) translateY(0);
+}
+
+@keyframes artFloat {
+  from { margin-top: -6px; }
+  to   { margin-top: 6px; }
+}
+
+@media (max-width: 1080px) {
+  .notice-art {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice-art {
+    animation: none;
+  }
+  .notice-art.reveal-wait {
+    opacity: 0.9;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+  .nf-counter::before {
+    animation: none;
+  }
+}
+
+/* 新闻区独立成全宽板块后：学术前沿单栏改双列 */
+.cols {
+  grid-template-columns: 1fr;
+}
+.acad-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--sp-xl);
+}
+
+@media (max-width: 860px) {
+  .acad-list {
+    grid-template-columns: 1fr;
+  }
+}

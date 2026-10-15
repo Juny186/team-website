@@ -104,6 +104,58 @@
   }
 
   /* =============================================================
+     新闻头条轮播：左大图自动切换 + 计数环
+     ============================================================= */
+  function initNewsFeature() {
+    const feature = document.getElementById("newsFeature");
+    if (!feature) return;
+
+    const slides = Array.prototype.slice.call(
+      feature.querySelectorAll(".nf-slide")
+    );
+    const idxEl = document.getElementById("nfIdx");
+    if (slides.length === 0) return;
+
+    let current = 0;
+    let timer = null;
+    const INTERVAL = 5000;
+
+    function show(i) {
+      current = (i + slides.length) % slides.length;
+      slides.forEach(function (slide, si) {
+        slide.classList.toggle("active", si === current);
+      });
+      if (idxEl) idxEl.textContent = String(current + 1);
+    }
+
+    function start() {
+      stop();
+      feature.classList.remove("paused");
+      timer = window.setInterval(function () {
+        show(current + 1);
+      }, INTERVAL);
+    }
+
+    function stop() {
+      feature.classList.add("paused");
+      if (timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    feature.addEventListener("mouseenter", stop);
+    feature.addEventListener("mouseleave", start);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    show(0);
+    start();
+  }
+
+  /* =============================================================
      走进团队：三色立体板块（悬停/点击/键盘横向展开）
      ============================================================= */
   function initFocusPanels() {
@@ -351,6 +403,7 @@
      ============================================================= */
   function init() {
     initBanner();
+    initNewsFeature();
     initFocusPanels();
     initSidebar();
     initMoreLinks();

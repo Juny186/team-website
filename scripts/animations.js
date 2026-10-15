@@ -126,6 +126,7 @@
       ".stat-item",
       ".notice-card",
       ".focus-panel",
+      ".notice-art",
     ];
     const nodes = [];
     SELECTORS.forEach(function (sel) {

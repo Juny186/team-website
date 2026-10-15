@@ -10,8 +10,8 @@
     <title>四川文理学院信息与生物医学交叉创新团队</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-    <link rel="stylesheet" href="./styles/main.css?v=202610150915" />
-    <link rel="stylesheet" href="./styles/animations.css?v=202610150915" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610150930" />
+    <link rel="stylesheet" href="./styles/animations.css?v=202610150930" />
   </head>
   <body>
     <!-- 无障碍：跳到主内容 -->
@@ -375,6 +375,7 @@
       <!-- 通知公告：波浪动效卡片带（借鉴武大官网） -->
       <section class="notice-band" id="notices" aria-labelledby="noticesTitle">
         <div class="notice-waves" aria-hidden="true"><svg viewBox="0 0 1440 220" preserveAspectRatio="none"><g stroke="#b6cce4" stroke-width="1" fill="none" opacity="0.55"><path d="M-60,60 C240,26 480,94 760,60.0 S1240,26 1560,60.0"/><path d="M-60,67 C240,33 480,101 760,64.9 S1240,33 1560,68.4"/><path d="M-60,74 C240,40 480,108 760,69.8 S1240,40 1560,76.8"/><path d="M-60,81 C240,47 480,115 760,74.7 S1240,47 1560,85.2"/><path d="M-60,88 C240,54 480,122 760,79.6 S1240,54 1560,93.6"/><path d="M-60,95 C240,61 480,129 760,84.5 S1240,61 1560,102.0"/></g><g class="wave-b"><g stroke="#8fb0d4" stroke-width="1" fill="none" opacity="0.4"><path d="M-60,120 C240,78 480,162 760,120.0 S1240,78 1560,120.0"/><path d="M-60,127 C240,85 480,169 760,124.9 S1240,85 1560,128.4"/><path d="M-60,134 C240,92 480,176 760,129.8 S1240,92 1560,136.8"/><path d="M-60,141 C240,99 480,183 760,134.7 S1240,99 1560,145.2"/><path d="M-60,148 C240,106 480,190 760,139.6 S1240,106 1560,153.6"/></g></g><g class="wave-a"><g stroke="#dbe6f2" stroke-width="1" fill="none" opacity="0.8"><path d="M-60,30 C240,4 480,56 760,30.0 S1240,4 1560,30.0"/><path d="M-60,37 C240,11 480,63 760,34.9 S1240,11 1560,38.4"/><path d="M-60,44 C240,18 480,70 760,39.8 S1240,18 1560,46.8"/><path d="M-60,51 C240,25 480,77 760,44.7 S1240,25 1560,55.2"/></g></g></svg></div>
+        <img class="notice-art reveal-wait" src="assets/notice-art.png" alt="" aria-hidden="true" />
         <div class="container notice-inner">
           <div class="notice-head">
             <h3 class="notice-title" id="noticesTitle">通知 · 公告</h3>
@@ -456,73 +457,81 @@
           </section>
 
           <!-- 右栏：新闻公告 -->
-          <section class="block col-news" id="news" aria-labelledby="newsTitle">
+          
+        </div>
+
+<section class="block col-news" id="news" aria-labelledby="newsTitle">
             <div class="block-head">
               <h3 class="block-title" id="newsTitle">新闻公告</h3>
               <a href="#news" class="block-more js-more" data-target="news">
                 MORE +
               </a>
             </div>
-            <div class="news-list">
-              <article class="news-item news-featured">
-                <div class="news-thumb">
-                  <img src="assets/banner/b5.jpg" alt="校园风景" loading="lazy" width="640" height="360" />
+            <div class="news-grid">
+              <div class="news-feature" id="newsFeature">
+                <span class="nf-label" aria-hidden="true">动态团队</span>
+                <div class="nf-stage">
+        <article class="nf-slide active">
+          <img src="assets/banner/b1.jpg" alt="四川文理学院校园——楼顶校名" loading="lazy" width="1200" height="675" />
+          <div class="nf-caption">
+            <span class="nf-date">09.17 / 2026</span>
+            <h3 class="nf-title"><a href="#">团队获批四川省自然科学基金重点项目立项资助</a></h3>
+            <p class="nf-brief">喜讯：团队负责人主持承担的省级重点科研项目正式获批立项，将聚焦交叉前沿开展攻关。</p>
+          </div>
+        </article>
+        <article class="nf-slide">
+          <img src="assets/research/dir3.jpg" alt="实验室研究场景" loading="lazy" width="1200" height="675" />
+          <div class="nf-caption">
+            <span class="nf-date">06.09 / 2026</span>
+            <h3 class="nf-title"><a href="#">团队成功举办医工交叉学术研讨会</a></h3>
+            <p class="nf-brief">来自多所高校与医院的专家学者围绕生物医学与信息技术融合展开深入交流。</p>
+          </div>
+        </article>
+        <article class="nf-slide">
+          <img src="assets/research/dir2.jpg" alt="数据分析研究场景" loading="lazy" width="1200" height="675" />
+          <div class="nf-caption">
+            <span class="nf-date">06.05 / 2026</span>
+            <h3 class="nf-title"><a href="#">团队成员受邀参加全国生物信息学学术会议并作报告</a></h3>
+            <p class="nf-brief">团队青年教师与研究生在学术会议上作专题报告，展示最新研究成果。</p>
+          </div>
+        </article>
+        <article class="nf-slide">
+          <img src="assets/banner/b4.jpg" alt="校训石刻" loading="lazy" width="1200" height="675" />
+          <div class="nf-caption">
+            <span class="nf-date">03.12 / 2026</span>
+            <h3 class="nf-title"><a href="#">团队面向全校招募科研助理与创新小组</a></h3>
+            <p class="nf-brief">欢迎对信息技术与生物医学交叉研究感兴趣的同学加入，共赴科研之旅。</p>
+          </div>
+        </article>
                 </div>
-                <div class="news-body">
-                  <span class="news-tag">09.17 / 2026</span>
-                  <h2 class="news-title">
-                    <a href="#">团队获批四川省自然科学基金重点项目立项资助</a>
-                  </h2>
-                  <p class="news-brief">
-                    喜讯：团队负责人主持承担的省级重点科研项目正式获批立项，将聚焦交叉前沿开展攻关。
-                  </p>
+                <div class="nf-counter" aria-hidden="true">
+                  <span class="nf-idx" id="nfIdx">1</span><i>/</i><span class="nf-total">4</span>
                 </div>
-              </article>
-              <article class="news-item">
-                <div class="news-thumb" aria-hidden="true">
-                  <span class="thumb-text">交流</span>
-                </div>
-                <div class="news-body">
-                  <span class="news-tag">06.09 / 2026</span>
-                  <h2 class="news-title">
-                    <a href="#">团队成功举办医工交叉学术研讨会</a>
-                  </h2>
-                  <p class="news-brief">
-                    来自多所高校与医院的专家学者围绕生物医学与信息技术融合展开深入交流。
-                  </p>
-                </div>
-              </article>
-              <article class="news-item">
-                <div class="news-thumb" aria-hidden="true">
-                  <span class="thumb-text">学术</span>
-                </div>
-                <div class="news-body">
-                  <span class="news-tag">06.05 / 2026</span>
-                  <h2 class="news-title">
-                    <a href="#">团队成员受邀参加全国生物信息学学术会议并作报告</a>
-                  </h2>
-                  <p class="news-brief">
-                    团队青年教师与研究生在学术会议上作专题报告，展示最新研究成果。
-                  </p>
-                </div>
-              </article>
-              <article class="news-item">
-                <div class="news-thumb" aria-hidden="true">
-                  <span class="thumb-text">招生</span>
-                </div>
-                <div class="news-body">
-                  <span class="news-tag">03.12 / 2026</span>
-                  <h2 class="news-title">
-                    <a href="#">团队面向全校招募科研助理与创新小组</a>
-                  </h2>
-                  <p class="news-brief">
-                    欢迎对信息技术与生物医学交叉研究感兴趣的同学加入，共赴科研之旅。
-                  </p>
-                </div>
-              </article>
+              </div>
+              <ul class="news-rows" id="newsRows">
+        <li class="news-row news-row-lead">
+          <span class="nr-thumb"><img src="assets/banner/b5.jpg" alt="校园风景" loading="lazy" width="220" height="150" /></span>
+          <span class="nr-body">
+            <span class="nr-date">09.17 / 2026</span>
+            <a class="nr-title" href="#">团队获批四川省自然科学基金重点项目立项资助</a>
+            <span class="nr-brief">喜讯：团队负责人主持承担的省级重点科研项目正式获批立项，将聚焦交叉前沿开展攻关。</span>
+          </span>
+        </li>
+        <li class="news-row">
+          <a class="nr-title" href="#">团队成功举办医工交叉学术研讨会</a>
+          <span class="nr-date">06.09</span>
+        </li>
+        <li class="news-row">
+          <a class="nr-title" href="#">团队成员受邀参加全国生物信息学学术会议并作报告</a>
+          <span class="nr-date">06.05</span>
+        </li>
+        <li class="news-row">
+          <a class="nr-title" href="#">团队面向全校招募科研助理与创新小组</a>
+          <span class="nr-date">03.12</span>
+        </li>
+              </ul>
             </div>
           </section>
-        </div>
       </div>
 
       <!-- 快速通道（整宽色带） -->
@@ -548,8 +557,8 @@
       </div>
     </footer>
 
-    <script src="./scripts/main.js?v=202610150915"></script>
+    <script src="./scripts/main.js?v=202610150930"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610150915"></script>
+    <script src="./scripts/animations.js?v=202610150930"></script>
   </body>
 </html>
