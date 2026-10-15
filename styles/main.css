@@ -4814,3 +4814,28 @@ html.js-scene .stats-band .scene-tag i {
 .achv-band { background: #fdfbf5; }
 .exch-band { background: #fbfaf6; }
 .dir-band { background: #fffdf7; }
+
+/* =============================================================
+   十五轮：书法书体统一（马善政毛笔楷书 · OFL 开源可商用）
+   子集 268 字 / woff2 96KB，本地托管，仅标题加载
+   ============================================================= */
+@font-face {
+  font-family: "MaShanZheng";
+  src: url("../assets/fonts/mashanzheng-subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --font-brush: "MaShanZheng", "STXingkai", "华文行楷", "KaiTi", "楷体", serif;
+}
+.motto-watermark span,
+.col-news .block-title,
+.join-title,
+.notice-title {
+  font-family: var(--font-brush);
+}
+.notice-title {
+  font-weight: 400;
+  letter-spacing: 12px;
+}
