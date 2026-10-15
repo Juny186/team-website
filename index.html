@@ -10,7 +10,7 @@
     <title>四川文理学院信息与生物医学交叉创新团队</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-    <link rel="stylesheet" href="./styles/main.css?v=202610150930" />
+    <link rel="stylesheet" href="./styles/main.css?v=202610151000" />
     <link rel="stylesheet" href="./styles/animations.css?v=202610150930" />
   </head>
   <body>
@@ -163,7 +163,7 @@
 
     <main id="main">
       <!-- 全宽轮播 Banner -->
-      <section class="banner" aria-label="焦点图轮播" aria-roledescription="轮播">
+      <section class="banner" id="hero" aria-label="焦点图轮播" aria-roledescription="轮播">
         <div class="banner-viewport" id="bannerViewport" aria-live="polite">
           <article class="banner-slide active" role="group" aria-roledescription="幻灯片">
             <img
@@ -229,19 +229,51 @@
               </div>
             </div>
           </article>
-          <article class="banner-slide" role="group" aria-roledescription="幻灯片">
+<article class="banner-slide" role="group" aria-roledescription="幻灯片">
             <img
               class="banner-bg"
-              src="./assets/banner/b5.jpg"
-              alt="四川文理学院校园风景"
+              src="./assets/banner/b8.jpg"
+              alt="校园石刻——艰难困苦 玉汝于成"
               width="1600"
               height="500"
               loading="lazy"
             />
             <div class="banner-overlay">
               <div class="banner-caption">
-                <h2>多学科交叉 · 共同成长</h2>
-                <p>在生物信息学与医学智能领域持续深耕</p>
+                <h2>艰难困苦 · 玉汝于成</h2>
+                <p>以奋斗精神砥砺科研之路</p>
+              </div>
+            </div>
+          </article>
+          <article class="banner-slide" role="group" aria-roledescription="幻灯片">
+            <img
+              class="banner-bg"
+              src="./assets/banner/b6.jpg"
+              alt="银杏掩映的教学楼"
+              width="1600"
+              height="500"
+              loading="lazy"
+            />
+            <div class="banner-overlay">
+              <div class="banner-caption">
+                <h2>银杏树下 · 载梦前行</h2>
+                <p>在最美的校园里深耕交叉研究</p>
+              </div>
+            </div>
+          </article>
+          <article class="banner-slide" role="group" aria-roledescription="幻灯片">
+            <img
+              class="banner-bg"
+              src="./assets/banner/b7.jpg"
+              alt="校园亭台远眺"
+              width="1600"
+              height="500"
+              loading="lazy"
+            />
+            <div class="banner-overlay">
+              <div class="banner-caption">
+                <h2>宁静致远 · 潜心探索</h2>
+                <p>绿水青山间的一方科研净土</p>
               </div>
             </div>
           </article>
@@ -272,29 +304,46 @@
         </div>
       </section>
 
-      <!-- 团队关键数据统计带 -->
-      <section class="stats-band" aria-label="团队关键数据">
+      <!-- 团队关键数据统计带（西财式：建筑底图 + 磨砂数据网格） -->
+      <section class="stats-band" id="stats" aria-label="团队关键数据">
+        <div class="stats-bg" aria-hidden="true"></div>
         <div class="container">
           <ul class="stats-grid">
+            <li class="stat-item stat-brand">
+              <span class="stat-brand-cn">数据团队</span>
+              <span class="stat-brand-en">TEAM IN DATA</span>
+            </li>
             <li class="stat-item">
               <span class="stat-num"><span data-count="50">0</span><span class="stat-plus">+</span></span>
               <span class="stat-label">发表学术论文</span>
             </li>
             <li class="stat-item">
               <span class="stat-num"><span data-count="18">0</span><span class="stat-plus">+</span></span>
-              <span class="stat-label">科研项目</span>
+              <span class="stat-label">主持科研项目</span>
             </li>
             <li class="stat-item">
               <span class="stat-num"><span data-count="10">0</span><span class="stat-plus">+</span></span>
-              <span class="stat-label">团队成员</span>
+              <span class="stat-label">核心成员</span>
             </li>
             <li class="stat-item">
               <span class="stat-num"><span data-count="30">0</span><span class="stat-plus">+</span></span>
-              <span class="stat-label">学生人数</span>
+              <span class="stat-label">科研训练本科生</span>
+            </li>
+            <li class="stat-item">
+              <span class="stat-num"><span data-count="5">0</span><span class="stat-plus"></span></span>
+              <span class="stat-label">团队博士</span>
             </li>
             <li class="stat-item">
               <span class="stat-num"><span data-count="8">0</span><span class="stat-plus">+</span></span>
               <span class="stat-label">专利与软著</span>
+            </li>
+            <li class="stat-item">
+              <span class="stat-num"><span data-count="3">0</span><span class="stat-plus"></span></span>
+              <span class="stat-label">大研究方向</span>
+            </li>
+            <li class="stat-item">
+              <span class="stat-num"><span data-count="3">0</span><span class="stat-plus"></span></span>
+              <span class="stat-label">高性能计算设备</span>
             </li>
           </ul>
         </div>
@@ -375,7 +424,7 @@
       <!-- 通知公告：波浪动效卡片带（借鉴武大官网） -->
       <section class="notice-band" id="notices" aria-labelledby="noticesTitle">
         <div class="notice-waves" aria-hidden="true"><svg viewBox="0 0 1440 220" preserveAspectRatio="none"><g stroke="#b6cce4" stroke-width="1" fill="none" opacity="0.55"><path d="M-60,60 C240,26 480,94 760,60.0 S1240,26 1560,60.0"/><path d="M-60,67 C240,33 480,101 760,64.9 S1240,33 1560,68.4"/><path d="M-60,74 C240,40 480,108 760,69.8 S1240,40 1560,76.8"/><path d="M-60,81 C240,47 480,115 760,74.7 S1240,47 1560,85.2"/><path d="M-60,88 C240,54 480,122 760,79.6 S1240,54 1560,93.6"/><path d="M-60,95 C240,61 480,129 760,84.5 S1240,61 1560,102.0"/></g><g class="wave-b"><g stroke="#8fb0d4" stroke-width="1" fill="none" opacity="0.4"><path d="M-60,120 C240,78 480,162 760,120.0 S1240,78 1560,120.0"/><path d="M-60,127 C240,85 480,169 760,124.9 S1240,85 1560,128.4"/><path d="M-60,134 C240,92 480,176 760,129.8 S1240,92 1560,136.8"/><path d="M-60,141 C240,99 480,183 760,134.7 S1240,99 1560,145.2"/><path d="M-60,148 C240,106 480,190 760,139.6 S1240,106 1560,153.6"/></g></g><g class="wave-a"><g stroke="#dbe6f2" stroke-width="1" fill="none" opacity="0.8"><path d="M-60,30 C240,4 480,56 760,30.0 S1240,4 1560,30.0"/><path d="M-60,37 C240,11 480,63 760,34.9 S1240,11 1560,38.4"/><path d="M-60,44 C240,18 480,70 760,39.8 S1240,18 1560,46.8"/><path d="M-60,51 C240,25 480,77 760,44.7 S1240,25 1560,55.2"/></g></g></svg></div>
-        <img class="notice-art reveal-wait" src="assets/notice-art.png" alt="" aria-hidden="true" />
+        <img class="notice-art reveal-wait" src="assets/notice-badge.png" alt="" aria-hidden="true" />
         <div class="container notice-inner">
           <div class="notice-head">
             <h3 class="notice-title" id="noticesTitle">通知 · 公告</h3>
@@ -510,7 +559,7 @@
               </div>
               <ul class="news-rows" id="newsRows">
         <li class="news-row news-row-lead">
-          <span class="nr-thumb"><img src="assets/banner/b5.jpg" alt="校园风景" loading="lazy" width="220" height="150" /></span>
+          <span class="nr-thumb"><img src="assets/banner/b6.jpg" alt="银杏掩映的教学楼" loading="lazy" width="220" height="150" /></span>
           <span class="nr-body">
             <span class="nr-date">09.17 / 2026</span>
             <a class="nr-title" href="#">团队获批四川省自然科学基金重点项目立项资助</a>
@@ -550,6 +599,19 @@
       </section>
     </main>
 
+    <!-- 右侧模块进度条（滚动定位导航） -->
+    <nav class="scroll-rail" id="scrollRail" aria-label="页面板块导航">
+      <ul class="rail-list">
+        <li><a href="#hero" data-rail="hero"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">焦点图</span></a></li>
+        <li><a href="#stats" data-rail="stats"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">数据团队</span></a></li>
+        <li><a href="#focus" data-rail="focus"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">走进团队</span></a></li>
+        <li><a href="#notices" data-rail="notices"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">通知公告</span></a></li>
+        <li><a href="#frontier" data-rail="frontier"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">学术前沿</span></a></li>
+        <li><a href="#news" data-rail="news"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">团队动态</span></a></li>
+        <li><a href="#links" data-rail="links"><span class="rail-dot" aria-hidden="true"></span><span class="rail-tip">快速通道</span></a></li>
+      </ul>
+    </nav>
+
     <!-- 底部版权 -->
     <footer class="footer">
       <div class="container footer-inner">
@@ -557,8 +619,8 @@
       </div>
     </footer>
 
-    <script src="./scripts/main.js?v=202610150930"></script>
+    <script src="./scripts/main.js?v=202610151000"></script>
     <!-- 动态叙事动效引擎 -->
-    <script src="./scripts/animations.js?v=202610150930"></script>
+    <script src="./scripts/animations.js?v=202610151000"></script>
   </body>
 </html>

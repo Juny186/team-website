@@ -399,6 +399,71 @@
   }
 
   /* =============================================================
+     右侧模块进度条（scroll-spy：高亮当前板块，点击平滑定位）
+     ============================================================= */
+  function initScrollRail() {
+    var rail = document.getElementById("scrollRail");
+    if (!rail) return;
+    var links = Array.prototype.slice.call(rail.querySelectorAll("a[data-rail]"));
+    if (!links.length) return;
+    var sections = links
+      .map(function (a) {
+        return document.getElementById(a.getAttribute("data-rail"));
+      })
+      .filter(Boolean);
+    if (!sections.length) return;
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var line = window.scrollY + window.innerHeight * 0.36;
+      var current = sections[0];
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].getBoundingClientRect().top + window.scrollY <= line) {
+          current = sections[i];
+        }
+      }
+      // 滚动到底部时点亮最后一项
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
+        current = sections[sections.length - 1];
+      }
+      links.forEach(function (a) {
+        a.classList.toggle(
+          "active",
+          a.getAttribute("data-rail") === current.id
+        );
+      });
+    }
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+
+    links.forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        var target = document.getElementById(a.getAttribute("data-rail"));
+        if (!target) return;
+        e.preventDefault();
+        var reduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        window.scrollTo({
+          top:
+            target.getBoundingClientRect().top +
+            window.scrollY -
+            72 /* 页头高度补偿 */,
+          behavior: reduced ? "auto" : "smooth",
+        });
+      });
+    });
+  }
+
+  /* =============================================================
      初始化（DOM 就绪后执行）
      ============================================================= */
   function init() {
@@ -410,6 +475,7 @@
     initPlaceholderActions();
     initScrollHighlight();
     initBackTop();
+    initScrollRail();
   }
 
   if (document.readyState === "loading") {

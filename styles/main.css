@@ -1772,29 +1772,49 @@ img {
   }
 }
 /* =============================================================
-   数据统计带（团队关键数字 · 学术蓝克制风格）
+   数据统计带（西财式：建筑组合底图 + 磨砂数据网格）
    ============================================================= */
 .stats-band {
+  position: relative;
   padding: var(--sp-xl) 0;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+  isolation: isolate;
+}
+.stats-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("../assets/stats-composite.jpg") center 42% / cover no-repeat;
+}
+.stats-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 33, 58, 0.88),
+    rgba(20, 48, 80, 0.74) 45%,
+    rgba(12, 33, 58, 0.9)
+  );
 }
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--sp-md);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 .stat-item {
   position: relative;
-  background: var(--color-surface-muted);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
   padding: var(--sp-lg) var(--sp-md);
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.055);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   transition:
-    border-color var(--dur-base) var(--ease),
-    box-shadow var(--dur-base) var(--ease),
+    background var(--dur-slow) var(--ease),
+    border-color var(--dur-slow) var(--ease),
     transform var(--dur-base) var(--ease);
 }
 .stat-item::before {
@@ -1806,16 +1826,16 @@ img {
   height: 3px;
   background: linear-gradient(
     90deg,
-    var(--color-primary-400),
-    var(--color-primary-700)
+    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0.15)
   );
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur-slow) var(--ease);
 }
 .stat-item:hover {
-  border-color: var(--color-primary-300);
-  box-shadow: var(--shadow-sm);
+  background: rgba(246, 243, 235, 0.94);
+  border-color: rgba(255, 255, 255, 0.65);
   transform: translateY(-4px);
 }
 .stat-item:hover::before {
@@ -1825,42 +1845,105 @@ img {
   display: block;
   font-size: var(--text-3xl);
   font-weight: 800;
-  color: var(--color-primary-700);
+  color: #ffffff;
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 8px rgba(10, 28, 48, 0.35);
+  transition: color var(--dur-slow) var(--ease);
 }
 .stat-num .stat-plus {
-  color: var(--color-primary-400);
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 700;
   margin-left: 2px;
+  transition: color var(--dur-slow) var(--ease);
 }
 .stat-label {
   display: block;
   margin-top: var(--sp-xs);
   font-size: var(--text-sm);
-  color: var(--color-text-sub);
+  color: rgba(255, 255, 255, 0.82);
   letter-spacing: 2px;
+  transition: color var(--dur-slow) var(--ease);
 }
-@media (max-width: 1100px) {
-  .stats-grid {
-    grid-template-columns: repeat(3, 1fr);
+.stat-item:hover .stat-num {
+  color: var(--color-primary-700);
+  text-shadow: none;
+}
+.stat-item:hover .stat-num .stat-plus {
+  color: var(--color-primary-400);
+}
+.stat-item:hover .stat-label {
+  color: var(--color-text-sub);
+}
+
+/* 品牌卡：「数据团队」标识格 */
+.stat-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(
+    135deg,
+    rgba(17, 44, 74, 0.92),
+    rgba(26, 74, 122, 0.8)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.stat-brand::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #9e1b1b;
+}
+.stat-brand-cn {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: 8px;
+  text-indent: 8px;
+  color: #ffffff;
+}
+.stat-brand-en {
+  font-size: var(--text-xs);
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.66);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .stat-item {
+    background: rgba(16, 42, 74, 0.82);
+  }
+  .stat-brand {
+    background: linear-gradient(135deg, rgba(17, 44, 74, 0.96), rgba(26, 74, 122, 0.92));
   }
 }
 @media (max-width: 900px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .stat-brand {
+    grid-column: 1 / -1;
+    padding: var(--sp-md);
+  }
 }
 @media (max-width: 560px) {
   .stats-grid {
     grid-template-columns: 1fr 1fr;
-    gap: var(--sp-md);
+    gap: 10px;
   }
   .stat-item {
     padding: var(--sp-md) var(--sp-sm);
   }
   .stat-num {
     font-size: var(--text-2xl);
+  }
+  .stat-brand-cn {
+    font-size: var(--text-xl);
+    letter-spacing: 6px;
   }
 }
 
@@ -2833,30 +2916,31 @@ img {
   opacity: 0.95;
 }
 
-/* 水墨塔楼：滚动进入视口后由模糊到清晰渐渐浮现，随后轻浮动 */
+/* 塔楼徽章 LOGO：滚动进入视口后由模糊到清晰渐渐浮现，随后轻浮动 */
 .notice-art {
   position: absolute;
-  right: 4%;
-  top: 50%;
-  width: 264px;
+  right: 2%;
+  top: 57%;
+  width: 192px;
   height: auto;
   z-index: 1;
-  mix-blend-mode: multiply;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 6px 18px rgba(26, 74, 122, 0.18));
   pointer-events: none;
   animation: artFloat 7s ease-in-out infinite alternate;
 }
 
 .notice-art.reveal-wait {
   opacity: 0;
-  filter: blur(14px);
-  transform: scale(1.08) translateY(14px);
+  filter: blur(14px) drop-shadow(0 6px 18px rgba(26, 74, 122, 0));
+  transform: translateY(-50%) scale(1.12);
   transition: opacity 1.6s ease 0.2s, filter 1.6s ease 0.2s, transform 1.6s ease 0.2s;
 }
 
 .notice-art.reveal-in {
-  opacity: 0.9;
-  filter: blur(0);
-  transform: scale(1) translateY(0);
+  opacity: 0.94;
+  filter: blur(0) drop-shadow(0 6px 18px rgba(26, 74, 122, 0.18));
+  transform: translateY(-50%) scale(1);
 }
 
 @keyframes artFloat {
@@ -2898,5 +2982,116 @@ img {
 @media (max-width: 860px) {
   .acad-list {
     grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================================
+   右侧模块进度条（scroll-spy 板块定位导航）
+   ============================================================= */
+.scroll-rail {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: none;
+}
+@media (min-width: 1280px) {
+  .scroll-rail {
+    display: block;
+  }
+}
+.rail-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 10px 0;
+  list-style: none;
+}
+.rail-list::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--color-border) 18%,
+    var(--color-border) 82%,
+    transparent
+  );
+}
+.rail-list a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: inherit;
+  text-decoration: none;
+}
+.rail-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-primary-300);
+  transition:
+    background var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease),
+    box-shadow var(--dur-base) var(--ease),
+    transform var(--dur-base) var(--ease);
+}
+.rail-list a:hover .rail-dot {
+  transform: scale(1.25);
+  border-color: var(--color-primary-600, var(--color-primary));
+}
+.rail-list a.active .rail-dot {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(26, 74, 122, 0.14);
+  transform: scale(1.15);
+}
+.rail-tip {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  padding: 4px 12px;
+  font-size: var(--text-xs);
+  letter-spacing: 2px;
+  white-space: nowrap;
+  color: var(--color-primary-700);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-base) var(--ease),
+    transform var(--dur-base) var(--ease),
+    visibility var(--dur-base) var(--ease);
+}
+.rail-list a:hover .rail-tip,
+.rail-list a.active .rail-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+.rail-list a.active .rail-tip {
+  color: #ffffff;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail-dot,
+  .rail-tip {
+    transition: none;
   }
 }
