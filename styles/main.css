@@ -3339,3 +3339,62 @@ main [id] {
     transition: none;
   }
 }
+
+/* =============================================================
+   十一轮：首屏大气 + 全页留白（对齐西南大学观感）
+   问题：轮播 16/5 偏矮、板块间距 24~32px 偏紧凑，整页局促
+   ============================================================= */
+
+/* ---------- 1. 轮播：桌面端接近满屏（导航以下约占 78% 视口） ---------- */
+@media (min-width: 992px) {
+  .banner-viewport {
+    aspect-ratio: auto;
+    height: clamp(560px, 78vh, 840px);
+  }
+}
+/* 轮播文案同步放大，避免"图大字小"失衡 */
+.banner-caption h2 {
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  letter-spacing: 3px;
+}
+.banner-caption p {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  letter-spacing: 1.5px;
+  margin-top: 6px;
+}
+.banner-overlay {
+  padding: clamp(40px, 4.5vw, 72px);
+  background: linear-gradient(
+    180deg,
+    rgba(9, 30, 52, 0) 46%,
+    rgba(9, 30, 52, 0.72) 100%
+  );
+}
+.banner-dots {
+  right: clamp(24px, 3vw, 56px);
+  bottom: clamp(22px, 3vw, 40px);
+}
+/* 高画面下推近节奏放缓，更有电影感 */
+.banner-slide.active .banner-bg {
+  animation-duration: 9s;
+}
+
+/* ---------- 2. 全页留白：板块间距整体放宽 ---------- */
+.block {
+  margin-bottom: clamp(40px, 4.5vw, 64px);
+}
+.block-head {
+  margin-bottom: clamp(18px, 2.2vw, 28px);
+}
+.focus-band {
+  margin: clamp(56px, 7vw, 96px) 0;
+}
+.focus-row {
+  height: clamp(380px, 46vh, 460px);
+}
+.quick-band {
+  padding: clamp(36px, 4.5vw, 60px) 0;
+}
+.typewriter-band {
+  padding: clamp(30px, 3.4vw, 44px) 0;
+}
