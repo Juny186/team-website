@@ -828,9 +828,9 @@
       { ch: "王", name: "王何鑫", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/B43P12VT/whx.html" },
       { ch: "申", name: "申秀有", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/RN7BQ6PT/" },
       { ch: "郑", name: "郑世超", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/MAF3HZ7S/" },
+      { ch: "郑", name: "郑钧元", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/MWRETTZG/junyuan.html" },
       { ch: "孙", name: "孙绍瑞", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/ZHBNYPQB/%E4%B8%AA%E4%BA%BA%E4%BB%8B%E7%BB%8D.html" },
       { ch: "晏", name: "晏紫", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/BH5D9Z5M/yanzi.html" },
-      { ch: "郑", name: "郑钧元", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/MWRETTZG/junyuan.html" },
       { ch: "余", name: "余馨颖", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/GBT3X896/yxy.html" }
     ];
     var avatar = document.getElementById("peopleAvatar");
