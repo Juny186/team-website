@@ -820,12 +820,18 @@
     var dots = document.getElementById("peopleDots");
     if (!dots) return;
     var people = [
-      { ch: "王", name: "王建国", role: "教授 · 团队负责人", desc: "深耕医学人工智能与生物医学大数据，主持多项省部级科研项目，带领团队贯通\u201c机制解析 — 数据挖掘 — 转化应用\u201d研究链条。" },
-      { ch: "李", name: "李文静", role: "副教授", desc: "聚焦医学影像智能处理，致力于把深度学习方法落地到临床辅助诊断场景。" },
-      { ch: "张", name: "张志强", role: "副教授", desc: "主攻多组学数据融合分析，探索基因表达调控的交叉研究路径。" },
-      { ch: "陈", name: "陈晓东", role: "副教授", desc: "专注机器学习与数据挖掘，支撑团队算法底座与高性能计算平台。" },
-      { ch: "刘", name: "刘雅琴", role: "讲师", desc: "从事生物信息学研究，参与疾病分子标志物挖掘与验证工作。" },
-      { ch: "赵", name: "赵明辉", role: "讲师", desc: "研究深度学习方法及其在生物医学信号处理中的应用。" }
+      { ch: "胡", name: "胡瑞思", role: "特聘研究员 · 团队带头人", desc: "主要从事病原生物学、生物信息学与人工智能研究，主持国家自然科学基金、中国博士后科学基金、四川省自然科学基金和达州市重点研发计划等项目；所在单位为康养产业学院、医学院。", href: "http://www.huruisi.work" },
+      { ch: "韩", name: "韩俊杰", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/GWK0P6F9/code_20261016.html" },
+      { ch: "江", name: "江炆静", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/5J6HGG8N/index-1.html" },
+      { ch: "罗", name: "罗茜娅", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/758HT7D2/%E4%BB%8B%E7%BB%8D.html" },
+      { ch: "王", name: "王何鑫", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/B43P12VT/whx.html" },
+      { ch: "申", name: "申秀有", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/RN7BQ6PT/" },
+      { ch: "郑", name: "郑世超", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/MAF3HZ7S/" },
+      { ch: "孙", name: "孙绍瑞", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/ZHBNYPQB/%E4%B8%AA%E4%BA%BA%E4%BB%8B%E7%BB%8D.html" },
+      { ch: "晏", name: "晏紫", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/BH5D9Z5M/yanzi.html" },
+      { ch: "郑", name: "郑钧元", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/MWRETTZG/junyuan.html" },
+      { ch: "余", name: "余馨颖", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/GBT3X896/yxy.html" },
+      { ch: "宋", name: "宋欣星", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/KWRGWA8M/page.html" }
     ];
     var avatar = document.getElementById("peopleAvatar");
     var nameEl = document.getElementById("peopleName");
@@ -857,6 +863,8 @@
       var p = people[current];
       var band = avatar.closest(".people-band");
       avatar.textContent = p.ch;
+      var stage = document.querySelector(".people-main");
+      if (stage) stage.setAttribute("data-href", p.href || "");
       nameEl.textContent = p.name;
       roleEl.textContent = p.role;
       descEl.textContent = p.desc;
@@ -880,6 +888,14 @@
       next.addEventListener("click", function () {
         show(current + 1);
       });
+    var stage = document.querySelector(".people-main");
+    if (stage) {
+      stage.style.cursor = "pointer";
+      stage.addEventListener("click", function () {
+        var h = stage.getAttribute("data-href");
+        if (h) window.open(h, "_blank", "noopener");
+      });
+    }
     show(0);
   }
 
