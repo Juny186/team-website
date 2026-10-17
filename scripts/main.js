@@ -821,6 +821,7 @@
     if (!dots) return;
     var people = [
       { ch: "胡", name: "胡瑞思", role: "特聘研究员 · 团队带头人", desc: "主要从事病原生物学、生物信息学与人工智能研究，主持国家自然科学基金、中国博士后科学基金、四川省自然科学基金和达州市重点研发计划等项目；所在单位为康养产业学院、医学院。", href: "http://www.huruisi.work" },
+      { ch: "宋", name: "宋欣星", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/KWRGWA8M/page.html" },
       { ch: "韩", name: "韩俊杰", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/GWK0P6F9/code_20261016.html" },
       { ch: "江", name: "江炆静", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/5J6HGG8N/index-1.html" },
       { ch: "罗", name: "罗茜娅", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/758HT7D2/%E4%BB%8B%E7%BB%8D.html" },
@@ -830,8 +831,7 @@
       { ch: "孙", name: "孙绍瑞", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/ZHBNYPQB/%E4%B8%AA%E4%BA%BA%E4%BB%8B%E7%BB%8D.html" },
       { ch: "晏", name: "晏紫", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/BH5D9Z5M/yanzi.html" },
       { ch: "郑", name: "郑钧元", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/MWRETTZG/junyuan.html" },
-      { ch: "余", name: "余馨颖", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/GBT3X896/yxy.html" },
-      { ch: "宋", name: "宋欣星", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/KWRGWA8M/page.html" }
+      { ch: "余", name: "余馨颖", role: "团队成员", desc: "个人介绍页面已上线，点击查看完整简历。", href: "https://htmlhoster.com/p/GBT3X896/yxy.html" }
     ];
     var avatar = document.getElementById("peopleAvatar");
     var nameEl = document.getElementById("peopleName");
@@ -865,6 +865,16 @@
       avatar.textContent = p.ch;
       var stage = document.querySelector(".people-main");
       if (stage) stage.setAttribute("data-href", p.href || "");
+      var linkEl = document.getElementById("peopleLink");
+      if (linkEl) {
+        linkEl.setAttribute("href", p.href || "#");
+        var lt = document.getElementById("peopleLinkText");
+        if (lt) {
+          lt.textContent = p.href && p.href.indexOf("huruisi") >= 0
+            ? "访问教师个人主页"
+            : "查看个人介绍页面";
+        }
+      }
       nameEl.textContent = p.name;
       roleEl.textContent = p.role;
       descEl.textContent = p.desc;

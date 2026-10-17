@@ -6957,9 +6957,30 @@ html.js-scene .stats-band .scene-tag i {
 .member-card.is-link:hover .member-name { color: var(--color-primary); }
 .member-card.is-link .member-info { color: var(--color-primary); }
 
-/* 头部人物区可点击 */
+/* 头部人物区：整块可点 + 显式链接按钮 */
 .people-main { cursor: pointer; }
-.people-band .people-info { pointer-events: none; }
+.people-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--sp-sm);
+  padding: 6px 14px;
+  border: 1px solid rgba(176, 132, 26, 0.5);
+  border-radius: var(--radius-full);
+  background: rgba(216, 180, 90, 0.12);
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease),
+    background-color 0.28s var(--ease);
+}
+.people-link:hover {
+  transform: translateY(-2px);
+  background: rgba(216, 180, 90, 0.22);
+  box-shadow: 0 6px 16px rgba(176, 132, 26, 0.18);
+}
+.people-link i { font-style: normal; }
 
 /* ---------- R29 · 科研成果页空状态 ---------- */
 .achv-note {
