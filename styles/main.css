@@ -6960,3 +6960,35 @@ html.js-scene .stats-band .scene-tag i {
 /* 头部人物区可点击 */
 .people-main { cursor: pointer; }
 .people-band .people-info { pointer-events: none; }
+
+/* ---------- R29 · 科研成果页空状态 ---------- */
+.achv-note {
+  margin: 0 0 var(--sp-lg);
+  padding: var(--sp-md) var(--sp-lg);
+  border-left: 3px solid #b0841a;
+  background: var(--color-primary-50);
+  color: var(--color-text-sub);
+  font-size: var(--text-sm);
+  line-height: 1.8;
+}
+.achv-empty {
+  margin: 0 0 var(--sp-lg);
+  padding: var(--sp-lg);
+  border: 1px dashed var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  text-align: center;
+}
+.achv-empty b {
+  display: block;
+  color: var(--color-text);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+.achv-empty span {
+  display: block;
+  margin-top: 6px;
+  color: var(--color-text-sub);
+  font-size: var(--text-sm);
+  line-height: 1.8;
+}
